@@ -1,0 +1,46 @@
+{
+  "query": "\nUPDATE books SET coverImageUrl = '/images/livres/IMG-20251027-WA0190.jpg' WHERE slug = 'la-vie-dun-breslever';\nUPDATE books SET coverImageUrl = '/images/livres/WhatsAppImage2025-10-31at01.25.29.jpeg' WHERE slug = 'likoutey-moharane-1';\nUPDATE books SET coverImageUrl = '/images/livres/IMG-20251110-WA0181.jpg' WHERE slug = 'likoutey-moharane-4';\nUPDATE books SET coverImageUrl = '/images/livres/IMG-20251110-WA0182.jpg' WHERE slug = 'likoutey-moharane-5';\nUPDATE books SET coverImageUrl = '/images/livres/IMG-20251110-WA0183.jpg' WHERE slug = 'likoutey-moharane-6';\nUPDATE books SET coverImageUrl = '/images/livres/IMG-20251110-WA0184.jpg' WHERE slug = 'likoutey-moharane-7-tinyana';\nUPDATE books SET coverImageUrl = '/images/livres/IMG-20251110-WA0187.jpg' WHERE slug = 'le-voyage-de-rabbi-nahman';\nUPDATE books SET coverImageUrl = '/images/livres/WhatsAppImage2025-11-10at21.47.57.jpeg' WHERE slug = 'conversations-des-anges-2';\nUPDATE books SET coverImageUrl = '/images/livres/WhatsAppImage2025-11-10at21.45.14.jpeg' WHERE slug = 'chemot-atsadikim';\n\nSELECT titleFr as Titre, coverImageUrl as Image FROM books ORDER BY id;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2Uv4HwgQRTgorzU.b8056fdc3616 --database 9J2kFU3Z5NckuWrQiQUeqK --execute \nUPDATE books SET coverImageUrl = '/images/livres/IMG-20251027-WA0190.jpg' WHERE slug = 'la-vie-dun-breslever';\nUPDATE books SET coverImageUrl = '/images/livres/WhatsAppImage2025-10-31at01.25.29.jpeg' WHERE slug = 'likoutey-moharane-1';\nUPDATE books SET coverImageUrl = '/images/livres/IMG-20251110-WA0181.jpg' WHERE slug = 'likoutey-moharane-4';\nUPDATE books SET coverImageUrl = '/images/livres/IMG-20251110-WA0182.jpg' WHERE slug = 'likoutey-moharane-5';\nUPDATE books SET coverImageUrl = '/images/livres/IMG-20251110-WA0183.jpg' WHERE slug = 'likoutey-moharane-6';\nUPDATE books SET coverImageUrl = '/images/livres/IMG-20251110-WA0184.jpg' WHERE slug = 'likoutey-moharane-7-tinyana';\nUPDATE books SET coverImageUrl = '/images/livres/IMG-20251110-WA0187.jpg' WHERE slug = 'le-voyage-de-rabbi-nahman';\nUPDATE books SET coverImageUrl = '/images/livres/WhatsAppImage2025-11-10at21.47.57.jpeg' WHERE slug = 'conversations-des-anges-2';\nUPDATE books SET coverImageUrl = '/images/livres/WhatsAppImage2025-11-10at21.45.14.jpeg' WHERE slug = 'chemot-atsadikim';\n\nSELECT titleFr as Titre, coverImageUrl as Image FROM books ORDER BY id;\n",
+  "rows": [
+    {
+      "Titre": "La Vie d'un Breslever",
+      "Image": "/images/livres/IMG-20251027-WA0190.jpg"
+    },
+    {
+      "Titre": "Likoutey Moharane - Tome 1",
+      "Image": "/images/livres/WhatsAppImage2025-10-31at01.25.29.jpeg"
+    },
+    {
+      "Titre": "Likoutey Moharane - Tome 4",
+      "Image": "/images/livres/IMG-20251110-WA0181.jpg"
+    },
+    {
+      "Titre": "Likoutey Moharane - Tome 5",
+      "Image": "/images/livres/IMG-20251110-WA0182.jpg"
+    },
+    {
+      "Titre": "Likoutey Moharane - Tome 6",
+      "Image": "/images/livres/IMG-20251110-WA0183.jpg"
+    },
+    {
+      "Titre": "Likoutey Moharane - Tome 7 (Tinyana)",
+      "Image": "/images/livres/IMG-20251110-WA0184.jpg"
+    },
+    {
+      "Titre": "Le Voyage de Rabbi Nahman",
+      "Image": "/images/livres/IMG-20251110-WA0187.jpg"
+    },
+    {
+      "Titre": "Conversations des Anges - Tome 2",
+      "Image": "/images/livres/WhatsAppImage2025-11-10at21.47.57.jpeg"
+    },
+    {
+      "Titre": "Chemot Atsadikim - Les Noms des Tsadikim",
+      "Image": "/images/livres/WhatsAppImage2025-11-10at21.45.14.jpeg"
+    }
+  ],
+  "messages": [],
+  "stdout": "Titre\tImage\nLa Vie d'un Breslever\t/images/livres/IMG-20251027-WA0190.jpg\nLikoutey Moharane - Tome 1\t/images/livres/WhatsAppImage2025-10-31at01.25.29.jpeg\nLikoutey Moharane - Tome 4\t/images/livres/IMG-20251110-WA0181.jpg\nLikoutey Moharane - Tome 5\t/images/livres/IMG-20251110-WA0182.jpg\nLikoutey Moharane - Tome 6\t/images/livres/IMG-20251110-WA0183.jpg\nLikoutey Moharane - Tome 7 (Tinyana)\t/images/livres/IMG-20251110-WA0184.jpg\nLe Voyage de Rabbi Nahman\t/images/livres/IMG-20251110-WA0187.jpg\nConversations des Anges - Tome 2\t/images/livres/WhatsAppImage2025-11-10at21.47.57.jpeg\nChemot Atsadikim - Les Noms des Tsadikim\t/images/livres/WhatsAppImage2025-11-10at21.45.14.jpeg\n",
+  "stderr": "",
+  "execution_time_ms": 3538
+}

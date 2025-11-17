@@ -1,0 +1,64 @@
+{
+  "query": "SELECT id, titleFr, slug, coverImageUrl FROM books ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2Uv4HwgQRTgorzU.b8056fdc3616 --database 9J2kFU3Z5NckuWrQiQUeqK --execute SELECT id, titleFr, slug, coverImageUrl FROM books ORDER BY id;",
+  "rows": [
+    {
+      "id": "1",
+      "titleFr": "La Vie d'un Breslever",
+      "slug": "la-vie-dun-breslever",
+      "coverImageUrl": "/images/livres/IMG-20251027-WA0190.jpg"
+    },
+    {
+      "id": "2",
+      "titleFr": "Likoutey Moharane - Tome 1",
+      "slug": "likoutey-moharane-1",
+      "coverImageUrl": "/images/livres/WhatsAppImage2025-10-31at01.25.29.jpeg"
+    },
+    {
+      "id": "3",
+      "titleFr": "Likoutey Moharane - Tome 4",
+      "slug": "likoutey-moharane-4",
+      "coverImageUrl": "/images/livres/IMG-20251110-WA0181.jpg"
+    },
+    {
+      "id": "4",
+      "titleFr": "Likoutey Moharane - Tome 5",
+      "slug": "likoutey-moharane-5",
+      "coverImageUrl": "/images/livres/IMG-20251110-WA0182.jpg"
+    },
+    {
+      "id": "5",
+      "titleFr": "Likoutey Moharane - Tome 6",
+      "slug": "likoutey-moharane-6",
+      "coverImageUrl": "/images/livres/IMG-20251110-WA0183.jpg"
+    },
+    {
+      "id": "6",
+      "titleFr": "Likoutey Moharane - Tome 7 (Tinyana)",
+      "slug": "likoutey-moharane-7-tinyana",
+      "coverImageUrl": "/images/livres/IMG-20251110-WA0184.jpg"
+    },
+    {
+      "id": "7",
+      "titleFr": "Le Voyage de Rabbi Nahman",
+      "slug": "le-voyage-de-rabbi-nahman",
+      "coverImageUrl": "/images/livres/IMG-20251110-WA0187.jpg"
+    },
+    {
+      "id": "8",
+      "titleFr": "Conversations des Anges - Tome 2",
+      "slug": "conversations-des-anges-2",
+      "coverImageUrl": "/images/livres/WhatsAppImage2025-11-10at21.47.57.jpeg"
+    },
+    {
+      "id": "9",
+      "titleFr": "Chemot Atsadikim - Les Noms des Tsadikim",
+      "slug": "chemot-atsadikim",
+      "coverImageUrl": "/images/livres/WhatsAppImage2025-11-10at21.45.14.jpeg"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitleFr\tslug\tcoverImageUrl\n1\tLa Vie d'un Breslever\tla-vie-dun-breslever\t/images/livres/IMG-20251027-WA0190.jpg\n2\tLikoutey Moharane - Tome 1\tlikoutey-moharane-1\t/images/livres/WhatsAppImage2025-10-31at01.25.29.jpeg\n3\tLikoutey Moharane - Tome 4\tlikoutey-moharane-4\t/images/livres/IMG-20251110-WA0181.jpg\n4\tLikoutey Moharane - Tome 5\tlikoutey-moharane-5\t/images/livres/IMG-20251110-WA0182.jpg\n5\tLikoutey Moharane - Tome 6\tlikoutey-moharane-6\t/images/livres/IMG-20251110-WA0183.jpg\n6\tLikoutey Moharane - Tome 7 (Tinyana)\tlikoutey-moharane-7-tinyana\t/images/livres/IMG-20251110-WA0184.jpg\n7\tLe Voyage de Rabbi Nahman\tle-voyage-de-rabbi-nahman\t/images/livres/IMG-20251110-WA0187.jpg\n8\tConversations des Anges - Tome 2\tconversations-des-anges-2\t/images/livres/WhatsAppImage2025-11-10at21.47.57.jpeg\n9\tChemot Atsadikim - Les Noms des Tsadikim\tchemot-atsadikim\t/images/livres/WhatsAppImage2025-11-10at21.45.14.jpeg\n",
+  "stderr": "",
+  "execution_time_ms": 1685
+}

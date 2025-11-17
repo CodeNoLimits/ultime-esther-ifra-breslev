@@ -1,0 +1,8 @@
+{
+  "query": "TRUNCATE TABLE books;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2Uv4HwgQRTgorzU.b8056fdc3616 --database 9J2kFU3Z5NckuWrQiQUeqK --execute TRUNCATE TABLE books;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1701 (42000) at line 1: Cannot truncate a table referenced in a foreign key constraint (`9J2kFU3Z5NckuWrQiQUeqK`.`cartItems` CONSTRAINT `cartItems_bookId_books_id_fk`)"
+  ]
+}

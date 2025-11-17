@@ -1,0 +1,42 @@
+{
+  "query": "SELECT * FROM categories;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2Uv4HwgQRTgorzU.b8056fdc3616 --database 9J2kFU3Z5NckuWrQiQUeqK --execute SELECT * FROM categories;",
+  "rows": [
+    {
+      "id": "1",
+      "nameEn": "Core Teachings",
+      "nameFr": "Enseignements Fondamentaux",
+      "nameHe": "לימודי יסוד",
+      "slug": "enseignements",
+      "createdAt": "2025-11-16 10:30:34"
+    },
+    {
+      "id": "2",
+      "nameEn": "Biography",
+      "nameFr": "Biographie",
+      "nameHe": "ביוגרפיה",
+      "slug": "biographie",
+      "createdAt": "2025-11-16 10:30:34"
+    },
+    {
+      "id": "3",
+      "nameEn": "Stories",
+      "nameFr": "Récits",
+      "nameHe": "סיפורים",
+      "slug": "recits",
+      "createdAt": "2025-11-16 10:30:34"
+    },
+    {
+      "id": "4",
+      "nameEn": "Prayer",
+      "nameFr": "Prière",
+      "nameHe": "תפילה",
+      "slug": "priere",
+      "createdAt": "2025-11-16 10:30:34"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnameEn\tnameFr\tnameHe\tslug\tcreatedAt\n1\tCore Teachings\tEnseignements Fondamentaux\tלימודי יסוד\tenseignements\t2025-11-16 10:30:34\n2\tBiography\tBiographie\tביוגרפיה\tbiographie\t2025-11-16 10:30:34\n3\tStories\tRécits\tסיפורים\trecits\t2025-11-16 10:30:34\n4\tPrayer\tPrière\tתפילה\tpriere\t2025-11-16 10:30:34\n",
+  "stderr": "",
+  "execution_time_ms": 1554
+}

@@ -1,0 +1,9 @@
+{
+  "query": "DELETE FROM favorites;\nDELETE FROM readingProgress;\nDELETE FROM reviews;\nDELETE FROM orderItems;\nDELETE FROM books;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2Uv4HwgQRTgorzU.b8056fdc3616 --database 9J2kFU3Z5NckuWrQiQUeqK --execute DELETE FROM favorites;\nDELETE FROM readingProgress;\nDELETE FROM reviews;\nDELETE FROM orderItems;\nDELETE FROM books;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2326
+}

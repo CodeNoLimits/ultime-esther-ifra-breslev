@@ -1,0 +1,15 @@
+{
+  "query": "SELECT id, titleFr, slug FROM books WHERE coverImageUrl LIKE '%IMG-20251027-WA0190%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2Uv4HwgQRTgorzU.b8056fdc3616 --database 9J2kFU3Z5NckuWrQiQUeqK --execute SELECT id, titleFr, slug FROM books WHERE coverImageUrl LIKE '%IMG-20251027-WA0190%';",
+  "rows": [
+    {
+      "id": "30004",
+      "titleFr": "Les Cahiers du Cœur",
+      "slug": "les-cahiers-du-coeur"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitleFr\tslug\n30004\tLes Cahiers du Cœur\tles-cahiers-du-coeur\n",
+  "stderr": "",
+  "execution_time_ms": 1486
+}

@@ -1,0 +1,13 @@
+{
+  "query": "\nSET FOREIGN_KEY_CHECKS = 0;\nTRUNCATE TABLE books;\nTRUNCATE TABLE categories;\nTRUNCATE TABLE subscriptionPlans;\nSET FOREIGN_KEY_CHECKS = 1;\n\nINSERT INTO categories (id, nameEn, nameFr, nameHe, slug) VALUES\n(1, 'Core Teachings', 'Enseignements Fondamentaux', 'לימודי יסוד', 'enseignements'),\n(2, 'Biography', 'Biographie', 'ביוגרפיה', 'biographie'),\n(3, 'Stories', 'Récits', 'סיפורים', 'recits'),\n(4, 'Prayer', 'Prière', 'תפילה', 'priere');\n\nINSERT INTO subscriptionPlans (id, nameEn, nameFr, nameHe, slug, price, duration, maxDevices) VALUES\n(1, 'Monthly', 'Mensuel', 'חודשי', 'mensuel', 4900, 'monthly', 1),\n(2, 'Annual', 'Annuel', 'שנתי', 'annuel', 49000, 'yearly', 1),\n(3, 'Family', 'Familial', 'משפחתי', 'familial', 69000, 'family', 5);\n\nSELECT 'Categories et plans créés avec succès' as status;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2Uv4HwgQRTgorzU.b8056fdc3616 --database 9J2kFU3Z5NckuWrQiQUeqK --execute \nSET FOREIGN_KEY_CHECKS = 0;\nTRUNCATE TABLE books;\nTRUNCATE TABLE categories;\nTRUNCATE TABLE subscriptionPlans;\nSET FOREIGN_KEY_CHECKS = 1;\n\nINSERT INTO categories (id, nameEn, nameFr, nameHe, slug) VALUES\n(1, 'Core Teachings', 'Enseignements Fondamentaux', 'לימודי יסוד', 'enseignements'),\n(2, 'Biography', 'Biographie', 'ביוגרפיה', 'biographie'),\n(3, 'Stories', 'Récits', 'סיפורים', 'recits'),\n(4, 'Prayer', 'Prière', 'תפילה', 'priere');\n\nINSERT INTO subscriptionPlans (id, nameEn, nameFr, nameHe, slug, price, duration, maxDevices) VALUES\n(1, 'Monthly', 'Mensuel', 'חודשי', 'mensuel', 4900, 'monthly', 1),\n(2, 'Annual', 'Annuel', 'שנתי', 'annuel', 49000, 'yearly', 1),\n(3, 'Family', 'Familial', 'משפחתי', 'familial', 69000, 'family', 5);\n\nSELECT 'Categories et plans créés avec succès' as status;\n",
+  "rows": [
+    {
+      "status": "Categories et plans créés avec succès"
+    }
+  ],
+  "messages": [],
+  "stdout": "status\nCategories et plans créés avec succès\n",
+  "stderr": "",
+  "execution_time_ms": 3395
+}

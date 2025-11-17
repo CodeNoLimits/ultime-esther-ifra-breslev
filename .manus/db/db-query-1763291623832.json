@@ -1,0 +1,82 @@
+{
+  "query": "SELECT id, titleFr, slug, coverImageUrl, pricePhysical, priceDigital FROM books ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2Uv4HwgQRTgorzU.b8056fdc3616 --database 9J2kFU3Z5NckuWrQiQUeqK --execute SELECT id, titleFr, slug, coverImageUrl, pricePhysical, priceDigital FROM books ORDER BY id;",
+  "rows": [
+    {
+      "id": "30004",
+      "titleFr": "La Vie d'un Breslever",
+      "slug": "la-vie-dun-breslever",
+      "coverImageUrl": "/images/livres/IMG-20251027-WA0190.jpg",
+      "pricePhysical": "8000",
+      "priceDigital": "5000"
+    },
+    {
+      "id": "30005",
+      "titleFr": "Likoutey Moharane - Tome 1",
+      "slug": "likoutey-moharane-tome-1",
+      "coverImageUrl": "/images/livres/WhatsAppImage2025-10-31at01.25.29.jpeg",
+      "pricePhysical": "12000",
+      "priceDigital": "7000"
+    },
+    {
+      "id": "30006",
+      "titleFr": "Chemot Atsadikim",
+      "slug": "chemot-atsadikim",
+      "coverImageUrl": "/images/livres/WhatsAppImage2025-11-10at21.45.14.jpeg",
+      "pricePhysical": "3500",
+      "priceDigital": "0"
+    },
+    {
+      "id": "30007",
+      "titleFr": "Likoutey Moharane - Tome 3",
+      "slug": "likoutey-moharane-tome-3",
+      "coverImageUrl": "/images/livres/IMG-20251110-WA0184.jpg",
+      "pricePhysical": "11000",
+      "priceDigital": "6500"
+    },
+    {
+      "id": "30008",
+      "titleFr": "Likoutey Moharane - Tome 5",
+      "slug": "likoutey-moharane-tome-5",
+      "coverImageUrl": "/images/livres/IMG-20251110-WA0187.jpg",
+      "pricePhysical": "11500",
+      "priceDigital": "6800"
+    },
+    {
+      "id": "30009",
+      "titleFr": "Likoutey Moharane - Tome 6",
+      "slug": "likoutey-moharane-tome-6",
+      "coverImageUrl": "/images/livres/IMG-20251110-WA0188.jpg",
+      "pricePhysical": "11500",
+      "priceDigital": "6800"
+    },
+    {
+      "id": "30010",
+      "titleFr": "Likoutey Moharane - Tome 7",
+      "slug": "likoutey-moharane-tome-7",
+      "coverImageUrl": "/images/livres/IMG-20251110-WA0189.jpg",
+      "pricePhysical": "11500",
+      "priceDigital": "6800"
+    },
+    {
+      "id": "30011",
+      "titleFr": "Conversations des Anges - Tome 2",
+      "slug": "conversations-des-anges-tome-2",
+      "coverImageUrl": "/images/livres/WhatsAppImage2025-11-10at21.47.57.jpeg",
+      "pricePhysical": "6500",
+      "priceDigital": "4000"
+    },
+    {
+      "id": "30012",
+      "titleFr": "Le Voyage de Rabbi Nahman",
+      "slug": "le-voyage-de-rabbi-nahman",
+      "coverImageUrl": "/images/livres/IMG-20251110-WA0190.jpg",
+      "pricePhysical": "7500",
+      "priceDigital": "4500"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitleFr\tslug\tcoverImageUrl\tpricePhysical\tpriceDigital\n30004\tLa Vie d'un Breslever\tla-vie-dun-breslever\t/images/livres/IMG-20251027-WA0190.jpg\t8000\t5000\n30005\tLikoutey Moharane - Tome 1\tlikoutey-moharane-tome-1\t/images/livres/WhatsAppImage2025-10-31at01.25.29.jpeg\t12000\t7000\n30006\tChemot Atsadikim\tchemot-atsadikim\t/images/livres/WhatsAppImage2025-11-10at21.45.14.jpeg\t3500\t0\n30007\tLikoutey Moharane - Tome 3\tlikoutey-moharane-tome-3\t/images/livres/IMG-20251110-WA0184.jpg\t11000\t6500\n30008\tLikoutey Moharane - Tome 5\tlikoutey-moharane-tome-5\t/images/livres/IMG-20251110-WA0187.jpg\t11500\t6800\n30009\tLikoutey Moharane - Tome 6\tlikoutey-moharane-tome-6\t/images/livres/IMG-20251110-WA0188.jpg\t11500\t6800\n30010\tLikoutey Moharane - Tome 7\tlikoutey-moharane-tome-7\t/images/livres/IMG-20251110-WA0189.jpg\t11500\t6800\n30011\tConversations des Anges - Tome 2\tconversations-des-anges-tome-2\t/images/livres/WhatsAppImage2025-11-10at21.47.57.jpeg\t6500\t4000\n30012\tLe Voyage de Rabbi Nahman\tle-voyage-de-rabbi-nahman\t/images/livres/IMG-20251110-WA0190.jpg\t7500\t4500\n",
+  "stderr": "",
+  "execution_time_ms": 1610
+}
