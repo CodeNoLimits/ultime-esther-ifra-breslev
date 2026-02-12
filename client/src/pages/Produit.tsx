@@ -368,10 +368,10 @@ export default function Produit() {
                       <dd className="font-medium">{book.weight}g</dd>
                     </div>
                   )}
-                  {book.isbn && (
+                  {book.dimensions && (
                     <div className="flex flex-col">
-                      <dt className="text-sm text-muted-foreground mb-1">ISBN</dt>
-                      <dd className="font-medium">{book.isbn}</dd>
+                      <dt className="text-sm text-muted-foreground mb-1">Dimensions</dt>
+                      <dd className="font-medium">{book.dimensions}</dd>
                     </div>
                   )}
                 </dl>

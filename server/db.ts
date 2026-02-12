@@ -1,42 +1,36 @@
-import { eq, and, gte, lte, inArray, desc, asc } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
-import { 
-  InsertUser, 
-  users, 
-  books, 
-  categories, 
-  subscriptionPlans,
+import { createClient } from "@libsql/client";
+import { and, asc, desc, eq, gte, inArray, lte } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/libsql";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+import {
+  InsertUser,
+  books,
+  cartItems,
+  categories,
   favorites,
   readingProgress,
-  cartItems,
-  reviews
+  subscriptionPlans,
+  users,
 } from "../drizzle/schema";
-import { ENV } from './_core/env';
+import { ENV } from "./_core/env";
 
-let _db: ReturnType<typeof drizzle> | null = null;
+// Resolve sqlite.db path relative to this file (works locally + serverless)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const dbPath = join(__dirname, "..", "sqlite.db");
 
-// Lazily create the drizzle instance so local tooling can run without a DB.
+// Initialize SQLite database
+const client = createClient({ url: `file:${dbPath}` });
+const db = drizzle(client);
+
 export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
-    try {
-      _db = drizzle(process.env.DATABASE_URL);
-    } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
-      _db = null;
-    }
-  }
-  return _db;
+  return db;
 }
 
 export async function upsertUser(user: InsertUser): Promise<void> {
   if (!user.openId) {
     throw new Error("User openId is required for upsert");
-  }
-
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot upsert user: database not available");
-    return;
   }
 
   try {
@@ -66,8 +60,8 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       values.role = user.role;
       updateSet.role = user.role;
     } else if (user.openId === ENV.ownerOpenId) {
-      values.role = 'admin';
-      updateSet.role = 'admin';
+      values.role = "admin";
+      updateSet.role = "admin";
     }
 
     if (!values.lastSignedIn) {
@@ -78,7 +72,8 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       updateSet.lastSignedIn = new Date();
     }
 
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
+    await db.insert(users).values(values).onConflictDoUpdate({
+      target: users.openId,
       set: updateSet,
     });
   } catch (error) {
@@ -88,44 +83,33 @@ export async function upsertUser(user: InsertUser): Promise<void> {
 }
 
 export async function getUserByOpenId(openId: string) {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get user: database not available");
-    return undefined;
-  }
-
-  const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
-
+  const result = await db
+    .select()
+    .from(users)
+    .where(eq(users.openId, openId))
+    .limit(1);
   return result.length > 0 ? result[0] : undefined;
 }
 
 // Books queries
 export async function getAllBooks() {
-  const db = await getDb();
-  if (!db) return [];
-  
   return await db.select().from(books).orderBy(desc(books.createdAt));
 }
 
 export async function getFeaturedBooks() {
-  const db = await getDb();
-  if (!db) return [];
-  
-  return await db.select().from(books).where(eq(books.featured, true)).limit(3);
+  return await db.select().from(books).where(eq(books.featured, true)).limit(3); // SQLite stores boolean as 1/0, Drizzle handles mapping
 }
 
 export async function getBookBySlug(slug: string) {
-  const db = await getDb();
-  if (!db) return null;
-  
-  const result = await db.select().from(books).where(eq(books.slug, slug)).limit(1);
+  const result = await db
+    .select()
+    .from(books)
+    .where(eq(books.slug, slug))
+    .limit(1);
   return result.length > 0 ? result[0] : null;
 }
 
 export async function getBookById(id: number) {
-  const db = await getDb();
-  if (!db) return null;
-  
   const result = await db.select().from(books).where(eq(books.id, id)).limit(1);
   return result.length > 0 ? result[0] : null;
 }
@@ -139,91 +123,87 @@ interface BookFilters {
   author?: string[];
 }
 
-export async function getFilteredBooks(filters: BookFilters, sortBy: string = 'newest') {
-  const db = await getDb();
-  if (!db) return [];
-  
+export async function getFilteredBooks(
+  filters: BookFilters,
+  sortBy: string = "newest"
+) {
   let query = db.select().from(books);
   const conditions = [];
-  
+
   if (filters.type && filters.type.length > 0) {
     conditions.push(inArray(books.type, filters.type as any));
   }
-  
+
   if (filters.language && filters.language.length > 0) {
     conditions.push(inArray(books.language, filters.language as any));
   }
-  
+
   if (filters.categoryId && filters.categoryId.length > 0) {
     conditions.push(inArray(books.categoryId, filters.categoryId));
   }
-  
+
   if (filters.priceMin !== undefined) {
     conditions.push(gte(books.pricePhysical, filters.priceMin));
   }
-  
+
   if (filters.priceMax !== undefined) {
     conditions.push(lte(books.pricePhysical, filters.priceMax));
   }
-  
+
   if (conditions.length > 0) {
     query = query.where(and(...conditions)) as any;
   }
-  
+
   // Apply sorting
   switch (sortBy) {
-    case 'price-asc':
+    case "price-asc":
       query = query.orderBy(asc(books.pricePhysical)) as any;
       break;
-    case 'price-desc':
+    case "price-desc":
       query = query.orderBy(desc(books.pricePhysical)) as any;
       break;
-    case 'newest':
+    case "newest":
     default:
       query = query.orderBy(desc(books.createdAt)) as any;
       break;
   }
-  
+
   return await query;
 }
 
 // Categories queries
 export async function getAllCategories() {
-  const db = await getDb();
-  if (!db) return [];
-  
   return await db.select().from(categories);
 }
 
 export async function getCategoryById(id: number) {
-  const db = await getDb();
-  if (!db) return null;
-  
-  const result = await db.select().from(categories).where(eq(categories.id, id)).limit(1);
+  const result = await db
+    .select()
+    .from(categories)
+    .where(eq(categories.id, id))
+    .limit(1);
   return result.length > 0 ? result[0] : null;
 }
 
 // Subscription Plans queries
 export async function getAllSubscriptionPlans() {
-  const db = await getDb();
-  if (!db) return [];
-  
-  return await db.select().from(subscriptionPlans).where(eq(subscriptionPlans.active, true));
+  return await db
+    .select()
+    .from(subscriptionPlans)
+    .where(eq(subscriptionPlans.active, true));
 }
 
 export async function getSubscriptionPlanById(id: number) {
-  const db = await getDb();
-  if (!db) return null;
-  
-  const result = await db.select().from(subscriptionPlans).where(eq(subscriptionPlans.id, id)).limit(1);
+  const result = await db
+    .select()
+    .from(subscriptionPlans)
+    .where(eq(subscriptionPlans.id, id))
+    .limit(1);
   return result.length > 0 ? result[0] : null;
 }
 
 // User favorites
 export async function getUserFavorites(userId: number) {
-  const db = await getDb();
-  if (!db) return [];
-  
   const result = await db
     .select({
       book: books,
@@ -232,33 +212,24 @@ export async function getUserFavorites(userId: number) {
     .from(favorites)
     .innerJoin(books, eq(favorites.bookId, books.id))
     .where(eq(favorites.userId, userId));
-  
+
   return result.map(r => r.book);
 }
 
 export async function addFavorite(userId: number, bookId: number) {
-  const db = await getDb();
-  if (!db) return null;
-  
   await db.insert(favorites).values({ userId, bookId });
   return true;
 }
 
 export async function removeFavorite(userId: number, bookId: number) {
-  const db = await getDb();
-  if (!db) return null;
-  
-  await db.delete(favorites).where(
-    and(eq(favorites.userId, userId), eq(favorites.bookId, bookId))
-  );
+  await db
+    .delete(favorites)
+    .where(and(eq(favorites.userId, userId), eq(favorites.bookId, bookId)));
   return true;
 }
 
 // Reading progress
 export async function getUserReadingProgress(userId: number) {
-  const db = await getDb();
-  if (!db) return [];
-  
   const result = await db
     .select({
       book: books,
@@ -268,7 +239,7 @@ export async function getUserReadingProgress(userId: number) {
     .innerJoin(books, eq(readingProgress.bookId, books.id))
     .where(eq(readingProgress.userId, userId))
     .orderBy(desc(readingProgress.lastReadAt));
-  
+
   return result;
 }
 
@@ -278,20 +249,20 @@ export async function updateReadingProgress(
   currentPage: number,
   totalPages: number
 ) {
-  const db = await getDb();
-  if (!db) return null;
-  
   const progressPercent = Math.round((currentPage / totalPages) * 100);
   const completed = progressPercent >= 100;
-  
+
   const existing = await db
     .select()
     .from(readingProgress)
     .where(
-      and(eq(readingProgress.userId, userId), eq(readingProgress.bookId, bookId))
+      and(
+        eq(readingProgress.userId, userId),
+        eq(readingProgress.bookId, bookId)
+      )
     )
     .limit(1);
-  
+
   if (existing.length > 0) {
     await db
       .update(readingProgress)
@@ -303,7 +274,10 @@ export async function updateReadingProgress(
         lastReadAt: new Date(),
       })
       .where(
-        and(eq(readingProgress.userId, userId), eq(readingProgress.bookId, bookId))
+        and(
+          eq(readingProgress.userId, userId),
+          eq(readingProgress.bookId, bookId)
+        )
       );
   } else {
     await db.insert(readingProgress).values({
@@ -316,15 +290,12 @@ export async function updateReadingProgress(
       lastReadAt: new Date(),
     });
   }
-  
+
   return true;
 }
 
 // Cart
 export async function getUserCart(userId: number) {
-  const db = await getDb();
-  if (!db) return [];
-  
   const result = await db
     .select({
       book: books,
@@ -333,14 +304,16 @@ export async function getUserCart(userId: number) {
     .from(cartItems)
     .innerJoin(books, eq(cartItems.bookId, books.id))
     .where(eq(cartItems.userId, userId));
-  
+
   return result;
 }
 
-export async function addToCart(userId: number, bookId: number, quantity: number, type: 'physical' | 'digital') {
-  const db = await getDb();
-  if (!db) return null;
-  
+export async function addToCart(
+  userId: number,
+  bookId: number,
+  quantity: number,
+  type: "physical" | "digital"
+) {
   const existing = await db
     .select()
     .from(cartItems)
@@ -352,7 +325,7 @@ export async function addToCart(userId: number, bookId: number, quantity: number
       )
     )
     .limit(1);
-  
+
   if (existing.length > 0) {
     await db
       .update(cartItems)
@@ -361,24 +334,18 @@ export async function addToCart(userId: number, bookId: number, quantity: number
   } else {
     await db.insert(cartItems).values({ userId, bookId, quantity, type });
   }
-  
+
   return true;
 }
 
 export async function removeFromCart(userId: number, cartItemId: number) {
-  const db = await getDb();
-  if (!db) return null;
-  
-  await db.delete(cartItems).where(
-    and(eq(cartItems.id, cartItemId), eq(cartItems.userId, userId))
-  );
+  await db
+    .delete(cartItems)
+    .where(and(eq(cartItems.id, cartItemId), eq(cartItems.userId, userId)));
   return true;
 }
 
 export async function clearCart(userId: number) {
-  const db = await getDb();
-  if (!db) return null;
-  
   await db.delete(cartItems).where(eq(cartItems.userId, userId));
   return true;
 }
