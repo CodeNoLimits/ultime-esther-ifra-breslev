@@ -12,6 +12,7 @@ import APropos from "./pages/APropos";
 import Panier from "./pages/Panier";
 import Checkout from "./pages/Checkout";
 import EspaceMembre from "./pages/EspaceMembre";
+import CommandeConfirmee from "./pages/CommandeConfirmee";
 
 function Router() {
   return (
@@ -23,6 +24,7 @@ function Router() {
       <Route path={"/a-propos"} component={APropos} />
       <Route path={"/panier"} component={Panier} />
       <Route path={"/checkout"} component={Checkout} />
+      <Route path={"/commande-confirmee"} component={CommandeConfirmee} />
       <Route path={"/espace-membre"} component={EspaceMembre} />
       <Route path={"/mentions-legales"} component={() => <div className="min-h-screen flex items-center justify-center"><p>Mentions Légales - En construction</p></div>} />
       <Route path={"/cgv"} component={() => <div className="min-h-screen flex items-center justify-center"><p>CGV - En construction</p></div>} />

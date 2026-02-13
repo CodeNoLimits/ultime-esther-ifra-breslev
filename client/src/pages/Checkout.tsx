@@ -121,16 +121,34 @@ export default function Checkout() {
     setIsProcessing(true);
 
     try {
-      // TODO: Intégration réelle Stripe/PayPal
-      toast.info(`Redirection vers ${paymentMethod === "stripe" ? "Stripe" : "PayPal"}...`);
-      
-      // Simulation pour le moment
-      setTimeout(() => {
-        toast.success("Commande créée avec succès !");
-        setLocation("/espace-membre");
-      }, 2000);
-    } catch (error) {
-      toast.error("Erreur lors du traitement du paiement");
+      toast.info("Redirection vers le paiement securise...");
+
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: (cartItems ?? []).map((item: any) => ({
+            bookId: item.bookId ?? item.id,
+            quantity: item.quantity ?? 1,
+            type: item.type ?? "physical",
+          })),
+          shippingAddress: hasPhysicalItems ? shippingAddress : undefined,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Erreur de paiement");
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("URL de paiement non disponible");
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Erreur lors du traitement du paiement");
       setIsProcessing(false);
     }
   };
