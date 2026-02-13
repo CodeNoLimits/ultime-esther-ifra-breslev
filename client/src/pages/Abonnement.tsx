@@ -3,6 +3,8 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Sparkles, Users, Zap } from "lucide-react";
+import { toast } from "sonner";
+import { useLocation } from "wouter";
 import {
   Accordion,
   AccordionContent,
@@ -11,6 +13,18 @@ import {
 } from "@/components/ui/accordion";
 
 export default function Abonnement() {
+  const [, navigate] = useLocation();
+
+  const handleSubscribe = (planName: string) => {
+    toast.info(`Abonnement ${planName} - Disponible prochainement !`, {
+      description: "Les abonnements seront activés très bientôt. En attendant, découvrez nos livres à l'unité.",
+      action: {
+        label: "Voir la boutique",
+        onClick: () => navigate("/boutique"),
+      },
+    });
+  };
+
   const plans = [
     {
       id: "monthly",
@@ -220,6 +234,7 @@ export default function Abonnement() {
                       }`}
                       size="lg"
                       variant={plan.popular ? "default" : "outline"}
+                      onClick={() => handleSubscribe(plan.name)}
                     >
                       {plan.popular ? "Choisir Annuel" : `Choisir ${plan.name}`}
                     </Button>
@@ -314,7 +329,11 @@ export default function Abonnement() {
               Rejoignez des centaines de lecteurs qui approfondissent leur
               chemin spirituel avec les enseignements de Rabbi Nachman
             </p>
-            <Button size="lg" className="text-lg px-8">
+            <Button
+              size="lg"
+              className="text-lg px-8"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            >
               Choisir mon abonnement
             </Button>
           </div>

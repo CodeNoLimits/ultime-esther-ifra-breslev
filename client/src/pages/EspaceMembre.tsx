@@ -200,11 +200,19 @@ export default function EspaceMembre() {
                     <h3 className="font-bold mb-2 line-clamp-2">Likoutey Moharane - Tome 1</h3>
                     <p className="text-sm text-muted-foreground mb-4">Rabbi Nahman de Breslev</p>
                     <div className="flex gap-2">
-                      <Button size="sm" className="flex-1">
+                      <Button
+                        size="sm"
+                        className="flex-1"
+                        onClick={() => toast.info("Le lecteur en ligne sera disponible prochainement")}
+                      >
                         <Eye className="h-4 w-4 mr-2" />
                         Lire
                       </Button>
-                      <Button size="sm" variant="outline">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => toast.info("Le téléchargement PDF sera disponible prochainement")}
+                      >
                         <Download className="h-4 w-4" />
                       </Button>
                     </div>
@@ -285,7 +293,10 @@ export default function EspaceMembre() {
                             Page {progress.currentPage} sur {progress.totalPages}
                           </p>
                         </div>
-                        <Button size="sm">
+                        <Button
+                          size="sm"
+                          onClick={() => toast.info("Le lecteur en ligne sera disponible prochainement")}
+                        >
                           <BookOpen className="h-4 w-4 mr-2" />
                           Continuer
                         </Button>

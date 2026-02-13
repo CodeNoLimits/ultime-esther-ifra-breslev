@@ -103,19 +103,28 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-breslev-gold" />
-                <span className="text-white/80">+972 XX XXX XXXX</span>
+                <a
+                  href="tel:+972585148500"
+                  className="text-white/80 hover:text-breslev-gold transition-colors"
+                >
+                  +972 58-514-8500
+                </a>
               </li>
             </ul>
             <div className="flex gap-3 mt-4">
               <a
-                href="#"
+                href="https://www.facebook.com/profile.php?id=100089800498498"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-white/80 hover:text-breslev-gold transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/estherifrah_breslev/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-white/80 hover:text-breslev-gold transition-colors"
                 aria-label="Instagram"
               >
