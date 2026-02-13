@@ -1,10 +1,25 @@
-import { createClient } from "@libsql/client";
+import { createClient, type Client } from "@libsql/client";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { join } from "path";
 
 // ── DB Setup ──────────────────────────────────────────────────
-const dbPath = join(process.cwd(), "sqlite.db");
-const client = createClient({ url: `file:${dbPath}` });
+// Production (Vercel): uses Turso cloud URL if set, otherwise bundled sqlite.db
+// Local dev: falls back to file:sqlite.db in project root
+let _client: Client | null = null;
+function getClient(): Client {
+  if (_client) return _client;
+  if (process.env.TURSO_DATABASE_URL) {
+    _client = createClient({
+      url: process.env.TURSO_DATABASE_URL,
+      authToken: process.env.TURSO_AUTH_TOKEN,
+    });
+  } else {
+    // On Vercel, CWD is /var/task and sqlite.db is included via includeFiles
+    const dbPath = join(process.cwd(), "sqlite.db");
+    _client = createClient({ url: `file:${dbPath}` });
+  }
+  return _client;
+}
 
 // ── SQL Queries ───────────────────────────────────────────────
 const queries: Record<string, (input?: any) => Promise<any>> = {
@@ -13,31 +28,31 @@ const queries: Record<string, (input?: any) => Promise<any>> = {
   "auth.logout": async () => ({ success: true }),
 
   "books.getAll": async () => {
-    const r = await client.execute("SELECT * FROM books ORDER BY titleFr ASC");
+    const r = await getClient().execute("SELECT * FROM books ORDER BY titleFr ASC");
     return r.rows;
   },
   "books.getFeatured": async () => {
-    const r = await client.execute("SELECT * FROM books WHERE featured = 1");
+    const r = await getClient().execute("SELECT * FROM books WHERE featured = 1");
     return r.rows;
   },
   "books.getBySlug": async (input: any) => {
-    const r = await client.execute({
+    const r = await getClient().execute({
       sql: "SELECT * FROM books WHERE slug = ?",
       args: [input.slug],
     });
     return r.rows[0] || null;
   },
   "books.getFiltered": async () => {
-    const r = await client.execute("SELECT * FROM books ORDER BY titleFr ASC");
+    const r = await getClient().execute("SELECT * FROM books ORDER BY titleFr ASC");
     return r.rows;
   },
 
   "categories.getAll": async () => {
-    const r = await client.execute("SELECT * FROM categories");
+    const r = await getClient().execute("SELECT * FROM categories");
     return r.rows;
   },
   "categories.getById": async (input: any) => {
-    const r = await client.execute({
+    const r = await getClient().execute({
       sql: "SELECT * FROM categories WHERE id = ?",
       args: [input.id],
     });
@@ -45,11 +60,11 @@ const queries: Record<string, (input?: any) => Promise<any>> = {
   },
 
   "subscriptions.getPlans": async () => {
-    const r = await client.execute("SELECT * FROM subscription_plans");
+    const r = await getClient().execute("SELECT * FROM subscription_plans");
     return r.rows;
   },
   "subscriptions.getPlanById": async (input: any) => {
-    const r = await client.execute({
+    const r = await getClient().execute({
       sql: "SELECT * FROM subscription_plans WHERE id = ?",
       args: [input.id],
     });

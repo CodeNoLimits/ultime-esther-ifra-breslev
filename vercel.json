@@ -5,9 +5,9 @@
   "installCommand": "pnpm install",
   "framework": null,
   "functions": {
-    "api/trpc/[trpc].ts": {
-      "includeFiles": "sqlite.db",
-      "maxDuration": 10
+    "api/**/*.ts": {
+      "maxDuration": 10,
+      "includeFiles": "sqlite.db"
     }
   },
   "rewrites": [

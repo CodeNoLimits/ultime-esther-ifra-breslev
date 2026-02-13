@@ -1,30 +1,21 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { existsSync, readdirSync } from "fs";
+import { existsSync, readdirSync, statSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
-export default function handler(req: VercelRequest, res: VercelResponse) {
+export default function handler(_req: VercelRequest, res: VercelResponse) {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
+  const cwdDbPath = join(process.cwd(), "sqlite.db");
 
-  // Debug info
   const info = {
     cwd: process.cwd(),
     __dirname,
-    cwdFiles: readdirSync(process.cwd()).filter(
-      f => f.endsWith(".db") || f === "sqlite.db"
-    ),
-    dirFiles: readdirSync(__dirname).filter(
-      f => f.endsWith(".db") || f === "sqlite.db"
-    ),
-    parentFiles: readdirSync(join(__dirname, "..")),
-    rootFiles: readdirSync(join(__dirname, "..", "..")),
-    sqliteExists: {
-      cwd: existsSync(join(process.cwd(), "sqlite.db")),
-      dir: existsSync(join(__dirname, "sqlite.db")),
-      parent: existsSync(join(__dirname, "..", "sqlite.db")),
-      root: existsSync(join(__dirname, "..", "..", "sqlite.db")),
-    },
+    cwdDbPath,
+    sqliteExists: existsSync(cwdDbPath),
+    sqliteSize: existsSync(cwdDbPath) ? statSync(cwdDbPath).size : 0,
+    cwdFiles: readdirSync(process.cwd()),
+    envTurso: !!process.env.TURSO_DATABASE_URL,
   };
 
   return res.status(200).json(info);
