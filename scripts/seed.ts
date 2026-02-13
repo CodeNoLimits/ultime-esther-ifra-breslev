@@ -2,7 +2,12 @@ import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 import { books, categories, subscriptionPlans } from "../drizzle/schema";
 
-const client = createClient({ url: "file:sqlite.db" });
+const client = process.env.TURSO_DATABASE_URL
+  ? createClient({
+      url: process.env.TURSO_DATABASE_URL,
+      authToken: process.env.TURSO_AUTH_TOKEN,
+    })
+  : createClient({ url: "file:sqlite.db" });
 const db = drizzle(client);
 
 console.log("🌱 Début du seed de la base de données SQLite (LibSQL)...\n");

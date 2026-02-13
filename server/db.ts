@@ -15,13 +15,18 @@ import {
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
-// Resolve sqlite.db path relative to this file (works locally + serverless)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const dbPath = join(__dirname, "..", "sqlite.db");
+// Environment-aware DB connection:
+// - Turso cloud (Vercel/production): uses TURSO_DATABASE_URL + TURSO_AUTH_TOKEN
+// - Local dev: falls back to file:sqlite.db
+const client = process.env.TURSO_DATABASE_URL
+  ? createClient({
+      url: process.env.TURSO_DATABASE_URL,
+      authToken: process.env.TURSO_AUTH_TOKEN,
+    })
+  : createClient({
+      url: `file:${join(dirname(fileURLToPath(import.meta.url)), "..", "sqlite.db")}`,
+    });
 
-// Initialize SQLite database
-const client = createClient({ url: `file:${dbPath}` });
 const db = drizzle(client);
 
 export async function getDb() {
