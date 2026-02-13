@@ -56,8 +56,8 @@ export default function EspaceMembre() {
           <Card className="p-12 text-center">
             <User className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
             <h2 className="text-2xl font-bold mb-4">Connectez-vous pour accéder à votre espace</h2>
-            <Button size="lg" onClick={() => toast.info("Connexion disponible prochainement")}>
-              Se connecter
+            <Button size="lg" asChild>
+              <Link href="/connexion">Se connecter</Link>
             </Button>
           </Card>
         </main>

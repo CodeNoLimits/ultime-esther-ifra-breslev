@@ -131,8 +131,8 @@ export default function Panier() {
             <p className="text-muted-foreground mb-6">
               Vous devez être connecté pour accéder à votre panier
             </p>
-            <Button size="lg" onClick={() => toast.info("Connexion disponible prochainement")}>
-              Se connecter
+            <Button size="lg" asChild>
+              <Link href="/connexion">Se connecter</Link>
             </Button>
           </Card>
         </main>

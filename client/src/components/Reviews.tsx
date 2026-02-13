@@ -172,8 +172,8 @@ export default function Reviews({ bookId, bookTitle }: ReviewsProps) {
           <p className="text-muted-foreground mb-4">
             Connectez-vous pour laisser un avis
           </p>
-          <Button onClick={() => toast.info("Connexion disponible prochainement")}>
-            Se connecter
+          <Button asChild>
+            <a href="/connexion">Se connecter</a>
           </Button>
         </Card>
       )}

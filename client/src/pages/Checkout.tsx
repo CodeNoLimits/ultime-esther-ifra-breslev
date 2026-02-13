@@ -22,7 +22,6 @@ import {
   Package,
   Lock,
   CheckCircle2,
-  AlertCircle,
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -122,29 +121,55 @@ export default function Checkout() {
     try {
       toast.info("Redirection vers le paiement securise...");
 
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          items: (cartItems ?? []).map((item: any) => ({
-            bookId: item.bookId ?? item.id,
-            quantity: item.quantity ?? 1,
-            type: item.type ?? "physical",
-          })),
-          shippingAddress: hasPhysicalItems ? shippingAddress : undefined,
-        }),
-      });
+      if (paymentMethod === "paypal") {
+        // PayPal flow
+        const response = await fetch("/api/paypal/create-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount: (total / 100).toFixed(2),
+            currency: "ILS",
+            description: `Commande Librairie Breslev - ${cartItems?.length || 0} article(s)`,
+          }),
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || "Erreur de paiement");
-      }
+        if (!response.ok) {
+          throw new Error(data.error || "Erreur PayPal");
+        }
 
-      if (data.url) {
-        window.location.href = data.url;
+        if (data.approvalUrl) {
+          window.location.href = data.approvalUrl;
+        } else {
+          throw new Error("URL PayPal non disponible");
+        }
       } else {
-        throw new Error("URL de paiement non disponible");
+        // Stripe flow
+        const response = await fetch("/api/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: (cartItems ?? []).map((item: any) => ({
+              bookId: item.cartItem?.bookId ?? item.bookId ?? item.id,
+              quantity: item.cartItem?.quantity ?? item.quantity ?? 1,
+              type: item.cartItem?.type ?? item.type ?? "physical",
+            })),
+            shippingAddress: hasPhysicalItems ? shippingAddress : undefined,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Erreur de paiement");
+        }
+
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error("URL de paiement non disponible");
+        }
       }
     } catch (error: any) {
       toast.error(error.message || "Erreur lors du traitement du paiement");
@@ -160,8 +185,8 @@ export default function Checkout() {
           <Card className="p-12 text-center">
             <Lock className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
             <h2 className="text-2xl font-bold mb-4">Connectez-vous pour continuer</h2>
-            <Button size="lg" onClick={() => toast.info("Connexion disponible prochainement")}>
-              Se connecter
+            <Button size="lg" asChild>
+              <Link href="/connexion">Se connecter</Link>
             </Button>
           </Card>
         </main>
@@ -375,10 +400,10 @@ export default function Checkout() {
                   </div>
                 </div>
 
-                <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg flex gap-3">
-                  <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <div className="text-sm text-blue-900 dark:text-blue-100">
-                    <strong>Configuration en attente :</strong> Les clés API Stripe et PayPal doivent être configurées dans Settings → Payment pour activer les paiements.
+                <div className="mt-6 p-4 bg-green-50 dark:bg-green-950/20 rounded-lg flex gap-3">
+                  <Lock className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <div className="text-sm text-green-900 dark:text-green-100">
+                    Paiement 100% securise. Vos donnees bancaires ne sont jamais stockees sur nos serveurs.
                   </div>
                 </div>
               </Card>

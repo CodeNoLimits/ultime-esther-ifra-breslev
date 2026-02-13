@@ -13,6 +13,7 @@ import Panier from "./pages/Panier";
 import Checkout from "./pages/Checkout";
 import EspaceMembre from "./pages/EspaceMembre";
 import CommandeConfirmee from "./pages/CommandeConfirmee";
+import Connexion from "./pages/Connexion";
 
 function Router() {
   return (
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/livre/:slug" component={Produit} />
       <Route path={"/abonnement"} component={Abonnement} />
       <Route path={"/a-propos"} component={APropos} />
+      <Route path={"/connexion"} component={Connexion} />
       <Route path={"/panier"} component={Panier} />
       <Route path={"/checkout"} component={Checkout} />
       <Route path={"/commande-confirmee"} component={CommandeConfirmee} />

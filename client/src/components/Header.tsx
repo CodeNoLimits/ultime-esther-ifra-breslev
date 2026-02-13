@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 import { Menu, ShoppingCart, User, X } from "lucide-react";
 import { useState } from "react";
-import { toast } from "sonner";
 
 export default function Header() {
   const { user, isAuthenticated } = useAuth();
@@ -15,7 +14,7 @@ export default function Header() {
     { href: "/", label: "Accueil" },
     { href: "/boutique", label: "Boutique" },
     { href: "/abonnement", label: "Abonnement" },
-    { href: "/a-propos", label: "À Propos" },
+    { href: "/a-propos", label: "A Propos" },
   ];
 
   const isActive = (href: string) => {
@@ -32,7 +31,7 @@ export default function Header() {
             <div className="flex items-center gap-3 cursor-pointer">
               <img src={APP_LOGO} alt="Esther Ifrah" className="h-10 w-10" />
               <span className="text-xl font-bold text-breslev-blue hidden sm:inline">
-                Esther Ifrah - Littérature Breslev
+                Esther Ifrah - Litterature Breslev
               </span>
             </div>
           </Link>
@@ -60,7 +59,6 @@ export default function Header() {
             <Link href="/panier">
               <Button variant="ghost" size="icon" className="relative">
                 <ShoppingCart className="h-5 w-5" />
-                {/* Badge count - à implémenter avec le panier */}
                 <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-breslev-gold text-breslev-blue text-xs flex items-center justify-center font-bold">
                   0
                 </span>
@@ -75,14 +73,15 @@ export default function Header() {
                 </Button>
               </Link>
             ) : (
-              <Button
-                variant="default"
-                size="sm"
-                className="hidden md:inline-flex"
-                onClick={() => toast.info("Connexion disponible prochainement")}
-              >
-                Connexion
-              </Button>
+              <Link href="/connexion">
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="hidden md:inline-flex"
+                >
+                  Connexion
+                </Button>
+              </Link>
             )}
 
             {/* Mobile Menu Toggle */}
@@ -120,15 +119,14 @@ export default function Header() {
                 </Link>
               ))}
               {!isAuthenticated && (
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    toast.info("Connexion disponible prochainement");
-                  }}
-                  className="block w-full px-4 py-2 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:opacity-90 text-center"
-                >
-                  Connexion
-                </button>
+                <Link href="/connexion">
+                  <a
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block w-full px-4 py-2 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:opacity-90 text-center"
+                  >
+                    Connexion
+                  </a>
+                </Link>
               )}
             </nav>
           </div>
