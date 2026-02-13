@@ -339,16 +339,10 @@ export default function Boutique() {
                 </div>
               )}
 
-              {/* Pagination - Placeholder */}
+              {/* Info résultats */}
               {books.length > 0 && (
-                <div className="mt-12 flex justify-center gap-2">
-                  <Button variant="outline" disabled>
-                    Précédent
-                  </Button>
-                  <Button variant="default">1</Button>
-                  <Button variant="outline">2</Button>
-                  <Button variant="outline">3</Button>
-                  <Button variant="outline">Suivant</Button>
+                <div className="mt-12 text-center text-sm text-muted-foreground">
+                  Affichage de {books.length} livre(s)
                 </div>
               )}
             </div>

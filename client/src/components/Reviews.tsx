@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { getLoginUrl } from "@/const";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -173,8 +172,8 @@ export default function Reviews({ bookId, bookTitle }: ReviewsProps) {
           <p className="text-muted-foreground mb-4">
             Connectez-vous pour laisser un avis
           </p>
-          <Button asChild>
-            <a href={getLoginUrl()}>Se connecter</a>
+          <Button onClick={() => toast.info("Connexion disponible prochainement")}>
+            Se connecter
           </Button>
         </Card>
       )}

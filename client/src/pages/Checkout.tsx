@@ -1,5 +1,4 @@
 import { useAuth } from "@/_core/hooks/useAuth";
-import { getLoginUrl } from "@/const";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -161,8 +160,8 @@ export default function Checkout() {
           <Card className="p-12 text-center">
             <Lock className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
             <h2 className="text-2xl font-bold mb-4">Connectez-vous pour continuer</h2>
-            <Button asChild size="lg">
-              <a href={getLoginUrl()}>Se connecter</a>
+            <Button size="lg" onClick={() => toast.info("Connexion disponible prochainement")}>
+              Se connecter
             </Button>
           </Card>
         </main>

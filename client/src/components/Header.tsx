@@ -1,9 +1,10 @@
 import { useAuth } from "@/_core/hooks/useAuth";
-import { APP_LOGO, getLoginUrl } from "@/const";
+import { APP_LOGO } from "@/const";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 import { Menu, ShoppingCart, User, X } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Header() {
   const { user, isAuthenticated } = useAuth();
@@ -74,8 +75,13 @@ export default function Header() {
                 </Button>
               </Link>
             ) : (
-              <Button asChild variant="default" size="sm" className="hidden md:inline-flex">
-                <a href={getLoginUrl()}>Connexion</a>
+              <Button
+                variant="default"
+                size="sm"
+                className="hidden md:inline-flex"
+                onClick={() => toast.info("Connexion disponible prochainement")}
+              >
+                Connexion
               </Button>
             )}
 
@@ -114,12 +120,15 @@ export default function Header() {
                 </Link>
               ))}
               {!isAuthenticated && (
-                <a
-                  href={getLoginUrl()}
-                  className="block px-4 py-2 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:opacity-90 text-center"
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    toast.info("Connexion disponible prochainement");
+                  }}
+                  className="block w-full px-4 py-2 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:opacity-90 text-center"
                 >
                   Connexion
-                </a>
+                </button>
               )}
             </nav>
           </div>
