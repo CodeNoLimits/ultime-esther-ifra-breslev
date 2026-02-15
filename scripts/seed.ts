@@ -380,7 +380,7 @@ const booksData = [
     pricePhysical: 10000, // 100₪ en centimes
     priceDigital: 6000, // 60₪ en centimes
     weight: 500,
-    coverImageUrl: "/images/livres/L'Age d'or de Breslev 1.pdf", // Use PDF cover
+    coverImageUrl: "/images/livres/age-dor-breslev.jpg",
     pdfUrl: "/pdfs/L'Age d'or de Breslev 1.pdf",
     featured: false,
     includedInSubscription: true,

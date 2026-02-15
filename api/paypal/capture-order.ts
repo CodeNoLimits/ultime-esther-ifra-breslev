@@ -20,6 +20,9 @@ async function getPayPalToken(): Promise<string> {
   });
 
   const data = await res.json();
+  if (!res.ok || !data.access_token) {
+    throw new Error(data.error_description || data.error || "PayPal auth failed");
+  }
   return data.access_token;
 }
 

@@ -20,6 +20,9 @@ async function getPayPalToken(): Promise<string> {
   });
 
   const data = await res.json();
+  if (!res.ok || !data.access_token) {
+    throw new Error(data.error_description || data.error || "PayPal auth failed");
+  }
   return data.access_token;
 }
 
@@ -46,7 +49,21 @@ export default async function handler(
       return res.status(400).json({ error: "Invalid amount" });
     }
 
-    const token = await getPayPalToken();
+    let token: string;
+    try {
+      token = await getPayPalToken();
+    } catch (tokenErr: any) {
+      console.error("PayPal auth failed:", tokenErr);
+      return res.status(503).json({
+        error: "PayPal authentication failed. Sandbox credentials may be invalid. Please use Stripe instead.",
+      });
+    }
+
+    if (!token) {
+      return res.status(503).json({
+        error: "PayPal authentication failed. Please use Stripe instead.",
+      });
+    }
     const origin =
       req.headers.origin ||
       `https://${req.headers.host}` ||
