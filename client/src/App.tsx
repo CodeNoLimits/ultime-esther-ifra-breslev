@@ -14,6 +14,9 @@ import Checkout from "./pages/Checkout";
 import EspaceMembre from "./pages/EspaceMembre";
 import CommandeConfirmee from "./pages/CommandeConfirmee";
 import Connexion from "./pages/Connexion";
+import CGV from "./pages/CGV";
+import MentionsLegales from "./pages/MentionsLegales";
+import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite";
 
 function Router() {
   return (
@@ -28,9 +31,9 @@ function Router() {
       <Route path={"/checkout"} component={Checkout} />
       <Route path={"/commande-confirmee"} component={CommandeConfirmee} />
       <Route path={"/espace-membre"} component={EspaceMembre} />
-      <Route path={"/mentions-legales"} component={() => <div className="min-h-screen flex items-center justify-center"><p>Mentions Légales - En construction</p></div>} />
-      <Route path={"/cgv"} component={() => <div className="min-h-screen flex items-center justify-center"><p>CGV - En construction</p></div>} />
-      <Route path={"/politique-confidentialite"} component={() => <div className="min-h-screen flex items-center justify-center"><p>Politique de Confidentialité - En construction</p></div>} />
+      <Route path={"/mentions-legales"} component={MentionsLegales} />
+      <Route path={"/cgv"} component={CGV} />
+      <Route path={"/politique-confidentialite"} component={PolitiqueConfidentialite} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

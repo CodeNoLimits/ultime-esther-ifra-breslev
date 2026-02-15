@@ -14,8 +14,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Filter, X } from "lucide-react";
+import { Filter, X, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { trpc } from "@/lib/trpc";
 
 export default function Boutique() {
@@ -253,7 +254,7 @@ export default function Boutique() {
                 >
                   <Filter className="h-4 w-4 mr-2" />
                   Filtres
-                  {hasActiveFilters && (
+                  {hasActiveFilters && (filters.type.length + filters.language.length + filters.theme.length + filters.author.length) > 0 && (
                     <Badge className="ml-2 bg-breslev-gold text-breslev-blue">
                       {filters.type.length +
                         filters.language.length +
@@ -305,16 +306,43 @@ export default function Boutique() {
 
               {/* Results Count */}
               <div className="mb-6">
-                <p className="text-sm text-muted-foreground">
-                  <span className="font-bold text-foreground">
-                    {books.length}
-                  </span>{" "}
-                  livre(s) trouvé(s)
-                </p>
+                {isLoading ? (
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Chargement des livres...
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-bold text-foreground">
+                      {books.length}
+                    </span>{" "}
+                    livre(s) trouvé(s)
+                  </p>
+                )}
               </div>
 
               {/* Books Grid */}
-              {books.length > 0 ? (
+              {isLoading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <div key={i} className="bg-card rounded-lg shadow-breslev overflow-hidden border border-border">
+                      <Skeleton className="aspect-[3/4] w-full rounded-none" />
+                      <div className="p-4 space-y-3">
+                        <Skeleton className="h-5 w-3/4" />
+                        <Skeleton className="h-4 w-1/2" />
+                        <div className="flex gap-2">
+                          <Skeleton className="h-5 w-16 rounded-full" />
+                          <Skeleton className="h-5 w-16 rounded-full" />
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <Skeleton className="h-6 w-12" />
+                          <Skeleton className="h-8 w-16 rounded-md" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : books.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {books.map((book: any) => (
                     <BookCard key={book.id} book={book} />
@@ -340,7 +368,7 @@ export default function Boutique() {
               )}
 
               {/* Info résultats */}
-              {books.length > 0 && (
+              {!isLoading && books.length > 0 && (
                 <div className="mt-12 text-center text-sm text-muted-foreground">
                   Affichage de {books.length} livre(s)
                 </div>

@@ -358,23 +358,15 @@ export default async function handler(
       const rawInput = url.searchParams.get("input");
       if (rawInput) {
         try {
-          const parsed = JSON.parse(rawInput);
-          if (isBatch) {
-            inputs = parsed;
-          } else {
-            inputs = { "0": parsed };
-          }
+          // httpBatchLink always sends {"0":{"json":{...}}} format
+          inputs = JSON.parse(rawInput);
         } catch {}
       }
     } else if (req.method === "POST") {
       const body = req.body;
       if (body) {
-        if (isBatch) {
-          // Batched mutations
-          inputs = typeof body === "string" ? JSON.parse(body) : body;
-        } else {
-          inputs = { "0": typeof body === "string" ? JSON.parse(body) : body };
-        }
+        // httpBatchLink always sends {"0":{"json":{...}}} format
+        inputs = typeof body === "string" ? JSON.parse(body) : body;
       }
     }
 

@@ -17,11 +17,11 @@ export default function CommandeConfirmee() {
           <CheckCircle className="h-20 w-20 mx-auto mb-6 text-green-600" />
           <h1 className="text-3xl font-bold mb-4">Merci pour votre commande !</h1>
           <p className="text-muted-foreground mb-2">
-            Votre paiement a ete traite avec succes.
+            Votre paiement a été traité avec succès.
           </p>
           {sessionId && (
             <p className="text-sm text-muted-foreground mb-6">
-              Reference: {sessionId.slice(0, 20)}...
+              Référence : {sessionId.slice(0, 20)}...
             </p>
           )}
           <p className="text-muted-foreground mb-8">

@@ -8,23 +8,58 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLocation } from "wouter";
-import { BookOpen, Mail, Lock, User } from "lucide-react";
+import { BookOpen, Mail, Lock, User, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 export default function Connexion() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
   const [isRegister, setIsRegister] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isResettingPassword, setIsResettingPassword] = useState(false);
+
+  // Show loading while checking auth
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-breslev-blue" />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   // Redirect if already authenticated
   if (isAuthenticated) {
     setLocation("/espace-membre");
     return null;
   }
+
+  const handleResetPassword = async () => {
+    if (!email) {
+      toast.error("Entrez votre adresse email pour reinitialiser votre mot de passe");
+      return;
+    }
+    setIsResettingPassword(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/connexion`,
+      });
+      if (error) throw error;
+      toast.success("Email de reinitialisation envoye !", {
+        description: "Verifiez votre boite de reception pour reinitialiser votre mot de passe.",
+      });
+    } catch (error: any) {
+      toast.error(error.message || "Erreur lors de l'envoi de l'email de reinitialisation");
+    } finally {
+      setIsResettingPassword(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,7 +74,7 @@ export default function Connexion() {
         });
         if (error) throw error;
         toast.success(
-          "Compte cree ! Verifiez votre email pour confirmer votre inscription."
+          "Compte créé ! Vérifiez votre email pour confirmer votre inscription."
         );
       } else {
         const { error } = await supabase.auth.signInWithPassword({
@@ -47,7 +82,7 @@ export default function Connexion() {
           password,
         });
         if (error) throw error;
-        toast.success("Connexion reussie !");
+        toast.success("Connexion réussie !");
         setLocation("/espace-membre");
       }
     } catch (error: any) {
@@ -55,9 +90,9 @@ export default function Connexion() {
       if (msg.includes("Invalid login")) {
         toast.error("Email ou mot de passe incorrect");
       } else if (msg.includes("already registered")) {
-        toast.error("Cet email est deja enregistre. Connectez-vous.");
+        toast.error("Cet email est déjà enregistré. Connectez-vous.");
       } else if (msg.includes("Password should be")) {
-        toast.error("Le mot de passe doit contenir au moins 6 caracteres");
+        toast.error("Le mot de passe doit contenir au moins 6 caractères");
       } else {
         toast.error(msg);
       }
@@ -78,12 +113,12 @@ export default function Connexion() {
               <BookOpen className="h-8 w-8 text-breslev-blue" />
             </div>
             <h1 className="text-2xl font-bold text-breslev-blue">
-              {isRegister ? "Creer un compte" : "Se connecter"}
+              {isRegister ? "Créer un compte" : "Se connecter"}
             </h1>
             <p className="text-muted-foreground mt-2">
               {isRegister
-                ? "Rejoignez la communaute Breslev"
-                : "Accedez a votre espace membre"}
+                ? "Rejoignez la communauté Breslev"
+                : "Accédez à votre espace membre"}
             </p>
           </div>
 
@@ -130,13 +165,26 @@ export default function Connexion() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Minimum 6 caracteres"
+                  placeholder="Minimum 6 caractères"
                   className="pl-10"
                   required
                   minLength={6}
                 />
               </div>
             </div>
+
+            {!isRegister && (
+              <div className="text-right">
+                <button
+                  type="button"
+                  onClick={handleResetPassword}
+                  disabled={isResettingPassword}
+                  className="text-sm text-breslev-gold hover:underline disabled:opacity-50"
+                >
+                  {isResettingPassword ? "Envoi en cours..." : "Mot de passe oublie ?"}
+                </button>
+              </div>
+            )}
 
             <Button
               type="submit"
@@ -147,7 +195,7 @@ export default function Connexion() {
               {isLoading
                 ? "Chargement..."
                 : isRegister
-                  ? "Creer mon compte"
+                  ? "Créer mon compte"
                   : "Se connecter"}
             </Button>
           </form>
@@ -160,8 +208,8 @@ export default function Connexion() {
               className="text-sm text-breslev-gold hover:underline"
             >
               {isRegister
-                ? "Deja un compte ? Se connecter"
-                : "Pas encore de compte ? Creer un compte"}
+                ? "Déjà un compte ? Se connecter"
+                : "Pas encore de compte ? Créer un compte"}
             </button>
           </div>
         </Card>

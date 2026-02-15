@@ -18,11 +18,12 @@ import {
   Crown,
   Download,
   Eye,
+  Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
 
 export default function EspaceMembre() {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, loading } = useAuth();
 
   // Queries
   const { data: favorites, isLoading: loadingFavorites } = trpc.favorites.getMy.useQuery(
@@ -48,15 +49,33 @@ export default function EspaceMembre() {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 container py-12 flex items-center justify-center">
+          <div className="flex flex-col items-center gap-3">
+            <Loader2 className="h-8 w-8 animate-spin text-breslev-blue" />
+            <p className="text-muted-foreground">Chargement...</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 container py-12">
-          <Card className="p-12 text-center">
-            <User className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-            <h2 className="text-2xl font-bold mb-4">Connectez-vous pour accéder à votre espace</h2>
-            <Button size="lg" asChild>
+        <main className="flex-1 container py-12 flex items-center justify-center">
+          <Card className="p-8 text-center max-w-md w-full">
+            <User className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+            <h2 className="text-xl font-bold mb-2">Espace Membre</h2>
+            <p className="text-muted-foreground mb-6">
+              Connectez-vous pour acceder a votre espace personnel
+            </p>
+            <Button size="default" asChild>
               <Link href="/connexion">Se connecter</Link>
             </Button>
           </Card>

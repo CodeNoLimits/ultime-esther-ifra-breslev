@@ -14,7 +14,7 @@ export default function Header() {
     { href: "/", label: "Accueil" },
     { href: "/boutique", label: "Boutique" },
     { href: "/abonnement", label: "Abonnement" },
-    { href: "/a-propos", label: "A Propos" },
+    { href: "/a-propos", label: "À Propos" },
   ];
 
   const isActive = (href: string) => {
@@ -31,7 +31,7 @@ export default function Header() {
             <div className="flex items-center gap-3 cursor-pointer">
               <img src={APP_LOGO} alt="Esther Ifrah" className="h-10 w-10" />
               <span className="text-xl font-bold text-breslev-blue hidden sm:inline">
-                Esther Ifrah - Litterature Breslev
+                Esther Ifrah - Littérature Breslev
               </span>
             </div>
           </Link>

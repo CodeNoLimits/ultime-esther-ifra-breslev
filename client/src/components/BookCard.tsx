@@ -22,8 +22,8 @@ export default function BookCard({
     return `${(priceInCents / 100).toFixed(0)}₪`;
   };
 
-  const hasPhysical = book.pricePhysical && book.pricePhysical > 0;
-  const hasDigital = book.pdfUrl && book.priceDigital && book.priceDigital > 0;
+  const hasPhysical = !!book.pricePhysical && book.pricePhysical > 0;
+  const hasDigital = !!book.pdfUrl && !!book.priceDigital && book.priceDigital > 0;
 
   return (
     <div className="group relative bg-card rounded-lg shadow-breslev hover:shadow-breslev-lg transition-all duration-300 overflow-hidden border border-border hover:-translate-y-2">
@@ -44,7 +44,7 @@ export default function BookCard({
 
           {/* Badges */}
           <div className="absolute top-2 left-2 flex flex-col gap-1">
-            {book.featured && (
+            {!!book.featured && (
               <Badge className="bg-breslev-gold text-breslev-blue">
                 Phare
               </Badge>
@@ -100,7 +100,7 @@ export default function BookCard({
               Digital
             </Badge>
           )}
-          {book.includedInSubscription && (
+          {!!book.includedInSubscription && (
             <Badge variant="outline" className="text-xs">
               Abonnement
             </Badge>

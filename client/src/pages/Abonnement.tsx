@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Check, Sparkles, Users, Zap } from "lucide-react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
+import { useAuth } from "@/_core/hooks/useAuth";
 import {
   Accordion,
   AccordionContent,
@@ -14,10 +15,22 @@ import {
 
 export default function Abonnement() {
   const [, navigate] = useLocation();
+  const { isAuthenticated, loading: authLoading } = useAuth();
 
   const handleSubscribe = (planName: string) => {
-    toast.info(`Abonnement ${planName} - Disponible prochainement !`, {
-      description: "Les abonnements seront activés très bientôt. En attendant, découvrez nos livres à l'unité.",
+    if (!authLoading && !isAuthenticated) {
+      toast.info("Connectez-vous pour souscrire un abonnement", {
+        description: "Vous devez avoir un compte pour choisir un abonnement.",
+        action: {
+          label: "Se connecter",
+          onClick: () => navigate("/connexion"),
+        },
+      });
+      return;
+    }
+
+    toast.info(`Contactez-nous pour souscrire à l'abonnement ${planName}`, {
+      description: "Les abonnements en ligne seront disponibles prochainement. En attendant, contactez-nous directement.",
       action: {
         label: "Voir la boutique",
         onClick: () => navigate("/boutique"),

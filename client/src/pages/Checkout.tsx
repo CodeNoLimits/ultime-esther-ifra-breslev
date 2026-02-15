@@ -119,7 +119,7 @@ export default function Checkout() {
     setIsProcessing(true);
 
     try {
-      toast.info("Redirection vers le paiement securise...");
+      toast.info("Redirection vers le paiement sécurisé...");
 
       if (paymentMethod === "paypal") {
         // PayPal flow
@@ -403,7 +403,7 @@ export default function Checkout() {
                 <div className="mt-6 p-4 bg-green-50 dark:bg-green-950/20 rounded-lg flex gap-3">
                   <Lock className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
                   <div className="text-sm text-green-900 dark:text-green-100">
-                    Paiement 100% securise. Vos donnees bancaires ne sont jamais stockees sur nos serveurs.
+                    Paiement 100% sécurisé. Vos données bancaires ne sont jamais stockées sur nos serveurs.
                   </div>
                 </div>
               </Card>
