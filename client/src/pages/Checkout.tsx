@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -14,7 +15,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { trpc } from "@/lib/trpc";
 import { Link, useLocation } from "wouter";
 import {
   CreditCard,
@@ -55,11 +55,8 @@ export default function Checkout() {
   const [notes, setNotes] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Récupérer le panier
-  const { data: cartItems, isLoading } = trpc.cart.get.useQuery(
-    undefined,
-    { enabled: isAuthenticated }
-  );
+  // Récupérer le panier via context (persisted in localStorage)
+  const { items: cartItems, isLoading } = useCart();
 
   // Calculs
   const calculateSubtotal = () => {

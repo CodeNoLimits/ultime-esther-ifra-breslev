@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useCart } from "@/contexts/CartContext";
 import { APP_LOGO } from "@/const";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
@@ -7,6 +8,7 @@ import { useState } from "react";
 
 export default function Header() {
   const { user, isAuthenticated } = useAuth();
+  const { count: cartCount } = useCart();
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -59,9 +61,11 @@ export default function Header() {
             <Link href="/panier">
               <Button variant="ghost" size="icon" className="relative">
                 <ShoppingCart className="h-5 w-5" />
-                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-breslev-gold text-breslev-blue text-xs flex items-center justify-center font-bold">
-                  0
-                </span>
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-breslev-gold text-breslev-blue text-xs flex items-center justify-center font-bold">
+                    {cartCount > 99 ? "99+" : cartCount}
+                  </span>
+                )}
               </Button>
             </Link>
 

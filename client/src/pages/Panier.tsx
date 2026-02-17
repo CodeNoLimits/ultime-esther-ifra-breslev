@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,7 +12,6 @@ import {
 } from "@/components/ui/select";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { trpc } from "@/lib/trpc";
 import { Link, useLocation } from "wouter";
 import {
   ShoppingCart,
@@ -37,43 +37,25 @@ type ShippingZone = keyof typeof SHIPPING_ZONES;
 
 export default function Panier() {
   const { isAuthenticated, user } = useAuth();
+  const { items: cartItems, isLoading, removeItem, clearCart: clearCartFn } = useCart();
   const [, setLocation] = useLocation();
   const [shippingZone, setShippingZone] = useState<ShippingZone>("IL");
-
-  // Récupérer le panier
-  const { data: cartItems, isLoading, refetch } = trpc.cart.get.useQuery(
-    undefined,
-    { enabled: isAuthenticated }
-  );
-
-  // Mutations
-  const removeItemMutation = trpc.cart.remove.useMutation({
-    onSuccess: () => {
-      toast.success("Article retiré du panier");
-      refetch();
-    },
-    onError: () => {
-      toast.error("Erreur lors de la suppression");
-    },
-  });
-
-  const clearCartMutation = trpc.cart.clear.useMutation({
-    onSuccess: () => {
-      toast.success("Panier vidé");
-      refetch();
-    },
-    onError: () => {
-      toast.error("Erreur lors du vidage du panier");
-    },
-  });
+  const [isRemoving, setIsRemoving] = useState(false);
+  const [isClearing, setIsClearing] = useState(false);
 
   const handleRemoveItem = (cartItemId: number) => {
-    removeItemMutation.mutate({ cartItemId });
+    setIsRemoving(true);
+    removeItem(cartItemId);
+    toast.success("Article retiré du panier");
+    setIsRemoving(false);
   };
 
   const handleClearCart = () => {
     if (confirm("Êtes-vous sûr de vouloir vider votre panier ?")) {
-      clearCartMutation.mutate();
+      setIsClearing(true);
+      clearCartFn();
+      toast.success("Panier vidé");
+      setIsClearing(false);
     }
   };
 
@@ -235,7 +217,7 @@ export default function Panier() {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleRemoveItem(item.cartItem.id)}
-                            disabled={removeItemMutation.isPending}
+                            disabled={isRemoving}
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -286,7 +268,7 @@ export default function Panier() {
               <Button
                 variant="outline"
                 onClick={handleClearCart}
-                disabled={clearCartMutation.isPending}
+                disabled={isClearing}
                 className="w-full"
               >
                 <Trash2 className="h-4 w-4 mr-2" />

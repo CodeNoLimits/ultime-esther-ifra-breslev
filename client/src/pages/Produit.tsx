@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -26,8 +27,10 @@ import Reviews from "@/components/Reviews";
 export default function Produit() {
   const { slug } = useParams<{ slug: string }>();
   const { isAuthenticated } = useAuth();
+  const { addItem: addToCart } = useCart();
   const [selectedFormat, setSelectedFormat] = useState<"physical" | "digital">("physical");
   const [quantity, setQuantity] = useState(1);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   // Récupérer le livre
   const { data: book, isLoading } = trpc.books.getBySlug.useQuery(
@@ -36,15 +39,6 @@ export default function Produit() {
   );
 
   // Mutations
-  const addToCartMutation = trpc.cart.add.useMutation({
-    onSuccess: () => {
-      toast.success("Ajouté au panier !");
-    },
-    onError: () => {
-      toast.error("Erreur lors de l'ajout au panier");
-    },
-  });
-
   const addToFavoritesMutation = trpc.favorites.add.useMutation({
     onSuccess: () => {
       toast.success("Ajouté aux favoris !");
@@ -60,11 +54,10 @@ export default function Produit() {
       return;
     }
     if (book) {
-      addToCartMutation.mutate({
-        bookId: book.id,
-        quantity,
-        type: selectedFormat,
-      });
+      setIsAddingToCart(true);
+      addToCart(book, selectedFormat, quantity);
+      toast.success("Ajouté au panier !");
+      setIsAddingToCart(false);
     }
   };
 
@@ -281,7 +274,7 @@ export default function Produit() {
                     onClick={handleAddToCart}
                     size="lg"
                     className="flex-1"
-                    disabled={addToCartMutation.isPending}
+                    disabled={isAddingToCart}
                   >
                     <ShoppingCart className="h-5 w-5 mr-2" />
                     Ajouter au panier
