@@ -37,8 +37,8 @@ function FeaturedBooks() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {books.map((book) => (
-        <BookCard key={book.id} book={book} />
+      {books.map((book, index) => (
+        <BookCard key={book.id} book={book} index={index} />
       ))}
     </div>
   );

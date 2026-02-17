@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ultime-esther-ifra-breslev.vercel.app/sitemap.xml

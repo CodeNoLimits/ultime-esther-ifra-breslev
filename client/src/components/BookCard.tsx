@@ -6,6 +6,7 @@ import { Heart, ShoppingCart } from "lucide-react";
 
 interface BookCardProps {
   book: Book;
+  index?: number;
   onAddToCart?: (bookId: number, type: "physical" | "digital") => void;
   onToggleFavorite?: (bookId: number) => void;
   isFavorite?: boolean;
@@ -13,6 +14,7 @@ interface BookCardProps {
 
 export default function BookCard({
   book,
+  index = 1,
   onAddToCart,
   onToggleFavorite,
   isFavorite = false,
@@ -34,6 +36,8 @@ export default function BookCard({
             <img
               src={book.coverImageUrl}
               alt={book.titleFr}
+              loading={index === 0 ? "eager" : "lazy"}
+              decoding="async"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           ) : (
