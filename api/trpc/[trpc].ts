@@ -8,11 +8,15 @@ let _client: Client | null = null;
 function getClient(): Client {
   if (_client) return _client;
   if (process.env.TURSO_DATABASE_URL) {
+    if (!process.env.TURSO_AUTH_TOKEN) {
+      console.warn("[DB] TURSO_DATABASE_URL is set but TURSO_AUTH_TOKEN is missing! Queries will fail.");
+    }
     _client = createClient({
       url: process.env.TURSO_DATABASE_URL,
       authToken: process.env.TURSO_AUTH_TOKEN,
     });
   } else {
+    console.warn("[DB] No TURSO_DATABASE_URL set, falling back to local sqlite.db (will be empty on Vercel!)");
     const dbPath = join(process.cwd(), "sqlite.db");
     _client = createClient({ url: `file:${dbPath}` });
   }
@@ -89,7 +93,28 @@ const queries: Record<
   string,
   (input: any, user: User) => Promise<any>
 > = {
-  "system.healthCheck": async () => ({ status: "ok" }),
+  "system.healthCheck": async () => ({
+    status: "ok",
+    hasTursoUrl: !!process.env.TURSO_DATABASE_URL,
+    hasTursoToken: !!process.env.TURSO_AUTH_TOKEN,
+  }),
+
+  "system.dbStatus": async () => {
+    try {
+      const r = await getClient().execute("SELECT COUNT(*) as count FROM books");
+      return {
+        connected: true,
+        bookCount: r.rows[0]?.count ?? 0,
+        dbType: process.env.TURSO_DATABASE_URL ? "turso" : "local-sqlite",
+      };
+    } catch (error: any) {
+      return {
+        connected: false,
+        error: error.message,
+        dbType: process.env.TURSO_DATABASE_URL ? "turso" : "local-sqlite",
+      };
+    }
+  },
 
   "auth.me": async (_input, user) => {
     if (!user) return null;
@@ -389,8 +414,13 @@ export default async function handler(
         const data = await queryFn(input, user);
         results.push({ result: { data: { json: data } } });
       } catch (error: any) {
+        console.error(`[tRPC] Error in ${procName}:`, error.message);
         results.push({
-          error: { message: error.message, code: -32603 },
+          error: {
+            message: error.message,
+            code: -32603,
+            data: { procedure: procName },
+          },
         });
       }
     }
