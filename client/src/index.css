@@ -40,22 +40,30 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Breslev Custom Colors */
+  --color-breslev-blue: var(--breslev-blue);
+  --color-breslev-gold: var(--breslev-gold);
+  --color-breslev-cream: var(--breslev-cream);
+  --color-breslev-gray: var(--breslev-gray);
 }
 
 :root {
-  /* Breslev Colors: Bleu profond #1E3A8A + Or #D4AF37 */
-  --breslev-blue: oklch(0.35 0.12 264); /* #1E3A8A - Bleu profond spirituel */
-  --breslev-gold: oklch(0.75 0.12 85); /* #D4AF37 - Or sacré */
-  --breslev-cream: oklch(0.98 0.005 85); /* #FAFAF9 - Blanc cassé */
-  --breslev-gray: oklch(0.92 0.003 264); /* #E5E7EB - Gris doux */
-  
+  /* Breslev Colors: Premium Deep Blue + Luxury Gold */
+  --breslev-blue: oklch(0.25 0.05 264); /* Deep elegant spiritual blue */
+  --breslev-gold: oklch(
+    0.72 0.14 80
+  ); /* #d4a843 - Warm Luxury gold (AG-4 Fix) */
+  --breslev-cream: oklch(0.99 0.01 85); /* #FAFAF9 - Luxury Light Stone */
+  --breslev-gray: oklch(0.94 0.005 264); /* Soft gray */
+
   --primary: var(--breslev-gold);
   --primary-foreground: var(--breslev-blue);
   --secondary: var(--breslev-blue);
   --secondary-foreground: oklch(1 0 0);
   --accent: var(--breslev-gold);
   --accent-foreground: var(--breslev-blue);
-  
+
   --radius: 0.5rem; /* 8px - border radius doux et spirituel */
   --background: oklch(1 0 0); /* Blanc pur */
   --foreground: oklch(0.25 0.01 264); /* Texte sombre */
@@ -101,7 +109,7 @@
   --muted: oklch(0.274 0.006 286.033);
   --muted-foreground: oklch(0.705 0.015 286.067);
   --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
+  --accent-foreground: oklch(0.92 0.005 65);
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(1 0 0 / 10%);
@@ -115,7 +123,7 @@
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.85 0.005 65);
   --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.488 0.243 264.376);
 }
@@ -185,22 +193,27 @@
 /* Breslev Typography */
 @layer base {
   :root {
-    --font-sans: 'Heebo', system-ui, -apple-system, sans-serif;
-    --font-serif: 'Libre Baskerville', Georgia, serif;
+    --font-sans: "Outfit", system-ui, -apple-system, sans-serif;
+    --font-serif: "Playfair Display", Georgia, serif;
   }
-  
+
   body {
     font-family: var(--font-serif);
     font-size: 16px;
     line-height: 1.6;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-serif);
     font-weight: 700;
     line-height: 1.2;
   }
-  
+
   /* Classe pour texte hébreu */
   .hebrew {
     font-family: var(--font-sans);
@@ -213,36 +226,153 @@
   .text-breslev-blue {
     color: var(--breslev-blue);
   }
-  
+
   .text-breslev-gold {
     color: var(--breslev-gold);
   }
-  
+
   .bg-breslev-blue {
     background-color: var(--breslev-blue);
   }
-  
+
   .bg-breslev-gold {
     background-color: var(--breslev-gold);
   }
-  
+
   .bg-breslev-cream {
     background-color: var(--breslev-cream);
   }
-  
+
   .border-breslev-gold {
     border-color: var(--breslev-gold);
   }
-  
+
   .shadow-breslev {
-    box-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.1), 0 2px 4px -1px rgba(30, 58, 138, 0.06);
+    box-shadow:
+      0 4px 6px -1px rgba(30, 58, 138, 0.1),
+      0 2px 4px -1px rgba(30, 58, 138, 0.06);
   }
-  
+
   .shadow-breslev-lg {
-    box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.1), 0 4px 6px -2px rgba(30, 58, 138, 0.05);
+    box-shadow:
+      0 10px 15px -3px rgba(30, 58, 138, 0.1),
+      0 4px 6px -2px rgba(30, 58, 138, 0.05);
   }
-  
+
+  .shadow-breslev-gold {
+    box-shadow:
+      0 0 25px rgba(212, 175, 55, 0.4),
+      0 0 10px rgba(212, 175, 55, 0.2);
+  }
+
   .glow-gold {
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+  }
+}
+
+/* 
+  =========================================
+  THEME V2: GAN EDEN PREMIUM (Phase 3)
+  Design System by AntiGravity
+  =========================================
+*/
+
+@layer components {
+  /* --- Advanced Glassmorphism --- */
+  .glass-panel-v2 {
+    @apply bg-breslev-blue/40 backdrop-blur-xl border border-breslev-gold/20 shadow-2xl;
+  }
+
+  .glass-card-v2 {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-lg transition-all duration-500 hover:bg-white/10 hover:border-breslev-gold/40 hover:-translate-y-2;
+  }
+
+  .glass-card-light {
+    @apply bg-white/70 backdrop-blur-xl border border-white/50 shadow-[0_8px_32px_0_rgba(30,58,138,0.08)] rounded-2xl transition-all duration-300;
+  }
+
+  /* --- Premium Hero Area --- */
+  .hero-v2-bg {
+    @apply relative overflow-hidden bg-breslev-blue;
+    background-image:
+      radial-gradient(
+        circle at 50% 0%,
+        rgba(212, 168, 67, 0.15) 0%,
+        transparent 50%
+      ),
+      url("/assets/patterns/breslev-pattern.svg");
+    background-size: cover, 400px;
+    background-position: center, center;
+  }
+
+  .hero-v2-overlay {
+    @apply absolute inset-0 bg-gradient-to-b from-[#1a2332]/60 via-[#1a2332]/80 to-[#1a2332] pointer-events-none;
+  }
+
+  /* --- Text Effects --- */
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#e6c875] via-[#d4a843] to-[#c4922b];
+  }
+
+  .text-glow-gold {
+    text-shadow: 0 0 20px rgba(212, 168, 67, 0.4);
+  }
+
+  /* --- Animations & Micro-Interactions --- */
+  @keyframes float-book {
+    0% {
+      transform: translateY(0px) rotateX(5deg) rotateY(-5deg);
+    }
+    50% {
+      transform: translateY(-15px) rotateX(8deg) rotateY(-8deg);
+    }
+    100% {
+      transform: translateY(0px) rotateX(5deg) rotateY(-5deg);
+    }
+  }
+
+  .animate-float-3d {
+    animation: float-book 6s ease-in-out infinite;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.2;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+  }
+
+  .animate-pulse-ring::before {
+    content: "";
+    @apply absolute inset-0 rounded-full border border-breslev-gold/50 z-[-1];
+    animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* --- Premium Badges & Buttons --- */
+  .badge-bestseller-v2 {
+    @apply absolute -top-3 -right-3 bg-gradient-to-br from-[#d4a843] to-[#9c7827] text-[#1a2332] text-xs font-bold px-3 py-1.5 rounded-full shadow-lg border border-white/20 transform rotate-12 z-10;
+  }
+
+  .btn-premium-cta {
+    @apply relative overflow-hidden bg-gradient-to-r from-[#d4a843] to-[#b58c30] text-[#1a2332] font-semibold py-3 px-8 rounded-full shadow-[0_0_20px_rgba(212,168,67,0.3)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(212,168,67,0.5)] hover:scale-105;
+  }
+
+  .btn-premium-cta::after {
+    content: "";
+    @apply absolute top-0 left-[-100%] w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[45deg] transition-all duration-500;
+  }
+
+  .btn-premium-cta:hover::after {
+    left: 200%;
   }
 }

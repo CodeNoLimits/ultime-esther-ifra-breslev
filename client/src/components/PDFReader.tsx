@@ -1,16 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
+  Download,
+  Maximize,
+  Shield,
   ZoomIn,
   ZoomOut,
-  Maximize,
-  Download,
-  BookOpen,
 } from "lucide-react";
-import { useAuth } from "@/_core/hooks/useAuth";
+import { useEffect, useRef, useState } from "react";
 
 interface PDFReaderProps {
   pdfUrl: string;
@@ -84,9 +85,14 @@ export default function PDFReader({
   const progressPercent = totalPages > 0 ? (currentPage / totalPages) * 100 : 0;
 
   return (
-    <div className="space-y-4">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="space-y-6"
+    >
       {/* Barre de contrôle */}
-      <Card className="p-4">
+      <Card className="p-4 glass-card-v2 border-breslev-gold/30">
         <div className="flex items-center justify-between flex-wrap gap-4">
           {/* Navigation */}
           <div className="flex items-center gap-2">
@@ -121,7 +127,9 @@ export default function PDFReader({
             >
               <ZoomOut className="h-4 w-4" />
             </Button>
-            <span className="text-sm font-medium w-16 text-center">{zoom}%</span>
+            <span className="text-sm font-medium w-16 text-center">
+              {zoom}%
+            </span>
             <Button
               variant="outline"
               size="sm"
@@ -134,11 +142,21 @@ export default function PDFReader({
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={toggleFullscreen}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={toggleFullscreen}
+              className="hover:bg-breslev-gold/20 text-white transition-colors border-white/20"
+            >
               <Maximize className="h-4 w-4 mr-2" />
               Plein écran
             </Button>
-            <Button variant="outline" size="sm" disabled>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled
+              className="opacity-50 border-white/20 text-white"
+            >
               <Download className="h-4 w-4 mr-2" />
               Télécharger
             </Button>
@@ -146,14 +164,16 @@ export default function PDFReader({
         </div>
 
         {/* Barre de progression */}
-        <div className="mt-4">
-          <div className="w-full bg-breslev-cream rounded-full h-2">
-            <div
-              className="bg-breslev-gold h-2 rounded-full transition-all duration-300"
-              style={{ width: `${progressPercent}%` }}
+        <div className="mt-5">
+          <div className="w-full bg-breslev-cream/50 overflow-hidden rounded-full h-1.5">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${progressPercent}%` }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="bg-gradient-to-r from-[#d4a843] to-[#b58c30] h-[shadow-sm] h-full rounded-full shadow-[0_0_10px_rgba(212,168,67,0.5)]"
             />
           </div>
-          <p className="text-xs text-muted-foreground mt-1 text-center">
+          <p className="text-[10px] text-muted-foreground mt-2 text-center uppercase tracking-widest font-semibold">
             Progression: {progressPercent.toFixed(0)}%
           </p>
         </div>
@@ -162,17 +182,17 @@ export default function PDFReader({
       {/* Visionneuse PDF */}
       <Card
         ref={containerRef}
-        className="relative overflow-hidden bg-gray-100 dark:bg-gray-900"
-        style={{ minHeight: "600px" }}
+        className="relative overflow-hidden bg-[#0A0F18] border border-white/5 shadow-inner"
+        style={{ minHeight: "650px" }}
       >
         {/* Zone de visualisation du PDF */}
-        <div className="flex items-center justify-center p-8 relative">
+        <div className="flex items-center justify-center p-8 relative min-h-full">
           {/* Watermark en arrière-plan */}
-          <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-10 select-none">
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-5 select-none">
             <div
-              className="text-breslev-gold font-bold text-4xl transform -rotate-45"
+              className="text-breslev-gold font-bold text-5xl md:text-7xl transform -rotate-45"
               style={{
-                textShadow: "2px 2px 4px rgba(0,0,0,0.1)",
+                textShadow: "4px 4px 10px rgba(0,0,0,0.1)",
               }}
             >
               {watermarkText}
@@ -180,88 +200,74 @@ export default function PDFReader({
           </div>
 
           {/* Contenu PDF (simulation) */}
-          <div
-            className="bg-white shadow-2xl relative"
-            style={{
-              width: `${zoom}%`,
-              maxWidth: "800px",
-              aspectRatio: "210/297", // Format A4
-            }}
-          >
-            {/* Watermark visible sur chaque page */}
-            <div className="absolute top-4 right-4 text-xs text-gray-400 opacity-50 select-none">
-              {watermarkText}
-            </div>
-
-            {/* Contenu de la page */}
-            <div className="p-12">
-              <div className="flex items-center gap-3 mb-6">
-                <BookOpen className="h-8 w-8 text-breslev-gold" />
-                <h2 className="text-2xl font-serif font-bold text-breslev-blue">
-                  {bookTitle}
-                </h2>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentPage}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+              className="bg-[#0b111a] shadow-[0_0_50px_rgba(212,168,67,0.15)] relative rounded-sm border border-[#d4a843]/20"
+              style={{
+                width: `${zoom}%`,
+                maxWidth: "850px",
+                aspectRatio: "210/297", // Format A4
+              }}
+            >
+              {/* Watermark visible sur chaque page */}
+              <div className="absolute top-6 right-6 text-xs text-[#d4a843]/40 tracking-wider select-none font-serif">
+                {watermarkText}
               </div>
 
-              <div className="space-y-4 text-gray-700">
-                <p className="text-lg leading-relaxed">
-                  Ceci est une simulation du lecteur PDF sécurisé. Dans l'implémentation finale,
-                  le contenu réel du PDF sera affiché ici avec la bibliothèque PDF.js.
-                </p>
-
-                <p className="leading-relaxed">
-                  Le watermarking personnalisé avec le nom de l'utilisateur ({watermarkText})
-                  apparaît en filigrane sur chaque page pour protéger le contenu contre
-                  la distribution non autorisée.
-                </p>
-
-                <div className="mt-8 p-4 bg-breslev-cream/30 rounded-lg">
-                  <h3 className="font-bold mb-2 text-breslev-blue">
-                    Fonctionnalités de protection :
-                  </h3>
-                  <ul className="list-disc list-inside space-y-1 text-sm">
-                    <li>Watermarking personnalisé avec nom de l'utilisateur</li>
-                    <li>Désactivation du clic droit et de la sélection</li>
-                    <li>Téléchargement contrôlé (uniquement pour propriétaires)</li>
-                    <li>Suivi de la progression de lecture</li>
-                    <li>Lecture en ligne uniquement (pas de copie locale)</li>
-                  </ul>
-                </div>
-
-                <p className="text-sm text-muted-foreground italic mt-6">
-                  Page {currentPage} sur {totalPages}
-                </p>
+              {/* Contenu de la page : Iframe affichant le vrai PDF */}
+              <div className="h-full w-full relative z-10 p-2">
+                <iframe
+                  src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+                  className="w-full h-full border-0 rounded-sm"
+                  title={`Lecteur PDF - ${bookTitle}`}
+                  style={{ pointerEvents: "auto" }}
+                />
               </div>
-            </div>
 
-            {/* Watermark en bas de page */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-xs text-gray-400 opacity-50 select-none">
-              © Esther Ifrah - {watermarkText}
-            </div>
-          </div>
+              {/* Watermark en bas de page */}
+              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-[10px] text-[#d4a843]/40 tracking-widest select-none font-sans uppercase">
+                © Esther Ifrah — {watermarkText}
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* Overlay pour désactiver le clic droit */}
         <div
           className="absolute inset-0 pointer-events-none"
-          onContextMenu={(e) => e.preventDefault()}
+          onContextMenu={e => e.preventDefault()}
           style={{ userSelect: "none" }}
         />
       </Card>
 
       {/* Informations */}
-      <Card className="p-4 bg-blue-50 dark:bg-blue-950/20">
-        <div className="flex gap-3">
-          <BookOpen className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-          <div className="text-sm text-blue-900 dark:text-blue-100">
-            <p className="font-semibold mb-1">Lecture protégée</p>
-            <p>
-              Ce livre est protégé par watermarking personnalisé. Votre nom apparaît sur chaque
-              page pour empêcher la distribution non autorisée. La progression de votre lecture
-              est automatiquement sauvegardée.
-            </p>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4 }}
+      >
+        <Card className="p-5 glass-card-v2 border-breslev-gold/20">
+          <div className="flex gap-4">
+            <Shield className="h-6 w-6 text-[#d4a843] flex-shrink-0 mt-0.5 drop-shadow-[0_0_8px_rgba(212,168,67,0.5)]" />
+            <div className="text-sm text-breslev-blue/80">
+              <p className="font-semibold mb-1 text-breslev-blue">
+                Sceau de Qualité et Protection
+              </p>
+              <p className="leading-relaxed">
+                Ce texte est protégé par notre système propriétaire de
+                watermarking. Votre empreinte digitale ({watermarkText}) scelle
+                ce document pour prévenir toute distribution non autorisée,
+                garantissant la pérennité de l'œuvre authentique d'Esther Ifrah.
+              </p>
+            </div>
           </div>
-        </div>
-      </Card>
-    </div>
+        </Card>
+      </motion.div>
+    </motion.div>
   );
 }

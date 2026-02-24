@@ -3,21 +3,23 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { ThemeProvider } from "./contexts/ThemeContext";
 import { CartProvider } from "./contexts/CartContext";
-import Home from "./pages/Home";
-import Produit from "./pages/Produit";
-import Boutique from "./pages/Boutique";
-import Abonnement from "./pages/Abonnement";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import APropos from "./pages/APropos";
-import Panier from "./pages/Panier";
+import Abonnement from "./pages/Abonnement";
+import Boutique from "./pages/Boutique";
+import CGV from "./pages/CGV";
 import Checkout from "./pages/Checkout";
-import EspaceMembre from "./pages/EspaceMembre";
 import CommandeConfirmee from "./pages/CommandeConfirmee";
 import Connexion from "./pages/Connexion";
-import CGV from "./pages/CGV";
+import Contact from "./pages/Contact";
+import EspaceMembre from "./pages/EspaceMembre";
+import Home from "./pages/Home";
 import MentionsLegales from "./pages/MentionsLegales";
+import Panier from "./pages/Panier";
 import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite";
+import Produit from "./pages/Produit";
+import TestPDFPage from "./pages/TestPDFPage";
 
 function Router() {
   return (
@@ -34,7 +36,12 @@ function Router() {
       <Route path={"/espace-membre"} component={EspaceMembre} />
       <Route path={"/mentions-legales"} component={MentionsLegales} />
       <Route path={"/cgv"} component={CGV} />
-      <Route path={"/politique-confidentialite"} component={PolitiqueConfidentialite} />
+      <Route
+        path={"/politique-confidentialite"}
+        component={PolitiqueConfidentialite}
+      />
+      <Route path={"/contact"} component={Contact} />
+      <Route path={"/test-pdf"} component={TestPDFPage} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&amp;family=Cormorant+Garamond:ital@1&amp;display=swap');
+      .title { font-family: 'Cinzel', serif; font-size: 80px; font-weight: 700; fill: #d4a843; }
+      .subtitle { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-style: italic; fill: #f8f6f3; opacity: 0.9; }
+      .brand { font-family: 'Cinzel', serif; font-size: 32px; font-weight: 600; fill: #d4a843; letter-spacing: 4px; }
+    </style>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#1a2332" />
+    </linearGradient>
+    <radialGradient id="glow" cx="80%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#d4a843" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#1a2332" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)" />
+  <rect width="1200" height="630" fill="url(#glow)" />
+
+  <!-- Abstract Gold Lines (Background Element) -->
+  <path d="M0,315 Q400,200 600,315 T1200,315" fill="none" stroke="#d4a843" stroke-width="1" opacity="0.2"/>
+  <path d="M0,400 Q400,500 600,400 T1200,400" fill="none" stroke="#d4a843" stroke-width="1" opacity="0.1"/>
+
+  <!-- Left Content: Texts -->
+  <g transform="translate(100, 260)">
+    <text x="0" y="0" class="title">Breslev</text>
+    <text x="0" y="70" class="subtitle">by Esther Ifrah</text>
+    <text x="0" y="160" class="brand">BIBLIOTHÈQUE SPIRITUELLE</text>
+  </g>
+
+  <!-- Right Content: 3D Book Graphic Representation -->
+  <!-- Back cover -->
+  <polygon points="760,180 940,140 1020,160 840,200" fill="#0d1117" />
+  <!-- Pages edge -->
+  <polygon points="1020,160 1020,480 840,520 840,200" fill="#f8f6f3" />
+  <!-- Front cover -->
+  <polygon points="730,195 910,155 910,475 730,515" fill="#1e293b" />
+  <polygon points="730,195 910,155 910,475 730,515" fill="none" stroke="#d4a843" stroke-width="3" />
+  
+  <!-- Cover Details -->
+  <polygon points="745,210 895,175 895,460 745,495" fill="none" stroke="#d4a843" stroke-width="1" opacity="0.6" />
+  <!-- Spine -->
+  <polygon points="730,195 760,180 760,500 730,515" fill="#0f172a" />
+  
+  <!-- Star of David Icon on Cover -->
+  <g transform="translate(820, 310) scale(0.6)">
+    <polygon points="0,-15 13,8 -13,8" stroke="#d4a843" fill="none" stroke-width="3"/>
+    <polygon points="0,15 -13,-8 13,-8" stroke="#d4a843" fill="none" stroke-width="3"/>
+  </g>
+  
+  <!-- Cover Title Line -->
+  <line x1="770" y1="360" x2="870" y2="335" stroke="#d4a843" stroke-width="4" />
+  <line x1="790" y1="380" x2="850" y2="365" stroke="#d4a843" stroke-width="2" opacity="0.7" />
+</svg>

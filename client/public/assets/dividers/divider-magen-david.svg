@@ -1,0 +1,9 @@
+<svg viewBox="0 0 800 40" width="100%" height="40" xmlns="http://www.w3.org/2000/svg">
+  <!-- Lignes latérales -->
+  <line x1="0" y1="20" x2="375" y2="20" stroke="#d4a843" stroke-width="1" stroke-opacity="0.4" />
+  <line x1="425" y1="20" x2="800" y2="20" stroke="#d4a843" stroke-width="1" stroke-opacity="0.4" />
+  
+  <!-- Etoile de David (2 triangles entrelacés) -->
+  <polygon points="400,8 412,28 388,28" stroke="#d4a843" fill="none" stroke-width="1.5" />
+  <polygon points="400,32 388,12 412,12" stroke="#d4a843" fill="none" stroke-width="1.5" />
+</svg>

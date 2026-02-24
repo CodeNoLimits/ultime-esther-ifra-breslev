@@ -1,40 +1,36 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { trpc } from "@/lib/trpc";
-import { Link } from "wouter";
 import {
   BookOpen,
-  Heart,
   Clock,
-  Package,
   CreditCard,
-  User,
-  LogOut,
   Crown,
   Download,
   Eye,
+  Heart,
   Loader2,
+  LogOut,
+  Package,
+  User,
 } from "lucide-react";
 import { toast } from "sonner";
+import { Link } from "wouter";
 
 export default function EspaceMembre() {
   const { isAuthenticated, user, loading } = useAuth();
 
   // Queries
-  const { data: favorites, isLoading: loadingFavorites } = trpc.favorites.getMy.useQuery(
-    undefined,
-    { enabled: isAuthenticated }
-  );
+  const { data: favorites, isLoading: loadingFavorites } =
+    trpc.favorites.getMy.useQuery(undefined, { enabled: isAuthenticated });
 
-  const { data: readingProgress, isLoading: loadingProgress } = trpc.reading.getProgress.useQuery(
-    undefined,
-    { enabled: isAuthenticated }
-  );
+  const { data: readingProgress, isLoading: loadingProgress } =
+    trpc.reading.getProgress.useQuery(undefined, { enabled: isAuthenticated });
 
   const logoutMutation = trpc.auth.logout.useMutation({
     onSuccess: () => {
@@ -129,7 +125,9 @@ export default function EspaceMembre() {
                 <div className="text-2xl font-bold">
                   {readingProgress?.length || 0}
                 </div>
-                <div className="text-sm text-muted-foreground">Livres en cours</div>
+                <div className="text-sm text-muted-foreground">
+                  Livres en cours
+                </div>
               </div>
             </div>
           </Card>
@@ -199,7 +197,8 @@ export default function EspaceMembre() {
             <Card className="p-6">
               <h2 className="text-2xl font-bold mb-4">Mes Livres Digitaux</h2>
               <p className="text-muted-foreground mb-6">
-                Accédez à tous vos livres digitaux achetés et inclus dans votre abonnement
+                Accédez à tous vos livres digitaux achetés et inclus dans votre
+                abonnement
               </p>
 
               {/* Liste des livres (exemple) */}
@@ -215,13 +214,21 @@ export default function EspaceMembre() {
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                   </div>
                   <div className="p-4">
-                    <h3 className="font-bold mb-2 line-clamp-2">Likoutey Moharane - Tome 1</h3>
-                    <p className="text-sm text-muted-foreground mb-4">Rabbi Nahman de Breslev</p>
+                    <h3 className="font-bold mb-2 line-clamp-2">
+                      Likoutey Moharane - Tome 1
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Rabbi Nahman de Breslev
+                    </p>
                     <div className="flex gap-2">
                       <Button
                         size="sm"
                         className="flex-1"
-                        onClick={() => toast.info("Le lecteur en ligne sera disponible prochainement")}
+                        onClick={() =>
+                          toast.info(
+                            "Le lecteur en ligne sera disponible prochainement"
+                          )
+                        }
                       >
                         <Eye className="h-4 w-4 mr-2" />
                         Lire
@@ -229,7 +236,11 @@ export default function EspaceMembre() {
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => toast.info("Le téléchargement PDF sera disponible prochainement")}
+                        onClick={() =>
+                          toast.info(
+                            "Le téléchargement PDF sera disponible prochainement"
+                          )
+                        }
                       >
                         <Download className="h-4 w-4" />
                       </Button>
@@ -240,7 +251,9 @@ export default function EspaceMembre() {
                 {/* Message si aucun livre */}
                 <Card className="p-12 text-center col-span-full">
                   <BookOpen className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                  <h3 className="text-lg font-bold mb-2">Votre bibliothèque est vide</h3>
+                  <h3 className="text-lg font-bold mb-2">
+                    Votre bibliothèque est vide
+                  </h3>
                   <p className="text-muted-foreground mb-4">
                     Commencez à construire votre collection de livres spirituels
                   </p>
@@ -265,7 +278,7 @@ export default function EspaceMembre() {
 
               {loadingProgress ? (
                 <div className="space-y-4">
-                  {[1, 2, 3].map((i) => (
+                  {[1, 2, 3].map(i => (
                     <div key={i} className="animate-pulse flex gap-4">
                       <div className="w-20 h-28 bg-breslev-cream rounded" />
                       <div className="flex-1 space-y-2">
@@ -282,38 +295,47 @@ export default function EspaceMembre() {
                     <Card key={progress.id} className="p-4">
                       <div className="flex gap-4">
                         <div className="w-20 h-28 flex-shrink-0 rounded overflow-hidden bg-breslev-cream">
-                          {progress.book?.coverImageUrl && (
-                            <img
-                              src={progress.book.coverImageUrl}
-                              alt={progress.book.titleFr}
-                              className="w-full h-full object-cover"
-                            />
-                          )}
+                          <img
+                            src="/images/livres/WhatsAppImage2025-10-31at01.25.29.jpeg"
+                            alt="Livre abonnement"
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                         <div className="flex-1">
-                          <h3 className="font-bold mb-1">{progress.book?.titleFr}</h3>
+                          <h3 className="font-bold mb-1">
+                            {progress.book?.titleFr}
+                          </h3>
                           <p className="text-sm text-muted-foreground mb-3">
                             {progress.book?.author}
                           </p>
                           <div className="mb-2">
                             <div className="flex justify-between text-sm mb-1">
                               <span>Progression</span>
-                              <span className="font-semibold">{progress.progressPercent}%</span>
+                              <span className="font-semibold">
+                                {progress.progressPercent}%
+                              </span>
                             </div>
                             <div className="w-full bg-breslev-cream rounded-full h-2">
                               <div
                                 className="bg-breslev-gold h-2 rounded-full transition-all"
-                                style={{ width: `${progress.progressPercent}%` }}
+                                style={{
+                                  width: `${progress.progressPercent}%`,
+                                }}
                               />
                             </div>
                           </div>
                           <p className="text-xs text-muted-foreground">
-                            Page {progress.currentPage} sur {progress.totalPages}
+                            Page {progress.currentPage} sur{" "}
+                            {progress.totalPages}
                           </p>
                         </div>
                         <Button
                           size="sm"
-                          onClick={() => toast.info("Le lecteur en ligne sera disponible prochainement")}
+                          onClick={() =>
+                            toast.info(
+                              "Le lecteur en ligne sera disponible prochainement"
+                            )
+                          }
                         >
                           <BookOpen className="h-4 w-4 mr-2" />
                           Continuer
@@ -325,7 +347,9 @@ export default function EspaceMembre() {
               ) : (
                 <Card className="p-12 text-center">
                   <Clock className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                  <h3 className="text-lg font-bold mb-2">Aucune lecture en cours</h3>
+                  <h3 className="text-lg font-bold mb-2">
+                    Aucune lecture en cours
+                  </h3>
                   <p className="text-muted-foreground">
                     Commencez à lire un livre pour le voir apparaître ici
                   </p>
@@ -344,7 +368,7 @@ export default function EspaceMembre() {
 
               {loadingFavorites ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[1, 2, 3].map((i) => (
+                  {[1, 2, 3].map(i => (
                     <div key={i} className="animate-pulse">
                       <div className="aspect-[3/4] bg-breslev-cream rounded mb-4" />
                       <div className="h-4 bg-breslev-cream rounded mb-2" />
@@ -367,8 +391,12 @@ export default function EspaceMembre() {
                           )}
                         </div>
                         <div className="p-4">
-                          <h3 className="font-bold mb-2 line-clamp-2">{book.titleFr}</h3>
-                          <p className="text-sm text-muted-foreground">{book.author}</p>
+                          <h3 className="font-bold mb-2 line-clamp-2">
+                            {book.titleFr}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            {book.author}
+                          </p>
                         </div>
                       </Card>
                     </Link>
@@ -379,7 +407,8 @@ export default function EspaceMembre() {
                   <Heart className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
                   <h3 className="text-lg font-bold mb-2">Aucun favori</h3>
                   <p className="text-muted-foreground mb-4">
-                    Ajoutez des livres à vos favoris pour les retrouver facilement
+                    Ajoutez des livres à vos favoris pour les retrouver
+                    facilement
                   </p>
                   <Button asChild>
                     <Link href="/boutique">Parcourir la boutique</Link>

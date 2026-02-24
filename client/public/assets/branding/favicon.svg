@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&amp;display=swap');
+      .text {
+        font-family: 'Cinzel', serif;
+        font-size: 85px;
+        font-weight: 700;
+        fill: #d4a843;
+      }
+    </style>
+  </defs>
+  <!-- Background Navy -->
+  <rect width="180" height="180" fill="#1a2332" rx="36" />
+  
+  <!-- Outer Gold Border -->
+  <rect x="8" y="8" width="164" height="164" fill="none" stroke="#d4a843" stroke-width="2" rx="30" opacity="0.5"/>
+  
+  <!-- Centered EB Text -->
+  <text x="90" y="120" class="text" text-anchor="middle">EB</text>
+</svg>

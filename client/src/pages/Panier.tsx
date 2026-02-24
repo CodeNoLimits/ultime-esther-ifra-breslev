@@ -1,8 +1,9 @@
 import { useAuth } from "@/_core/hooks/useAuth";
-import { useCart } from "@/contexts/CartContext";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -10,21 +11,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Link, useLocation } from "wouter";
+import { useCart } from "@/contexts/CartContext";
 import {
-  ShoppingCart,
-  Trash2,
-  Plus,
-  Minus,
-  Package,
+  ArrowRight,
   CreditCard,
   MapPin,
-  ArrowRight,
+  Minus,
+  Package,
+  Plus,
+  ShoppingCart,
+  Trash2,
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Link, useLocation } from "wouter";
 
 // Zones de livraison avec frais
 const SHIPPING_ZONES = {
@@ -37,7 +37,12 @@ type ShippingZone = keyof typeof SHIPPING_ZONES;
 
 export default function Panier() {
   const { isAuthenticated, user } = useAuth();
-  const { items: cartItems, isLoading, removeItem, clearCart: clearCartFn } = useCart();
+  const {
+    items: cartItems,
+    isLoading,
+    removeItem,
+    clearCart: clearCartFn,
+  } = useCart();
   const [, setLocation] = useLocation();
   const [shippingZone, setShippingZone] = useState<ShippingZone>("IL");
   const [isRemoving, setIsRemoving] = useState(false);
@@ -63,10 +68,11 @@ export default function Panier() {
   const calculateSubtotal = () => {
     if (!cartItems) return 0;
     return cartItems.reduce((sum, item) => {
-      const price = item.cartItem.type === "physical" 
-        ? (item.book.pricePhysical || 0)
-        : (item.book.priceDigital || 0);
-      return sum + (price * item.cartItem.quantity);
+      const price =
+        item.cartItem.type === "physical"
+          ? item.book.pricePhysical || 0
+          : item.book.priceDigital || 0;
+      return sum + price * item.cartItem.quantity;
     }, 0);
   };
 
@@ -74,27 +80,26 @@ export default function Panier() {
     if (!cartItems) return 0;
     return cartItems.reduce((sum, item) => {
       if (item.cartItem.type === "physical" && item.book.weight) {
-        return sum + (item.book.weight * item.cartItem.quantity);
+        return sum + item.book.weight * item.cartItem.quantity;
       }
       return sum;
     }, 0);
   };
 
   const calculateShipping = () => {
-    const hasPhysical = cartItems?.some(item => item.cartItem.type === "physical");
+    const hasPhysical = cartItems?.some(
+      item => item.cartItem.type === "physical"
+    );
     if (!hasPhysical) return 0;
 
     const totalWeight = calculateTotalWeight();
     const zone = SHIPPING_ZONES[shippingZone];
-    
+
     // Calcul basé sur le poids (formule simplifiée)
     const baseShipping = zone.min;
     const weightFactor = Math.floor(totalWeight / 500); // +frais tous les 500g
-    const shipping = Math.min(
-      baseShipping + (weightFactor * 500),
-      zone.max
-    );
-    
+    const shipping = Math.min(baseShipping + weightFactor * 500, zone.max);
+
     return shipping;
   };
 
@@ -109,7 +114,9 @@ export default function Panier() {
         <main className="flex-1 container py-12">
           <Card className="p-12 text-center">
             <ShoppingCart className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-            <h2 className="text-2xl font-bold mb-4">Connectez-vous pour voir votre panier</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              Connectez-vous pour voir votre panier
+            </h2>
             <p className="text-muted-foreground mb-6">
               Vous devez être connecté pour accéder à votre panier
             </p>
@@ -151,7 +158,9 @@ export default function Panier() {
             Mon Panier
           </h1>
           <p className="text-muted-foreground">
-            {isEmpty ? "Votre panier est vide" : `${cartItems.length} article(s)`}
+            {isEmpty
+              ? "Votre panier est vide"
+              : `${cartItems.length} article(s)`}
           </p>
         </div>
 
@@ -173,15 +182,23 @@ export default function Panier() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Liste des articles */}
             <div className="lg:col-span-2 space-y-4">
-              {cartItems.map((item) => {
-                const price = item.cartItem.type === "physical"
-                  ? item.book.pricePhysical
-                  : item.book.priceDigital;
-                const priceInShekels = price ? (price / 100).toFixed(2) : "0.00";
-                const itemTotal = price ? ((price * item.cartItem.quantity) / 100).toFixed(2) : "0.00";
+              {cartItems.map(item => {
+                const price =
+                  item.cartItem.type === "physical"
+                    ? item.book.pricePhysical
+                    : item.book.priceDigital;
+                const priceInShekels = price
+                  ? (price / 100).toFixed(2)
+                  : "0.00";
+                const itemTotal = price
+                  ? ((price * item.cartItem.quantity) / 100).toFixed(2)
+                  : "0.00";
 
                 return (
-                  <Card key={item.cartItem.id} className="p-6">
+                  <Card
+                    key={item.cartItem.id}
+                    className="p-6 glass-card-light border-breslev-gold/10 hover:-translate-y-1 hover:shadow-breslev-gold"
+                  >
                     <div className="flex gap-6">
                       {/* Image */}
                       <Link href={`/livre/${item.book.slug}`}>
@@ -224,19 +241,30 @@ export default function Panier() {
                         </div>
 
                         <div className="flex items-center gap-2 mb-3">
-                          <Badge variant={item.cartItem.type === "physical" ? "default" : "secondary"}>
-                            {item.cartItem.type === "physical" ? "Physique" : "Digital"}
+                          <Badge
+                            variant={
+                              item.cartItem.type === "physical"
+                                ? "default"
+                                : "secondary"
+                            }
+                          >
+                            {item.cartItem.type === "physical"
+                              ? "Physique"
+                              : "Digital"}
                           </Badge>
-                          {item.cartItem.type === "physical" && item.book.weight && (
-                            <span className="text-xs text-muted-foreground">
-                              {item.book.weight}g
-                            </span>
-                          )}
+                          {item.cartItem.type === "physical" &&
+                            item.book.weight && (
+                              <span className="text-xs text-muted-foreground">
+                                {item.book.weight}g
+                              </span>
+                            )}
                         </div>
 
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <span className="text-sm text-muted-foreground">Quantité:</span>
+                            <span className="text-sm text-muted-foreground">
+                              Quantité:
+                            </span>
                             <div className="flex items-center gap-2">
                               <Button variant="outline" size="sm" disabled>
                                 <Minus className="h-3 w-3" />
@@ -278,7 +306,7 @@ export default function Panier() {
 
             {/* Récapitulatif */}
             <div className="lg:col-span-1">
-              <Card className="p-6 sticky top-4">
+              <Card className="p-6 sticky top-24 glass-card-light border-breslev-gold/20 shadow-breslev-lg z-10">
                 <h2 className="text-xl font-bold mb-6">Récapitulatif</h2>
 
                 {/* Zone de livraison */}
@@ -290,7 +318,9 @@ export default function Panier() {
                     </label>
                     <Select
                       value={shippingZone}
-                      onValueChange={(value) => setShippingZone(value as ShippingZone)}
+                      onValueChange={value =>
+                        setShippingZone(value as ShippingZone)
+                      }
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -298,7 +328,9 @@ export default function Panier() {
                       <SelectContent>
                         {Object.entries(SHIPPING_ZONES).map(([code, zone]) => (
                           <SelectItem key={code} value={code}>
-                            {zone.name} ({(zone.min / 100).toFixed(0)}-{(zone.max / 100).toFixed(0)}{zone.currency})
+                            {zone.name} ({(zone.min / 100).toFixed(0)}-
+                            {(zone.max / 100).toFixed(0)}
+                            {zone.currency})
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -312,13 +344,19 @@ export default function Panier() {
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Sous-total</span>
-                    <span className="font-medium">{(subtotal / 100).toFixed(2)}₪</span>
+                    <span className="font-medium">
+                      {(subtotal / 100).toFixed(2)}₪
+                    </span>
                   </div>
 
                   {shipping > 0 && (
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Frais de port</span>
-                      <span className="font-medium">{(shipping / 100).toFixed(2)}₪</span>
+                      <span className="text-muted-foreground">
+                        Frais de port
+                      </span>
+                      <span className="font-medium">
+                        {(shipping / 100).toFixed(2)}₪
+                      </span>
                     </div>
                   )}
 
@@ -342,20 +380,15 @@ export default function Panier() {
                   <ArrowRight className="h-5 w-5 ml-2" />
                 </Button>
 
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="w-full"
-                  asChild
-                >
-                  <Link href="/boutique">
-                    Continuer mes achats
-                  </Link>
+                <Button variant="outline" size="lg" className="w-full" asChild>
+                  <Link href="/boutique">Continuer mes achats</Link>
                 </Button>
 
                 {/* Informations de livraison */}
                 <div className="mt-6 p-4 bg-breslev-cream/30 rounded-lg">
-                  <h3 className="font-semibold mb-2 text-sm">Informations de livraison</h3>
+                  <h3 className="font-semibold mb-2 text-sm">
+                    Informations de livraison
+                  </h3>
                   <ul className="text-xs text-muted-foreground space-y-1">
                     <li>• Livraison sous 5-10 jours ouvrés</li>
                     <li>• Livres digitaux disponibles immédiatement</li>

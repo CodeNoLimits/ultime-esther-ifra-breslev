@@ -1,10 +1,11 @@
 import { useAuth } from "@/_core/hooks/useAuth";
-import { useCart } from "@/contexts/CartContext";
-import { APP_LOGO } from "@/const";
 import { Button } from "@/components/ui/button";
-import { Link, useLocation } from "wouter";
+import { APP_LOGO } from "@/const";
+import { useCart } from "@/contexts/CartContext";
+import { motion } from "framer-motion";
 import { Menu, ShoppingCart, User, X } from "lucide-react";
 import { useState } from "react";
+import { Link, useLocation } from "wouter";
 
 export default function Header() {
   const { user, isAuthenticated } = useAuth();
@@ -30,17 +31,27 @@ export default function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/">
-            <div className="flex items-center gap-3 cursor-pointer">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center gap-3 cursor-pointer"
+            >
               <img src={APP_LOGO} alt="Esther Ifrah" className="h-10 w-10" />
               <span className="text-xl font-bold text-breslev-blue hidden sm:inline">
                 Esther Ifrah - Littérature Breslev
               </span>
-            </div>
+            </motion.div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => (
+          <motion.nav
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="hidden md:flex items-center gap-6"
+          >
+            {navLinks.map(link => (
               <Link key={link.href} href={link.href}>
                 <a
                   className={`text-sm font-medium transition-colors hover:text-breslev-gold ${
@@ -53,7 +64,7 @@ export default function Header() {
                 </a>
               </Link>
             ))}
-          </nav>
+          </motion.nav>
 
           {/* Right Actions */}
           <div className="flex items-center gap-3">
@@ -108,7 +119,7 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border">
             <nav className="flex flex-col gap-3">
-              {navLinks.map((link) => (
+              {navLinks.map(link => (
                 <Link key={link.href} href={link.href}>
                   <a
                     onClick={() => setMobileMenuOpen(false)}

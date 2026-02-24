@@ -1,13 +1,13 @@
 import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { APP_TITLE, getLoginUrl } from "@/const";
-import { Link } from "wouter";
-import { Book, Heart, Shield, Sparkles } from "lucide-react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import BookCard from "@/components/BookCard";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
+import { motion } from "framer-motion";
+import { BookOpen, Compass, Flame, Sparkles, Star } from "lucide-react";
+import { Link } from "wouter";
 
 function FeaturedBooks() {
   const { data: books, isLoading } = trpc.books.getFeatured.useQuery();
@@ -15,8 +15,11 @@ function FeaturedBooks() {
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="bg-card rounded-lg shadow-breslev p-6 animate-pulse">
+        {[1, 2, 3].map(i => (
+          <div
+            key={i}
+            className="bg-card rounded-lg shadow-breslev p-6 animate-pulse"
+          >
             <div className="aspect-[3/4] bg-breslev-cream rounded-lg mb-4" />
             <div className="h-6 bg-breslev-cream rounded mb-2" />
             <div className="h-4 bg-breslev-cream rounded mb-4" />
@@ -30,7 +33,9 @@ function FeaturedBooks() {
   if (!books || books.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="text-muted-foreground">Aucun livre phare disponible pour le moment</p>
+        <p className="text-muted-foreground">
+          Aucun livre phare disponible pour le moment
+        </p>
       </div>
     );
   }
@@ -52,118 +57,210 @@ export default function Home() {
       <Header />
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-breslev-blue via-breslev-blue to-blue-900 text-white overflow-hidden">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
-              backgroundSize: '40px 40px'
-            }} />
-          </div>
+        {/* V2 GAN EDEN HERO SECTION */}
+        <section className="hero-v2-bg min-h-[90vh] flex items-center justify-center">
+          <div className="hero-v2-overlay"></div>
 
-          <div className="container relative py-20 md:py-32">
-            <div className="max-w-3xl mx-auto text-center">
-              {/* Badge */}
-              <Badge className="mb-6 bg-breslev-gold text-breslev-blue hover:bg-breslev-gold/90">
-                <Sparkles className="h-3 w-3 mr-1" />
-                Traductions d'Esther Ifrah
-              </Badge>
+          <div className="container relative py-20 md:py-32 z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left Content */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="max-w-2xl text-left"
+              >
+                <Badge className="mb-6 bg-transparent border border-breslev-gold text-breslev-gold hover:bg-breslev-gold/10 px-4 py-1">
+                  <Sparkles className="h-3 w-3 mr-2" />
+                  Collection Kadosh Refined
+                </Badge>
 
-              {/* Title */}
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                Découvrez les Enseignements de{" "}
-                <span className="text-breslev-gold">Rabbi Nachman</span>
-              </h1>
+                <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-[1.1] font-cinzel">
+                  <span className="text-white">Sagesse &</span>
+                  <br />
+                  <span className="text-gradient-gold text-glow-gold">
+                    Lumière Breslev
+                  </span>
+                </h1>
 
-              {/* Subtitle */}
-              <p className="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed">
-                Traductions et adaptations authentiques pour approfondir votre
-                chemin spirituel
-              </p>
+                <p className="text-xl md:text-2xl mb-10 text-white/80 leading-relaxed font-cormorant border-l-2 border-breslev-gold/50 pl-6">
+                  Traductions authentiques des enseignements de Rabbi Nachman de
+                  Breslev pour éclairer votre chemin spirituel au quotidien.
+                </p>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-breslev-gold text-breslev-blue hover:bg-breslev-gold/90 glow-gold text-lg px-8"
-                >
-                  <Link href="/boutique">Explorer la Bibliothèque</Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="border-2 border-white text-white hover:bg-white hover:text-breslev-blue text-lg px-8"
-                >
-                  <Link href="/abonnement">S'abonner</Link>
-                </Button>
-              </div>
+                <div className="flex flex-col sm:flex-row gap-6">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="btn-premium-cta text-lg px-8 py-6 h-auto font-cinzel tracking-wider uppercase"
+                  >
+                    <Link href="/boutique">Explorer les Livres</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="outline"
+                    className="border-2 border-breslev-gold/40 text-breslev-gold bg-transparent hover:bg-breslev-gold/10 text-lg px-8 py-6 h-auto font-cinzel tracking-wider uppercase backdrop-blur-sm transition-all hover:border-breslev-gold"
+                  >
+                    <Link href="/abonnement">S'abonner</Link>
+                  </Button>
+                </div>
+              </motion.div>
+
+              {/* Right Content - 3D Book */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+                className="relative hidden lg:flex justify-center items-center"
+              >
+                <div className="absolute w-64 h-64 bg-breslev-gold/20 rounded-full blur-[100px]"></div>
+                <div className="animate-pulse-ring w-[400px] h-[400px]"></div>
+
+                <div className="relative z-10 animate-float-3d">
+                  {/* The featured 3D Book - using genuine generated cover from PDF */}
+                  <img
+                    src="/images/livres/WhatsAppImage2025-10-31at01.25.29.jpeg"
+                    alt="Livre vedette Breslev: Likoutey Moharane"
+                    loading="eager"
+                    fetchPriority="high"
+                    className="w-[280px] h-[400px] object-cover rounded-md shadow-2xl border-l-4 border-[#8c6b22] border-r border-[#ffffff20] border-t border-[#ffffff10]"
+                    style={{
+                      transform: "rotateY(-15deg) rotateX(5deg)",
+                      boxShadow:
+                        "-20px 20px 30px rgba(0,0,0,0.8), inset 2px 0px 5px rgba(255,255,255,0.3)",
+                      filter: "contrast(1.1) brightness(0.95)",
+                    }}
+                  />
+                  <div className="badge-bestseller-v2">Meilleure Vente</div>
+                </div>
+              </motion.div>
             </div>
           </div>
 
-          {/* Wave Divider */}
-          <div className="absolute bottom-0 left-0 right-0">
+          {/* Custom SVG Wave Divider V2 */}
+          <div className="absolute bottom-0 left-0 right-0 overflow-hidden line-height-0 transform translate-y-[2px]">
+            <img
+              src="/assets/dividers/divider-filigree.svg"
+              alt="divider"
+              className="w-full h-12 object-cover opacity-60"
+            />
             <svg
-              viewBox="0 0 1440 120"
+              viewBox="0 0 1440 80"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               className="w-full h-auto"
             >
               <path
-                d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z"
-                fill="white"
+                d="M0,80 L1440,80 L1440,40 Q1080,80 720,40 Q360,0 0,40 Z"
+                fill="#0b111a"
               />
             </svg>
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="py-16 bg-background">
-          <div className="container">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Feature 1 */}
-              <div className="text-center p-6">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-breslev-cream mb-4">
-                  <Book className="h-8 w-8 text-breslev-blue" />
-                </div>
-                <h3 className="text-xl font-bold mb-3 text-breslev-blue">
-                  Bibliothèque Complète
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Plus de 30 livres et brochures sur les enseignements de Rabbi
-                  Nachman, traduits avec soin par Esther Ifrah.
-                </p>
-              </div>
+        {/* V2 "Pourquoi Breslev" Features Section */}
+        <section className="py-24 bg-[#0b111a] relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-breslev-blue/30 rounded-full blur-[150px] pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
 
-              {/* Feature 2 */}
-              <div className="text-center p-6">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-breslev-cream mb-4">
-                  <Shield className="h-8 w-8 text-breslev-gold" />
-                </div>
-                <h3 className="text-xl font-bold mb-3 text-breslev-blue">
-                  Lecture Protégée
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Accédez à vos livres numériques en ligne avec une protection
-                  avancée et un watermarking personnalisé.
-                </p>
-              </div>
+          <div className="container relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-sm font-bold tracking-[0.2em] text-breslev-gold uppercase mb-4 font-cinzel">
+                L'Essence de Breslev
+              </h2>
+              <h3 className="text-3xl md:text-5xl font-bold text-white font-cinzel">
+                Les 4 Piliers Fondamentaux
+              </h3>
+            </div>
 
-              {/* Feature 3 */}
-              <div className="text-center p-6">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-breslev-cream mb-4">
-                  <Heart className="h-8 w-8 text-breslev-gold" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Pillar 1: Torah */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="glass-card-v2 p-8 text-center group"
+              >
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-breslev-gold/20 to-transparent border border-breslev-gold/30 mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <BookOpen className="h-8 w-8 text-breslev-gold" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-breslev-blue">
-                  Transmission Authentique
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Des traductions fidèles qui préservent l'essence spirituelle
-                  des enseignements de Breslev.
+                <h4 className="text-xl font-bold mb-3 text-white font-cinzel">
+                  L'Étude
+                </h4>
+                <p className="text-white/60 leading-relaxed font-cormorant text-lg">
+                  L'engagement assidu dans la sagesse de la Torah pour éclairer
+                  l'intellect et l'âme.
                 </p>
-              </div>
+              </motion.div>
+
+              {/* Pillar 2: Prière */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="glass-card-v2 p-8 text-center group"
+              >
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-breslev-gold/20 to-transparent border border-breslev-gold/30 mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Flame className="h-8 w-8 text-breslev-gold" />
+                </div>
+                <h4 className="text-xl font-bold mb-3 text-white font-cinzel">
+                  La Prière
+                </h4>
+                <p className="text-white/60 leading-relaxed font-cormorant text-lg">
+                  La connexion authentique et brûlante avec le divin à travers
+                  le cœur.
+                </p>
+              </motion.div>
+
+              {/* Pillar 3: Joie */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="glass-card-v2 p-8 text-center group"
+              >
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-breslev-gold/20 to-transparent border border-breslev-gold/30 mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Star className="h-8 w-8 text-breslev-gold" />
+                </div>
+                <h4 className="text-xl font-bold mb-3 text-white font-cinzel">
+                  La Joie
+                </h4>
+                <p className="text-white/60 leading-relaxed font-cormorant text-lg">
+                  "C'est une grande Mitsva d'être toujours joyeux" - le remède
+                  absolu.
+                </p>
+              </motion.div>
+
+              {/* Pillar 4: Hitbodedut */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="glass-card-v2 p-8 text-center group"
+              >
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-breslev-gold/20 to-transparent border border-breslev-gold/30 mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Compass className="h-8 w-8 text-breslev-gold" />
+                </div>
+                <h4 className="text-xl font-bold mb-3 text-white font-cinzel">
+                  Hitbodedout
+                </h4>
+                <p className="text-white/60 leading-relaxed font-cormorant text-lg">
+                  L'isolement méditatif quotidien pour parler à Dieu comme au
+                  meilleur des amis.
+                </p>
+              </motion.div>
+            </div>
+
+            <div className="mt-16 text-center">
+              <img
+                src="/assets/dividers/divider-magen-david.svg"
+                alt="divider"
+                className="h-8 mx-auto opacity-50"
+              />
             </div>
           </div>
         </section>
@@ -196,12 +293,14 @@ export default function Home() {
         <section className="py-16 bg-background">
           <div className="container">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              {/* Image */}
+              {/* Image / Original Photo */}
               <div className="order-2 md:order-1">
-                <div className="aspect-square rounded-lg bg-breslev-cream shadow-breslev-lg overflow-hidden">
-                  <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                    <span>Photo Esther Ifrah</span>
-                  </div>
+                <div className="aspect-square rounded-lg shadow-breslev-lg overflow-hidden relative group border border-breslev-gold/30">
+                  <img
+                    src="/images/breslev_profile.png"
+                    alt="Photo d'Esther Ifrah"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
                 </div>
               </div>
 
@@ -246,8 +345,8 @@ export default function Home() {
                 Accédez à toute la sagesse de Breslev
               </h2>
               <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                Avec notre abonnement, profitez d'un accès illimité à plus de
-                30 livres et brochures. Lisez où vous voulez, quand vous voulez.
+                Avec notre abonnement, profitez d'un accès illimité à plus de 30
+                livres et brochures. Lisez où vous voulez, quand vous voulez.
               </p>
 
               {/* Plans Preview */}

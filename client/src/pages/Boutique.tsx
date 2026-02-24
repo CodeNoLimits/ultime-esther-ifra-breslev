@@ -1,12 +1,10 @@
-import { useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import BookCard from "@/components/BookCard";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Slider } from "@/components/ui/slider";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -14,10 +12,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Filter, X, Loader2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Slider } from "@/components/ui/slider";
 import { trpc } from "@/lib/trpc";
+import { Filter, Loader2, X } from "lucide-react";
+import { useState } from "react";
 
 export default function Boutique() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -34,12 +33,58 @@ export default function Boutique() {
   const { data: allBooks, isLoading } = trpc.books.getAll.useQuery();
   const books = allBooks || [];
 
+  const [activeCategory, setActiveCategory] = useState("Tous");
+  const categories = [
+    "Tous",
+    "Likoutey Moharane",
+    "Prières",
+    "Contes",
+    "Enseignements",
+    "Tsaddikim",
+  ];
+
+  // Semantic local filtering for the premium tabs
+  const displayBooks = books.filter((book: any) => {
+    if (activeCategory === "Tous") return true;
+    const searchString = `${book.titleFr} ${book.descriptionFr}`.toLowerCase();
+
+    switch (activeCategory) {
+      case "Likoutey Moharane":
+        return searchString.includes("moharane");
+      case "Prières":
+        return (
+          searchString.includes("prière") ||
+          searchString.includes("tefilot") ||
+          searchString.includes("hishtapkhout") ||
+          searchString.includes("hitbodedout")
+        );
+      case "Contes":
+        return (
+          searchString.includes("conte") ||
+          searchString.includes("maasiot") ||
+          searchString.includes("histoire")
+        );
+      case "Enseignements":
+        return (
+          searchString.includes("enseignement") ||
+          searchString.includes("conseil") ||
+          searchString.includes("sagesse")
+        );
+      case "Tsaddikim":
+        return (
+          searchString.includes("tsadik") || searchString.includes("chemot")
+        );
+      default:
+        return true;
+    }
+  });
+
   const toggleFilter = (category: keyof typeof filters, value: string) => {
     const currentFilters = filters[category] as string[];
     if (currentFilters.includes(value)) {
       setFilters({
         ...filters,
-        [category]: currentFilters.filter((v) => v !== value),
+        [category]: currentFilters.filter(v => v !== value),
       });
     } else {
       setFilters({
@@ -75,14 +120,12 @@ export default function Boutique() {
           Type
         </Label>
         <div className="space-y-2">
-          {["Livre", "Brochure"].map((type) => (
+          {["Livre", "Brochure"].map(type => (
             <div key={type} className="flex items-center space-x-2">
               <Checkbox
                 id={`type-${type}`}
                 checked={filters.type.includes(type.toLowerCase())}
-                onCheckedChange={() =>
-                  toggleFilter("type", type.toLowerCase())
-                }
+                onCheckedChange={() => toggleFilter("type", type.toLowerCase())}
               />
               <label
                 htmlFor={`type-${type}`}
@@ -105,7 +148,7 @@ export default function Boutique() {
             { label: "Français", value: "fr" },
             { label: "Hébreu", value: "he" },
             { label: "Anglais", value: "en" },
-          ].map((lang) => (
+          ].map(lang => (
             <div key={lang.value} className="flex items-center space-x-2">
               <Checkbox
                 id={`lang-${lang.value}`}
@@ -136,7 +179,7 @@ export default function Boutique() {
             "Hitbodedout",
             "Tikoun HaKlali",
             "Enseignements",
-          ].map((theme) => (
+          ].map(theme => (
             <div key={theme} className="flex items-center space-x-2">
               <Checkbox
                 id={`theme-${theme}`}
@@ -165,7 +208,7 @@ export default function Boutique() {
             max={200}
             step={10}
             value={filters.priceRange}
-            onValueChange={(value) =>
+            onValueChange={value =>
               setFilters({ ...filters, priceRange: value as [number, number] })
             }
             className="w-full"
@@ -183,7 +226,7 @@ export default function Boutique() {
           Auteur
         </Label>
         <div className="space-y-2">
-          {["Esther Ifrah", "Autres"].map((author) => (
+          {["Esther Ifrah", "Autres"].map(author => (
             <div key={author} className="flex items-center space-x-2">
               <Checkbox
                 id={`author-${author}`}
@@ -203,11 +246,7 @@ export default function Boutique() {
 
       {/* Reset Button */}
       {hasActiveFilters && (
-        <Button
-          variant="outline"
-          className="w-full"
-          onClick={resetFilters}
-        >
+        <Button variant="outline" className="w-full" onClick={resetFilters}>
           <X className="h-4 w-4 mr-2" />
           Réinitialiser les filtres
         </Button>
@@ -244,7 +283,26 @@ export default function Boutique() {
             </aside>
 
             {/* Main Content */}
-            <div className="flex-1">
+            <div className="flex-1 w-full overflow-hidden">
+              {/* Apple-style Category Tabs */}
+              <div className="mb-8 w-full overflow-x-auto pb-4 scrollbar-none">
+                <div className="flex gap-3 min-w-max px-1">
+                  {categories.map(cat => (
+                    <button
+                      key={cat}
+                      onClick={() => setActiveCategory(cat)}
+                      className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+                        activeCategory === cat
+                          ? "bg-gradient-to-r from-[#d4a843] to-[#cba03b] text-breslev-blue shadow-lg scale-105"
+                          : "bg-white/50 border border-border/50 text-breslev-blue/70 hover:bg-white hover:text-breslev-blue hover:shadow-md hover:border-breslev-gold/30"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Mobile Filter Button & Sort */}
               <div className="flex items-center justify-between mb-6">
                 <Button
@@ -254,14 +312,19 @@ export default function Boutique() {
                 >
                   <Filter className="h-4 w-4 mr-2" />
                   Filtres
-                  {hasActiveFilters && (filters.type.length + filters.language.length + filters.theme.length + filters.author.length) > 0 && (
-                    <Badge className="ml-2 bg-breslev-gold text-breslev-blue">
-                      {filters.type.length +
-                        filters.language.length +
-                        filters.theme.length +
-                        filters.author.length}
-                    </Badge>
-                  )}
+                  {hasActiveFilters &&
+                    filters.type.length +
+                      filters.language.length +
+                      filters.theme.length +
+                      filters.author.length >
+                      0 && (
+                      <Badge className="ml-2 bg-breslev-gold text-breslev-blue">
+                        {filters.type.length +
+                          filters.language.length +
+                          filters.theme.length +
+                          filters.author.length}
+                      </Badge>
+                    )}
                 </Button>
 
                 {/* Sort */}
@@ -314,7 +377,7 @@ export default function Boutique() {
                 ) : (
                   <p className="text-sm text-muted-foreground">
                     <span className="font-bold text-foreground">
-                      {books.length}
+                      {displayBooks.length}
                     </span>{" "}
                     livre(s) trouvé(s)
                   </p>
@@ -324,8 +387,11 @@ export default function Boutique() {
               {/* Books Grid */}
               {isLoading ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <div key={i} className="bg-card rounded-lg shadow-breslev overflow-hidden border border-border">
+                  {[1, 2, 3, 4, 5, 6].map(i => (
+                    <div
+                      key={i}
+                      className="bg-card rounded-lg shadow-breslev overflow-hidden border border-border"
+                    >
                       <Skeleton className="aspect-[3/4] w-full rounded-none" />
                       <div className="p-4 space-y-3">
                         <Skeleton className="h-5 w-3/4" />
@@ -342,9 +408,9 @@ export default function Boutique() {
                     </div>
                   ))}
                 </div>
-              ) : books.length > 0 ? (
+              ) : displayBooks.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {books.map((book: any, index: number) => (
+                  {displayBooks.map((book: any, index: number) => (
                     <BookCard key={book.id} book={book} index={index} />
                   ))}
                 </div>
@@ -357,20 +423,20 @@ export default function Boutique() {
                     Aucun livre trouvé
                   </h3>
                   <p className="text-muted-foreground mb-6">
-                    Aucun livre ne correspond à vos critères de recherche
+                    Aucun livre ne correspond à cette catégorie.
                   </p>
-                  {hasActiveFilters && (
-                    <Button onClick={resetFilters}>
-                      Réinitialiser les filtres
+                  {activeCategory !== "Tous" && (
+                    <Button onClick={() => setActiveCategory("Tous")}>
+                      Voir tous les livres
                     </Button>
                   )}
                 </div>
               )}
 
               {/* Info résultats */}
-              {!isLoading && books.length > 0 && (
+              {!isLoading && displayBooks.length > 0 && (
                 <div className="mt-12 text-center text-sm text-muted-foreground">
-                  Affichage de {books.length} livre(s)
+                  Affichage de {displayBooks.length} livre(s)
                 </div>
               )}
             </div>
