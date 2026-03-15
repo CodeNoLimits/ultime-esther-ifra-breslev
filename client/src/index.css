@@ -91,6 +91,14 @@
   --chart-3: oklch(0.45 0.12 264);
   --chart-4: oklch(0.65 0.12 85);
   --chart-5: oklch(0.55 0.12 264);
+
+  /* Mobile warm palette variables */
+  --breslev-warm-bg: oklch(0.97 0.015 85);       /* #F5F0E8 — creme chaud */
+  --breslev-warm-surface: oklch(0.95 0.02 75);    /* #EDE4D3 — surface doree douce */
+  --breslev-warm-hero: oklch(0.30 0.06 264);      /* Bleu nuit attenue — moins noir */
+  --breslev-warm-section: oklch(0.22 0.04 264);   /* Section piliers moins sombre */
+  --breslev-peach: oklch(0.90 0.05 60);           /* Touche peche pour accents mobiles */
+  --breslev-soft-gold: oklch(0.80 0.10 80);       /* Or plus clair pour mobile */
 }
 
 .dark {
@@ -374,5 +382,64 @@
 
   .btn-premium-cta:hover::after {
     left: 200%;
+  }
+}
+
+/* ===== MOBILE WARM OVERRIDE (max-width: 767px) ===== */
+/* Esther feedback: "couleurs moins foncees et plus gaies sur portable" */
+/* Desktop stays UNTOUCHED — all overrides scoped to mobile only */
+@media (max-width: 767px) {
+  :root {
+    --background: oklch(0.98 0.01 85);              /* Fond general plus chaud */
+    --breslev-cream: oklch(0.97 0.015 85);          /* Creme plus prononce */
+    --card: oklch(1 0.005 80);                       /* Cards legere teinte chaude */
+    --muted: oklch(0.95 0.015 80);                   /* Muted plus chaud */
+    --muted-foreground: oklch(0.45 0.02 264);        /* Texte secondaire plus doux */
+  }
+
+  /* Hero mobile: degrade vers un bleu plus doux au lieu du noir pur */
+  .hero-v2-bg {
+    background-image:
+      radial-gradient(
+        circle at 50% 30%,
+        rgba(212, 168, 67, 0.25) 0%,
+        transparent 60%
+      ),
+      linear-gradient(180deg, oklch(0.28 0.05 264) 0%, oklch(0.20 0.04 264) 100%);
+    background-size: cover;
+  }
+
+  .hero-v2-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(26, 35, 50, 0.40) 0%,
+      rgba(26, 35, 50, 0.60) 50%,
+      rgba(26, 35, 50, 0.85) 100%
+    );
+  }
+
+  /* Section Piliers: fond plus clair sur mobile */
+  section[class*="bg-[#0b111a]"] {
+    background-color: oklch(0.20 0.04 264) !important;
+  }
+
+  /* Glass cards plus lumineuses sur mobile */
+  .glass-card-v2 {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(212, 168, 67, 0.25);
+  }
+
+  /* Abonnement section plus chaude */
+  .bg-gradient-to-br.from-breslev-gold\/10 {
+    background: linear-gradient(135deg,
+      oklch(0.95 0.03 80) 0%,
+      oklch(0.97 0.015 85) 100%
+    );
+  }
+
+  /* Plans cards mobile — fond chaud */
+  .bg-card {
+    background: oklch(1 0.005 80);
+    border: 1px solid oklch(0.90 0.02 80);
   }
 }
