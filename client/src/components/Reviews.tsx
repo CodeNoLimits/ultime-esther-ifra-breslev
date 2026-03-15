@@ -140,7 +140,7 @@ export default function Reviews({ bookId, bookTitle }: ReviewsProps) {
                     <span className="text-sm font-medium">{star}</span>
                     <Star className="h-3 w-3 fill-breslev-gold text-breslev-gold" />
                   </div>
-                  <div className="flex-1 h-2 bg-breslev-cream rounded-full overflow-hidden">
+                  <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-breslev-gold transition-all"
                       style={{ width: `${percentage}%` }}

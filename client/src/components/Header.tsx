@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 
 export default function Header() {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { count: cartCount } = useCart();
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
