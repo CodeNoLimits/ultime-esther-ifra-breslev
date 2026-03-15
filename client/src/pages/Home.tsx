@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
 import { motion } from "framer-motion";
-import { BookOpen, Compass, Flame, Sparkles, Star } from "lucide-react";
+import { BookOpen, Compass, Flame, Quote, Sparkles, Star } from "lucide-react";
 import { Link } from "wouter";
 
 function FeaturedBooks() {
@@ -350,6 +350,75 @@ export default function Home() {
                   <Link href="/a-propos">En savoir plus sur mon parcours</Link>
                 </Button>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Temoignages / Reviews Section */}
+        <section className="py-16 bg-[#0b111a] relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-breslev-gold/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 -translate-x-1/3" />
+          <div className="container relative z-10">
+            <div className="text-center mb-12">
+              <h2 className="text-sm font-bold tracking-[0.2em] text-breslev-gold uppercase mb-4 font-cinzel">
+                Temoignages
+              </h2>
+              <h3 className="text-3xl md:text-4xl font-bold text-white font-cinzel">
+                Ce que disent nos lecteurs
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  name: "Sarah L.",
+                  rating: 5,
+                  text: "Un livre magnifique qui m'a profondement touchee. Les enseignements de Rabbi Nahman sont presentes de maniere claire et accessible. Je le recommande vivement.",
+                },
+                {
+                  name: "Rachel M.",
+                  rating: 5,
+                  text: "Esther Ifrah a fait un travail remarquable de traduction et d'adaptation. Ce livre est devenu mon compagnon quotidien de priere et de meditation.",
+                },
+                {
+                  name: "Lea K.",
+                  rating: 4,
+                  text: "Tres bon livre, riche en enseignements. La qualite de l'impression est excellente. Une lecture essentielle pour toute personne en quete de spiritualite.",
+                },
+              ].map((testimonial, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.15 }}
+                  className="glass-card-v2 p-8 relative"
+                >
+                  <Quote className="absolute top-4 right-4 h-8 w-8 text-breslev-gold/20" />
+                  <div className="flex gap-0.5 mb-4">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        className={`h-4 w-4 ${
+                          star <= testimonial.rating
+                            ? "fill-breslev-gold text-breslev-gold"
+                            : "text-gray-600"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-white/70 leading-relaxed font-cormorant text-lg mb-6">
+                    "{testimonial.text}"
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-breslev-gold/20 border border-breslev-gold/30 flex items-center justify-center text-breslev-gold font-bold text-sm">
+                      {testimonial.name.charAt(0)}
+                    </div>
+                    <span className="font-semibold text-white text-sm">
+                      {testimonial.name}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>
