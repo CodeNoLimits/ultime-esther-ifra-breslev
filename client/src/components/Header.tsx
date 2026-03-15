@@ -4,7 +4,7 @@ import { APP_LOGO } from "@/const";
 import { useCart } from "@/contexts/CartContext";
 import { motion } from "framer-motion";
 import { Menu, ShoppingCart, User, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 
 export default function Header() {
@@ -12,6 +12,16 @@ export default function Header() {
   const { count: cartCount } = useCart();
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // check initial state
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
     { href: "/", label: "Accueil" },
@@ -26,7 +36,13 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm">
+    <header
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        scrolled
+          ? "bg-background/95 backdrop-blur-md border-b border-border shadow-md"
+          : "bg-background/80 backdrop-blur-sm border-b border-transparent shadow-none"
+      }`}
+    >
       <div className="container">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
