@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 import { Link } from "wouter";
 import { Book } from "../../../drizzle/schema";
 
@@ -36,7 +36,7 @@ export default function BookCard({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: Math.min((index || 0) * 0.05, 0.3) }}
       whileHover={{ y: -8 }}
-      className="group relative bg-card rounded-xl shadow-breslev transition-all duration-300 overflow-hidden border border-breslev-gold/20 hover:shadow-breslev-gold hover:border-breslev-gold/50"
+      className="group relative bg-card rounded-xl shadow-breslev transition-all duration-500 overflow-hidden border border-breslev-gold/20 hover:shadow-[0_0_30px_rgba(212,175,55,0.4),0_20px_40px_rgba(0,0,0,0.15)] hover:border-breslev-gold/60"
     >
       {/* Image Container */}
       <Link href={`/livre/${book.slug}`}>
@@ -53,20 +53,25 @@ export default function BookCard({
               className="w-full h-full object-cover rounded-sm shadow-2xl border-r border-[#ffffff20] border-t border-[#ffffff10]"
               initial={{ rotateY: 0, rotateX: 0, z: 0 }}
               whileHover={{
-                rotateY: -15,
-                rotateX: 5,
-                z: 20,
-                scale: 1.05,
+                rotateY: -12,
+                rotateX: 4,
+                z: 30,
+                scale: 1.08,
                 boxShadow:
-                  "-15px 15px 25px rgba(0,0,0,0.8), 0 0 30px rgba(212, 175, 55, 0.5)",
+                  "-20px 20px 30px rgba(0,0,0,0.7), 0 0 40px rgba(212, 175, 55, 0.4)",
               }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              transition={{ type: "spring", stiffness: 200, damping: 15 }}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-white/50 border border-white/10 rounded-sm">
               <span className="text-sm font-cinzel">Aucune Image</span>
             </div>
           )}
+
+          {/* Shine/glare sweep effect on hover */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10">
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+          </div>
 
           {/* Badges */}
           {!!book.featured && (
@@ -96,6 +101,23 @@ export default function BookCard({
                 }`}
               />
             </button>
+          )}
+
+          {/* Quick Add overlay — slides up from bottom on hover */}
+          {onAddToCart && hasPhysical && (
+            <div className="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-20">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onAddToCart(book.id, "physical");
+                }}
+                className="w-full py-3 bg-breslev-gold/95 backdrop-blur-sm text-breslev-blue font-semibold text-sm flex items-center justify-center gap-2 hover:bg-breslev-gold transition-colors"
+              >
+                <ShoppingCart className="h-4 w-4" />
+                Ajouter au panier — {formatPrice(book.pricePhysical)}
+              </button>
+            </div>
           )}
         </div>
       </Link>
@@ -156,9 +178,9 @@ export default function BookCard({
             <Button
               size="sm"
               variant="default"
-              className="gap-2 bg-breslev-blue hover:bg-breslev-gold hover:text-breslev-blue text-white transition-all shadow-md"
+              className="gap-2 bg-breslev-blue hover:bg-breslev-gold hover:text-breslev-blue text-white transition-all duration-300 shadow-md hover:shadow-breslev-gold hover:scale-105"
             >
-              Voir
+              Decouvrir
             </Button>
           </Link>
         </div>
