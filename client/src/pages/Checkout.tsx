@@ -26,11 +26,10 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 
-// Zones de livraison
+// Zones de livraison (France = +35% surcharge on physical books)
 const SHIPPING_ZONES = {
-  IL: { name: "Israël", min: 500, max: 1500, currency: "₪" },
-  FR: { name: "France", min: 2000, max: 4500, currency: "₪" },
-  CA: { name: "Canada", min: 3000, max: 6000, currency: "₪" },
+  IL: { name: "Israël", min: 500, max: 1500, currency: "₪", physicalSurcharge: 0 },
+  FR: { name: "France", min: 2000, max: 4500, currency: "₪", physicalSurcharge: 0.35 },
 } as const;
 
 type ShippingZone = keyof typeof SHIPPING_ZONES;
@@ -85,15 +84,17 @@ export default function Checkout() {
 
     const totalWeight = calculateTotalWeight();
     const zone = SHIPPING_ZONES[shippingZone];
-    
+
     const baseShipping = zone.min;
     const weightFactor = Math.floor(totalWeight / 500);
     const shipping = Math.min(
       baseShipping + (weightFactor * 500),
       zone.max
     );
-    
-    return shipping;
+
+    // +35% surcharge for physical books shipped to France
+    const surcharge = Math.round(shipping * zone.physicalSurcharge);
+    return shipping + surcharge;
   };
 
   const subtotal = calculateSubtotal();
@@ -318,8 +319,7 @@ export default function Checkout() {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="IL">Israël</SelectItem>
-                          <SelectItem value="FR">France</SelectItem>
-                          <SelectItem value="CA">Canada</SelectItem>
+                          <SelectItem value="FR">France (+35% frais livraison)</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
