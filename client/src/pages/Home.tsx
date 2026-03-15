@@ -1,6 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import BookCard from "@/components/BookCard";
 import CoursAudioDuJour from "@/components/CoursAudioDuJour";
+import LectureDuJour from "@/components/LectureDuJour";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Badge } from "@/components/ui/badge";
@@ -163,6 +164,15 @@ export default function Home() {
               >
                 <CoursAudioDuJour />
               </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Lecture du Jour — Extrait quotidien du Likoutey Moharan */}
+        <section className="py-20 border-b border-white/5 relative overflow-hidden">
+          <div className="container relative z-10">
+            <div className="max-w-2xl mx-auto">
+              <LectureDuJour />
             </div>
           </div>
         </section>
