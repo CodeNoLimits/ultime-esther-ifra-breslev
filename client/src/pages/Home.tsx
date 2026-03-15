@@ -21,10 +21,10 @@ function FeaturedBooks() {
             key={i}
             className="bg-card rounded-lg shadow-breslev p-6 animate-pulse"
           >
-            <div className="aspect-[3/4] bg-breslev-cream rounded-lg mb-4" />
-            <div className="h-6 bg-breslev-cream rounded mb-2" />
-            <div className="h-4 bg-breslev-cream rounded mb-4" />
-            <div className="h-10 bg-breslev-cream rounded" />
+            <div className="aspect-[3/4] bg-white/5 rounded-lg mb-4" />
+            <div className="h-6 bg-white/5 rounded mb-2" />
+            <div className="h-4 bg-white/5 rounded mb-4" />
+            <div className="h-10 bg-white/5 rounded" />
           </div>
         ))}
       </div>
@@ -58,9 +58,21 @@ export default function Home() {
       <Header />
 
       <main className="flex-1">
-        {/* V2 GAN EDEN HERO SECTION */}
-        <section className="hero-v2-bg min-h-[70vh] md:min-h-[90vh] flex items-center justify-center">
+        {/* VERSION CLAUDE CODE — HERO SECTION */}
+        <section className="hero-v2-bg min-h-[70vh] md:min-h-[90vh] flex items-center justify-center border-b border-white/5">
           <div className="hero-v2-overlay"></div>
+
+          {/* Animated Gold Halo */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0.2, 0.4, 0.2], scale: [0.9, 1.1, 0.9] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" as const, delay: 1 }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[150px] md:h-[300px] bg-[#d4a843]/30 blur-[80px] rounded-[100%] pointer-events-none z-[1]"
+          />
+
+          {/* Decorative vertical lines */}
+          <div className="absolute left-8 lg:left-16 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent z-10 hidden md:block" />
+          <div className="absolute right-8 lg:right-16 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent z-10 hidden md:block" />
 
           <div className="container relative py-20 md:py-32 z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -71,7 +83,7 @@ export default function Home() {
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="max-w-2xl text-left"
               >
-                <Badge className="mb-6 bg-transparent border border-breslev-gold text-breslev-gold hover:bg-breslev-gold/10 px-4 py-1">
+                <Badge className="mb-6 bg-transparent border border-[#d4a843] text-[#d4a843] hover:bg-[#d4a843]/10 px-4 py-1">
                   <Sparkles className="h-3 w-3 mr-2" />
                   Collection Kadosh Refined
                 </Badge>
@@ -84,7 +96,7 @@ export default function Home() {
                   </span>
                 </h1>
 
-                <p className="text-lg md:text-2xl mb-8 md:mb-10 text-white/90 md:text-white/80 leading-relaxed font-cormorant border-l-2 border-breslev-gold/50 pl-4 md:pl-6">
+                <p className="text-lg md:text-2xl mb-8 md:mb-10 text-white/90 md:text-white/80 leading-relaxed font-cormorant border-l-2 border-[#d4a843]/50 pl-4 md:pl-6">
                   Traductions authentiques des enseignements de Rabbi Nachman de
                   Breslev pour éclairer votre chemin spirituel au quotidien.
                 </p>
@@ -101,7 +113,7 @@ export default function Home() {
                     asChild
                     size="lg"
                     variant="outline"
-                    className="border-2 border-breslev-gold/40 text-breslev-gold bg-transparent hover:bg-breslev-gold/10 text-lg px-8 py-6 h-auto font-cinzel tracking-wider uppercase backdrop-blur-sm transition-all hover:border-breslev-gold"
+                    className="border-2 border-[#d4a843]/40 text-[#d4a843] bg-transparent hover:bg-[#d4a843]/10 text-lg px-8 py-6 h-auto font-cinzel tracking-wider uppercase backdrop-blur-sm transition-all hover:border-[#d4a843]"
                   >
                     <Link href="/abonnement">S'abonner</Link>
                   </Button>
@@ -115,11 +127,10 @@ export default function Home() {
                 transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
                 className="relative hidden lg:flex justify-center items-center"
               >
-                <div className="absolute w-64 h-64 bg-breslev-gold/20 rounded-full blur-[100px]"></div>
+                <div className="absolute w-64 h-64 bg-[#d4a843]/20 rounded-full blur-[100px]"></div>
                 <div className="animate-pulse-ring w-[400px] h-[400px]"></div>
 
                 <div className="relative z-10 animate-float-3d">
-                  {/* The featured 3D Book - using genuine generated cover from PDF */}
                   <img
                     src="/images/livres/WhatsAppImage2025-10-31at01.25.29.jpeg"
                     alt="Livre vedette Breslev: Likoutey Moharane"
@@ -138,30 +149,10 @@ export default function Home() {
               </motion.div>
             </div>
           </div>
-
-          {/* Custom SVG Wave Divider V2 */}
-          <div className="absolute bottom-0 left-0 right-0 overflow-hidden line-height-0 transform translate-y-[2px]">
-            <img
-              src="/assets/dividers/divider-filigree.svg"
-              alt="divider"
-              className="w-full h-12 object-cover opacity-60"
-            />
-            <svg
-              viewBox="0 0 1440 80"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-auto"
-            >
-              <path
-                d="M0,80 L1440,80 L1440,40 Q1080,80 720,40 Q360,0 0,40 Z"
-                fill="#0b111a"
-              />
-            </svg>
-          </div>
         </section>
 
         {/* Cours Audio du Jour */}
-        <section className="py-16 bg-[#0b111a] relative overflow-hidden">
+        <section className="py-20 border-b border-white/5 relative overflow-hidden">
           <div className="container relative z-10">
             <div className="max-w-2xl mx-auto">
               <motion.div
@@ -176,13 +167,13 @@ export default function Home() {
           </div>
         </section>
 
-        {/* V2 "Pourquoi Breslev" Features Section */}
-        <section className="py-24 bg-[#0b111a] relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-breslev-blue/30 rounded-full blur-[150px] pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
+        {/* "Les 4 Piliers Fondamentaux" */}
+        <section className="py-24 border-b border-white/5 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#d4a843]/5 rounded-full blur-[150px] pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
 
           <div className="container relative z-10">
             <div className="text-center mb-16">
-              <h2 className="text-sm font-bold tracking-[0.2em] text-breslev-gold uppercase mb-4 font-cinzel">
+              <h2 className="text-sm font-bold tracking-[0.2em] text-[#d4a843] uppercase mb-4 font-cinzel">
                 L'Essence de Breslev
               </h2>
               <h3 className="text-3xl md:text-5xl font-bold text-white font-cinzel">
@@ -191,142 +182,85 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Pillar 1: Torah */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="glass-card-v2 p-8 text-center group"
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-breslev-gold/20 to-transparent border border-breslev-gold/30 mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <BookOpen className="h-8 w-8 text-breslev-gold" />
-                </div>
-                <h4 className="text-xl font-bold mb-3 text-white font-cinzel">
-                  L'Étude
-                </h4>
-                <p className="text-white/60 leading-relaxed font-cormorant text-lg">
-                  L'engagement assidu dans la sagesse de la Torah pour éclairer
-                  l'intellect et l'âme.
-                </p>
-              </motion.div>
-
-              {/* Pillar 2: Prière */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="glass-card-v2 p-8 text-center group"
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-breslev-gold/20 to-transparent border border-breslev-gold/30 mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Flame className="h-8 w-8 text-breslev-gold" />
-                </div>
-                <h4 className="text-xl font-bold mb-3 text-white font-cinzel">
-                  La Prière
-                </h4>
-                <p className="text-white/60 leading-relaxed font-cormorant text-lg">
-                  La connexion authentique et brûlante avec le divin à travers
-                  le cœur.
-                </p>
-              </motion.div>
-
-              {/* Pillar 3: Joie */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="glass-card-v2 p-8 text-center group"
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-breslev-gold/20 to-transparent border border-breslev-gold/30 mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Star className="h-8 w-8 text-breslev-gold" />
-                </div>
-                <h4 className="text-xl font-bold mb-3 text-white font-cinzel">
-                  La Joie
-                </h4>
-                <p className="text-white/60 leading-relaxed font-cormorant text-lg">
-                  "C'est une grande Mitsva d'être toujours joyeux" - le remède
-                  absolu.
-                </p>
-              </motion.div>
-
-              {/* Pillar 4: Hitbodedut */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="glass-card-v2 p-8 text-center group"
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-breslev-gold/20 to-transparent border border-breslev-gold/30 mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Compass className="h-8 w-8 text-breslev-gold" />
-                </div>
-                <h4 className="text-xl font-bold mb-3 text-white font-cinzel">
-                  Hitbodedout
-                </h4>
-                <p className="text-white/60 leading-relaxed font-cormorant text-lg">
-                  L'isolement méditatif quotidien pour parler à Dieu comme au
-                  meilleur des amis.
-                </p>
-              </motion.div>
+              {[
+                { icon: BookOpen, title: "L'Étude", desc: "L'engagement assidu dans la sagesse de la Torah pour éclairer l'intellect et l'âme." },
+                { icon: Flame, title: "La Prière", desc: "La connexion authentique et brûlante avec le divin à travers le cœur." },
+                { icon: Star, title: "La Joie", desc: "\"C'est une grande Mitsva d'être toujours joyeux\" - le remède absolu." },
+                { icon: Compass, title: "Hitbodedout", desc: "L'isolement méditatif quotidien pour parler à Dieu comme au meilleur des amis." },
+              ].map((pillar, index) => (
+                <motion.div
+                  key={pillar.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.1 * (index + 1) }}
+                  className="glass-card-v2 p-8 text-center group"
+                >
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#d4a843]/20 to-transparent border border-[#d4a843]/30 mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <pillar.icon className="h-8 w-8 text-[#d4a843]" />
+                  </div>
+                  <h4 className="text-xl font-bold mb-3 text-white font-cinzel">
+                    {pillar.title}
+                  </h4>
+                  <p className="text-white/60 leading-relaxed font-cormorant text-lg">
+                    {pillar.desc}
+                  </p>
+                </motion.div>
+              ))}
             </div>
 
             <div className="mt-16 text-center">
-              <img
-                src="/assets/dividers/divider-magen-david.svg"
-                alt="divider"
-                className="h-8 mx-auto opacity-50"
-              />
+              <div className="w-24 h-[1px] bg-[#d4a843] mx-auto opacity-50" />
             </div>
           </div>
         </section>
 
-        {/* Featured Books Section — Rectangle Central Bleu Marine */}
-        <section className="py-16 bg-[#2C3E50]">
+        {/* Featured Books — Unified Dark */}
+        <section className="py-24 border-b border-white/5">
           <div className="container">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-                Livres Phares
+              <h2 className="text-sm font-bold tracking-[0.2em] text-[#d4a843] uppercase mb-4 font-cinzel">
+                Notre Sélection
               </h2>
-              <p className="text-lg text-white/70 max-w-2xl mx-auto">
+              <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white font-cinzel">
+                Livres Phares
+              </h3>
+              <p className="text-lg text-white/60 max-w-2xl mx-auto">
                 Découvrez notre sélection de livres essentiels pour débuter ou
                 approfondir votre étude des enseignements de Rabbi Nachman.
               </p>
             </div>
 
-            {/* Featured books from database */}
             <FeaturedBooks />
 
             <div className="text-center mt-12">
-              <Button asChild size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10">
+              <Button asChild size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/5 hover:border-[#d4a843]/40">
                 <Link href="/boutique">Voir tous les livres</Link>
               </Button>
             </div>
           </div>
         </section>
 
-        {/* Mission Section */}
-        <section className="py-12 md:py-16 bg-background">
+        {/* Mission Section — Esther Ifrah */}
+        <section className="py-24 border-b border-white/5">
           <div className="container">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              {/* Image / Original Photo */}
               <div className="order-2 md:order-1">
-                <div className="aspect-square rounded-lg shadow-breslev-lg overflow-hidden relative group border border-breslev-gold/30">
+                <div className="aspect-square rounded-lg shadow-breslev-lg overflow-hidden relative group border border-[#d4a843]/30">
                   <img
                     src="/images/breslev_profile.png"
                     alt="Photo d'Esther Ifrah"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/40 to-transparent pointer-events-none" />
                 </div>
               </div>
 
-              {/* Content */}
               <div className="order-1 md:order-2">
-                <Badge className="mb-4 bg-breslev-gold text-breslev-blue">
+                <Badge className="mb-4 bg-[#d4a843] text-[#0a0a0a]">
                   Notre Mission
                 </Badge>
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-breslev-blue">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
                   Esther Ifrah
                 </h2>
                 <div className="space-y-4 text-muted-foreground leading-relaxed">
@@ -354,12 +288,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Temoignages / Reviews Section */}
-        <section className="py-16 bg-[#0b111a] relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-breslev-gold/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 -translate-x-1/3" />
+        {/* Temoignages */}
+        <section className="py-24 border-b border-white/5 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-[#d4a843]/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 -translate-x-1/3" />
           <div className="container relative z-10">
             <div className="text-center mb-12">
-              <h2 className="text-sm font-bold tracking-[0.2em] text-breslev-gold uppercase mb-4 font-cinzel">
+              <h2 className="text-sm font-bold tracking-[0.2em] text-[#d4a843] uppercase mb-4 font-cinzel">
                 Temoignages
               </h2>
               <h3 className="text-3xl md:text-4xl font-bold text-white font-cinzel">
@@ -393,14 +327,14 @@ export default function Home() {
                   transition={{ duration: 0.6, delay: index * 0.15 }}
                   className="glass-card-v2 p-8 relative"
                 >
-                  <Quote className="absolute top-4 right-4 h-8 w-8 text-breslev-gold/20" />
+                  <Quote className="absolute top-4 right-4 h-8 w-8 text-[#d4a843]/20" />
                   <div className="flex gap-0.5 mb-4">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star
                         key={star}
                         className={`h-4 w-4 ${
                           star <= testimonial.rating
-                            ? "fill-breslev-gold text-breslev-gold"
+                            ? "fill-[#d4a843] text-[#d4a843]"
                             : "text-gray-600"
                         }`}
                       />
@@ -410,7 +344,7 @@ export default function Home() {
                     "{testimonial.text}"
                   </p>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-breslev-gold/20 border border-breslev-gold/30 flex items-center justify-center text-breslev-gold font-bold text-sm">
+                    <div className="w-10 h-10 rounded-full bg-[#d4a843]/20 border border-[#d4a843]/30 flex items-center justify-center text-[#d4a843] font-bold text-sm">
                       {testimonial.name.charAt(0)}
                     </div>
                     <span className="font-semibold text-white text-sm">
@@ -424,10 +358,10 @@ export default function Home() {
         </section>
 
         {/* Subscription CTA Section */}
-        <section className="py-16 bg-gradient-to-br from-breslev-gold/10 to-breslev-cream">
+        <section className="py-24">
           <div className="container">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-breslev-blue">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
                 Accédez à toute la sagesse de Breslev
               </h2>
               <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
@@ -435,11 +369,10 @@ export default function Home() {
                 livres et brochures. Lisez où vous voulez, quand vous voulez.
               </p>
 
-              {/* Plans Preview */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-card rounded-lg p-6 shadow-breslev">
+                <div className="bg-card rounded-lg p-6 shadow-breslev border border-white/10">
                   <h3 className="font-bold text-lg mb-2">Mensuel</h3>
-                  <p className="text-3xl font-bold text-breslev-gold mb-2">
+                  <p className="text-3xl font-bold text-[#d4a843] mb-2">
                     49₪
                     <span className="text-sm text-muted-foreground">/mois</span>
                   </p>
@@ -448,12 +381,12 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="bg-breslev-blue text-white rounded-lg p-6 shadow-breslev-lg relative overflow-hidden">
-                  <Badge className="absolute top-2 right-2 bg-breslev-gold text-breslev-blue">
+                <div className="bg-gradient-to-br from-[#d4a843]/15 to-[#d4a843]/5 text-white rounded-lg p-6 shadow-breslev-lg relative overflow-hidden border-2 border-[#d4a843]/40">
+                  <Badge className="absolute top-2 right-2 bg-[#d4a843] text-[#0a0a0a]">
                     Populaire
                   </Badge>
                   <h3 className="font-bold text-lg mb-2">Annuel</h3>
-                  <p className="text-3xl font-bold text-breslev-gold mb-2">
+                  <p className="text-3xl font-bold text-[#d4a843] mb-2">
                     490₪
                     <span className="text-sm text-white/80">/an</span>
                   </p>
@@ -462,9 +395,9 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="bg-card rounded-lg p-6 shadow-breslev">
+                <div className="bg-card rounded-lg p-6 shadow-breslev border border-white/10">
                   <h3 className="font-bold text-lg mb-2">Familial</h3>
-                  <p className="text-3xl font-bold text-breslev-gold mb-2">
+                  <p className="text-3xl font-bold text-[#d4a843] mb-2">
                     690₪
                     <span className="text-sm text-muted-foreground">/an</span>
                   </p>

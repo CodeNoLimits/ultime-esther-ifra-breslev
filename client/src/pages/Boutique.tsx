@@ -29,7 +29,6 @@ export default function Boutique() {
   });
   const [sortBy, setSortBy] = useState("newest");
 
-  // Get books from database
   const { data: allBooks, isLoading } = trpc.books.getAll.useQuery();
   const books = allBooks || [];
 
@@ -43,7 +42,6 @@ export default function Boutique() {
     "Tsaddikim",
   ];
 
-  // Semantic local filtering for the premium tabs
   const displayBooks = books.filter((book: any) => {
     if (activeCategory === "Tous") return true;
     const searchString = `${book.titleFr} ${book.descriptionFr}`.toLowerCase();
@@ -114,9 +112,8 @@ export default function Boutique() {
 
   const FilterSection = () => (
     <div className="space-y-6">
-      {/* Type */}
       <div>
-        <Label className="text-base font-bold mb-3 block text-breslev-blue">
+        <Label className="text-base font-bold mb-3 block text-foreground">
           Type
         </Label>
         <div className="space-y-2">
@@ -138,9 +135,8 @@ export default function Boutique() {
         </div>
       </div>
 
-      {/* Langue */}
       <div>
-        <Label className="text-base font-bold mb-3 block text-breslev-blue">
+        <Label className="text-base font-bold mb-3 block text-foreground">
           Langue
         </Label>
         <div className="space-y-2">
@@ -166,9 +162,8 @@ export default function Boutique() {
         </div>
       </div>
 
-      {/* Thème */}
       <div>
-        <Label className="text-base font-bold mb-3 block text-breslev-blue">
+        <Label className="text-base font-bold mb-3 block text-foreground">
           Thème
         </Label>
         <div className="space-y-2">
@@ -197,9 +192,8 @@ export default function Boutique() {
         </div>
       </div>
 
-      {/* Prix */}
       <div>
-        <Label className="text-base font-bold mb-3 block text-breslev-blue">
+        <Label className="text-base font-bold mb-3 block text-foreground">
           Prix (₪)
         </Label>
         <div className="space-y-4">
@@ -220,9 +214,8 @@ export default function Boutique() {
         </div>
       </div>
 
-      {/* Auteur */}
       <div>
-        <Label className="text-base font-bold mb-3 block text-breslev-blue">
+        <Label className="text-base font-bold mb-3 block text-foreground">
           Auteur
         </Label>
         <div className="space-y-2">
@@ -244,7 +237,6 @@ export default function Boutique() {
         </div>
       </div>
 
-      {/* Reset Button */}
       {hasActiveFilters && (
         <Button variant="outline" className="w-full" onClick={resetFilters}>
           <X className="h-4 w-4 mr-2" />
@@ -260,9 +252,8 @@ export default function Boutique() {
 
       <main className="flex-1 bg-background">
         <div className="container py-8">
-          {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3 text-breslev-blue">
+            <h1 className="text-4xl md:text-5xl font-black mb-3 text-foreground tracking-tight">
               Boutique
             </h1>
             <p className="text-muted-foreground text-lg">
@@ -272,19 +263,16 @@ export default function Boutique() {
           </div>
 
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Desktop Sidebar Filters */}
             <aside className="hidden lg:block w-64 flex-shrink-0">
-              <div className="sticky top-24 bg-card rounded-lg p-6 shadow-breslev border border-border">
-                <h2 className="text-xl font-bold mb-6 text-breslev-blue">
+              <div className="sticky top-24 bg-card rounded-lg p-6 shadow-breslev border border-white/10">
+                <h2 className="text-xl font-bold mb-6 text-foreground">
                   Filtres
                 </h2>
                 <FilterSection />
               </div>
             </aside>
 
-            {/* Main Content */}
             <div className="flex-1 w-full overflow-hidden">
-              {/* Apple-style Category Tabs */}
               <div className="mb-8 w-full overflow-x-auto pb-4 scrollbar-none">
                 <div className="flex gap-3 min-w-max px-1">
                   {categories.map(cat => (
@@ -293,8 +281,8 @@ export default function Boutique() {
                       onClick={() => setActiveCategory(cat)}
                       className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
                         activeCategory === cat
-                          ? "bg-gradient-to-r from-[#d4a843] to-[#cba03b] text-breslev-blue shadow-lg scale-105"
-                          : "bg-white/50 border border-border/50 text-breslev-blue/70 hover:bg-white hover:text-breslev-blue hover:shadow-md hover:border-breslev-gold/30"
+                          ? "bg-gradient-to-r from-[#d4a843] to-[#cba03b] text-[#0a0a0a] shadow-lg scale-105"
+                          : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white hover:border-[#d4a843]/30"
                       }`}
                     >
                       {cat}
@@ -303,7 +291,6 @@ export default function Boutique() {
                 </div>
               </div>
 
-              {/* Mobile Filter Button & Sort */}
               <div className="flex items-center justify-between mb-6">
                 <Button
                   variant="outline"
@@ -318,7 +305,7 @@ export default function Boutique() {
                       filters.theme.length +
                       filters.author.length >
                       0 && (
-                      <Badge className="ml-2 bg-breslev-gold text-breslev-blue">
+                      <Badge className="ml-2 bg-[#d4a843] text-[#0a0a0a]">
                         {filters.type.length +
                           filters.language.length +
                           filters.theme.length +
@@ -327,7 +314,6 @@ export default function Boutique() {
                     )}
                 </Button>
 
-                {/* Sort */}
                 <div className="flex items-center gap-3">
                   <span className="text-sm text-muted-foreground hidden sm:inline">
                     Trier par:
@@ -348,11 +334,10 @@ export default function Boutique() {
                 </div>
               </div>
 
-              {/* Mobile Filters Modal */}
               {mobileFiltersOpen && (
-                <div className="lg:hidden mb-6 bg-card rounded-lg p-6 shadow-breslev border border-border">
+                <div className="lg:hidden mb-6 bg-card rounded-lg p-6 shadow-breslev border border-white/10">
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-xl font-bold text-breslev-blue">
+                    <h2 className="text-xl font-bold text-foreground">
                       Filtres
                     </h2>
                     <Button
@@ -367,7 +352,6 @@ export default function Boutique() {
                 </div>
               )}
 
-              {/* Results Count */}
               <div className="mb-6">
                 {isLoading ? (
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -384,13 +368,12 @@ export default function Boutique() {
                 )}
               </div>
 
-              {/* Books Grid */}
               {isLoading ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {[1, 2, 3, 4, 5, 6].map(i => (
                     <div
                       key={i}
-                      className="bg-card rounded-lg shadow-breslev overflow-hidden border border-border"
+                      className="bg-card rounded-lg shadow-breslev overflow-hidden border border-white/10"
                     >
                       <Skeleton className="aspect-[3/4] w-full rounded-none" />
                       <div className="p-4 space-y-3">
@@ -416,10 +399,10 @@ export default function Boutique() {
                 </div>
               ) : (
                 <div className="text-center py-16">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-breslev-cream mb-4">
-                    <Filter className="h-8 w-8 text-breslev-blue/30" />
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/5 mb-4">
+                    <Filter className="h-8 w-8 text-white/30" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-breslev-blue">
+                  <h3 className="text-xl font-bold mb-2 text-foreground">
                     Aucun livre trouvé
                   </h3>
                   <p className="text-muted-foreground mb-6">
@@ -433,7 +416,6 @@ export default function Boutique() {
                 </div>
               )}
 
-              {/* Info résultats */}
               {!isLoading && displayBooks.length > 0 && (
                 <div className="mt-12 text-center text-sm text-muted-foreground">
                   Affichage de {displayBooks.length} livre(s)

@@ -129,16 +129,18 @@ export default function Abonnement() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-breslev-blue to-blue-900 text-white py-16 md:py-24">
-          <div className="container text-center">
-            <Badge className="mb-4 bg-breslev-gold text-breslev-blue">
+        <section className="relative py-16 md:py-24 text-white overflow-hidden border-b border-white/5">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] to-[#0a0a0a]" />
+          <div className="absolute inset-0" style={{ background: "radial-gradient(circle at 50% 50%, rgba(212, 168, 67, 0.08) 0%, transparent 70%)" }} />
+          <div className="container relative z-10 text-center">
+            <Badge className="mb-4 bg-[#d4a843] text-[#0a0a0a]">
               <Sparkles className="h-3 w-3 mr-1" />
               Accès Illimité
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Accédez à toute la sagesse de Breslev
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto mb-8">
+            <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
               Plus de 30 livres et brochures en lecture illimitée. Lisez où vous
               voulez, quand vous voulez.
             </p>
@@ -146,7 +148,7 @@ export default function Abonnement() {
         </section>
 
         {/* Plans Section */}
-        <section className="py-16 bg-background">
+        <section className="py-20 md:py-24">
           <div className="container">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {plans.map((plan) => {
@@ -156,49 +158,42 @@ export default function Abonnement() {
                     key={plan.id}
                     className={`relative rounded-xl p-8 ${
                       plan.popular
-                        ? "bg-breslev-blue text-white shadow-breslev-lg scale-105 border-4 border-breslev-gold"
-                        : "bg-card shadow-breslev border border-border"
+                        ? "bg-gradient-to-br from-[#d4a843]/15 to-[#d4a843]/5 text-white shadow-breslev-lg scale-105 border-2 border-[#d4a843]/40"
+                        : "bg-card shadow-breslev border border-white/10"
                     }`}
                   >
-                    {/* Popular Badge */}
                     {plan.popular && (
-                      <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-breslev-gold text-breslev-blue">
+                      <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#d4a843] text-[#0a0a0a]">
                         {plan.badge}
                       </Badge>
                     )}
 
-                    {/* Icon */}
                     <div
                       className={`inline-flex items-center justify-center w-12 h-12 rounded-full mb-4 ${
                         plan.popular
-                          ? "bg-breslev-gold/20"
-                          : "bg-breslev-cream"
+                          ? "bg-[#d4a843]/20"
+                          : "bg-white/5 border border-white/10"
                       }`}
                     >
                       <Icon
-                        className={`h-6 w-6 ${
-                          plan.popular ? "text-breslev-gold" : "text-breslev-blue"
-                        }`}
+                        className="h-6 w-6 text-[#d4a843]"
                       />
                     </div>
 
-                    {/* Plan Name */}
                     <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
 
-                    {/* Badge */}
                     {!plan.popular && (
                       <Badge
                         variant="outline"
-                        className="mb-4 border-breslev-blue text-breslev-blue"
+                        className="mb-4 border-white/20 text-foreground"
                       >
                         {plan.badge}
                       </Badge>
                     )}
 
-                    {/* Price */}
                     <div className="mb-6">
                       <div className="flex items-baseline gap-2">
-                        <span className="text-4xl font-bold text-breslev-gold">
+                        <span className="text-4xl font-bold text-[#d4a843]">
                           {plan.price}₪
                         </span>
                         <span
@@ -210,22 +205,17 @@ export default function Abonnement() {
                         </span>
                       </div>
                       {plan.savings && (
-                        <p className="text-sm text-breslev-gold mt-1 font-medium">
+                        <p className="text-sm text-[#d4a843] mt-1 font-medium">
                           {plan.savings}
                         </p>
                       )}
                     </div>
 
-                    {/* Features */}
                     <ul className="space-y-3 mb-8">
                       {plan.features.map((feature, index) => (
                         <li key={index} className="flex items-start gap-3">
                           <Check
-                            className={`h-5 w-5 flex-shrink-0 mt-0.5 ${
-                              plan.popular
-                                ? "text-breslev-gold"
-                                : "text-breslev-blue"
-                            }`}
+                            className="h-5 w-5 flex-shrink-0 mt-0.5 text-[#d4a843]"
                           />
                           <span
                             className={`text-sm ${
@@ -238,11 +228,10 @@ export default function Abonnement() {
                       ))}
                     </ul>
 
-                    {/* CTA Button */}
                     <Button
                       className={`w-full ${
                         plan.popular
-                          ? "bg-breslev-gold text-breslev-blue hover:bg-breslev-gold/90"
+                          ? "bg-[#d4a843] text-[#0a0a0a] hover:bg-[#d4a843]/90"
                           : ""
                       }`}
                       size="lg"
@@ -259,17 +248,17 @@ export default function Abonnement() {
         </section>
 
         {/* Benefits Section */}
-        <section className="py-16 bg-breslev-cream">
+        <section className="py-20 border-t border-white/5">
           <div className="container">
-            <h2 className="text-3xl font-bold text-center mb-12 text-breslev-blue">
+            <h2 className="text-3xl font-bold text-center mb-12 text-foreground">
               Pourquoi s'abonner ?
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               <div className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white mb-4 shadow-breslev">
-                  <Sparkles className="h-8 w-8 text-breslev-gold" />
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/5 border border-white/10 mb-4">
+                  <Sparkles className="h-8 w-8 text-[#d4a843]" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-breslev-blue">
+                <h3 className="text-xl font-bold mb-3 text-foreground">
                   Bibliothèque toujours à jour
                 </h3>
                 <p className="text-muted-foreground">
@@ -279,10 +268,10 @@ export default function Abonnement() {
               </div>
 
               <div className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white mb-4 shadow-breslev">
-                  <Zap className="h-8 w-8 text-breslev-gold" />
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/5 border border-white/10 mb-4">
+                  <Zap className="h-8 w-8 text-[#d4a843]" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-breslev-blue">
+                <h3 className="text-xl font-bold mb-3 text-foreground">
                   Multi-devices
                 </h3>
                 <p className="text-muted-foreground">
@@ -292,10 +281,10 @@ export default function Abonnement() {
               </div>
 
               <div className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white mb-4 shadow-breslev">
-                  <Check className="h-8 w-8 text-breslev-gold" />
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/5 border border-white/10 mb-4">
+                  <Check className="h-8 w-8 text-[#d4a843]" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-breslev-blue">
+                <h3 className="text-xl font-bold mb-3 text-foreground">
                   Sans engagement
                 </h3>
                 <p className="text-muted-foreground">
@@ -308,9 +297,9 @@ export default function Abonnement() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-16 bg-background">
+        <section className="py-20 border-t border-white/5">
           <div className="container max-w-3xl">
-            <h2 className="text-3xl font-bold text-center mb-12 text-breslev-blue">
+            <h2 className="text-3xl font-bold text-center mb-12 text-foreground">
               Questions Fréquentes
             </h2>
             <Accordion type="single" collapsible className="space-y-4">
@@ -318,9 +307,9 @@ export default function Abonnement() {
                 <AccordionItem
                   key={index}
                   value={`item-${index}`}
-                  className="bg-card rounded-lg border border-border px-6"
+                  className="bg-card rounded-lg border border-white/10 px-6"
                 >
-                  <AccordionTrigger className="text-left font-bold hover:text-breslev-gold">
+                  <AccordionTrigger className="text-left font-bold hover:text-[#d4a843]">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground">
@@ -333,9 +322,9 @@ export default function Abonnement() {
         </section>
 
         {/* Final CTA */}
-        <section className="py-16 bg-gradient-to-br from-breslev-gold/10 to-breslev-cream">
+        <section className="py-20 border-t border-white/5">
           <div className="container text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-breslev-blue">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
               Commencez votre voyage spirituel aujourd'hui
             </h2>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
