@@ -1,5 +1,5 @@
 import { APP_TITLE } from "@/const";
-import { Facebook, Instagram, Mail, Phone } from "lucide-react";
+import { Facebook, Instagram, Mail, Phone, Youtube } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Footer() {
@@ -168,6 +168,15 @@ export default function Footer() {
                 aria-label="Instagram"
               >
                 <Instagram className="h-4 w-4" />
+              </a>
+              <a
+                href="https://www.youtube.com/@BreslevEsther"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-breslev-gold/30 text-white hover:bg-breslev-gold hover:text-breslev-blue hover:-translate-y-1 transition-all duration-300 shadow-lg"
+                aria-label="YouTube"
+              >
+                <Youtube className="h-4 w-4" />
               </a>
             </div>
           </div>
