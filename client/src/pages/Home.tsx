@@ -1,5 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import BookCard from "@/components/BookCard";
+import CoursAudioDuJour from "@/components/CoursAudioDuJour";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Badge } from "@/components/ui/badge";
@@ -156,6 +157,22 @@ export default function Home() {
                 fill="#0b111a"
               />
             </svg>
+          </div>
+        </section>
+
+        {/* Cours Audio du Jour */}
+        <section className="py-16 bg-[#0b111a] relative overflow-hidden">
+          <div className="container relative z-10">
+            <div className="max-w-2xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <CoursAudioDuJour />
+              </motion.div>
+            </div>
           </div>
         </section>
 
