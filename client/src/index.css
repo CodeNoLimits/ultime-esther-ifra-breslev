@@ -232,6 +232,40 @@
   }
 }
 
+/* ==========================================
+   MOBILE COLOR REFINEMENTS (Point 12)
+   Ensure gold/white/dark palette renders
+   well on mobile screens with varying
+   brightness and color accuracy.
+   ========================================== */
+@media (max-width: 767px) {
+  :root {
+    /* Slightly brighter gold on mobile for better visibility */
+    --breslev-gold: oklch(0.75 0.14 80);
+    /* Slightly lighter muted text for mobile readability */
+    --muted-foreground: oklch(0.70 0.01 264);
+  }
+
+  /* Improve touch target sizes on mobile */
+  .glass-card-v2 {
+    @apply rounded-xl;
+  }
+
+  /* Ensure sufficient contrast for secondary text */
+  .text-white\/60 {
+    color: rgba(255, 255, 255, 0.70);
+  }
+
+  .text-white\/50 {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  /* Boost border visibility on small screens */
+  .border-white\/10 {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
 /*
   =========================================
   VERSION CLAUDE CODE — Dark Premium

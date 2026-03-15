@@ -145,7 +145,7 @@ export default function BookCard({
           {hasPhysical && (
             <Badge
               variant="outline"
-              className="text-xs border-breslev-blue text-breslev-blue"
+              className="text-xs border-white/30 text-white/80"
             >
               Physique
             </Badge>
