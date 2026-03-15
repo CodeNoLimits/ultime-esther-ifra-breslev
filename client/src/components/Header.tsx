@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 
 export default function Header() {
-  const { isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const { count: cartCount } = useCart();
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,7 +19,7 @@ export default function Header() {
       setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    handleScroll(); // check initial state
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -40,8 +40,8 @@ export default function Header() {
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? "bg-[#0a0a0a]/85 backdrop-blur-md border-b border-white/10 shadow-lg"
-          : "bg-transparent border-b border-transparent shadow-none"
+          ? "bg-background/95 backdrop-blur-md border-b border-border shadow-md"
+          : "bg-background/80 backdrop-blur-sm border-b border-transparent shadow-none"
       }`}
     >
       <div className="container">
@@ -55,7 +55,7 @@ export default function Header() {
               className="flex items-center gap-3 cursor-pointer"
             >
               <img src={APP_LOGO} alt="Esther Ifrah" className="h-10 w-10" />
-              <span className="text-xl font-bold text-foreground hidden sm:inline">
+              <span className="text-xl font-bold text-breslev-blue hidden sm:inline">
                 Esther Ifrah - Littérature Breslev
               </span>
             </motion.div>
@@ -71,10 +71,10 @@ export default function Header() {
             {navLinks.map(link => (
               <Link key={link.href} href={link.href}>
                 <a
-                  className={`text-sm font-medium transition-colors hover:text-[#d4a843] ${
+                  className={`text-sm font-medium transition-colors hover:text-breslev-gold ${
                     isActive(link.href)
-                      ? "text-[#d4a843]"
-                      : "text-white/80"
+                      ? "text-breslev-gold"
+                      : "text-foreground"
                   }`}
                 >
                   {link.label}
@@ -87,10 +87,10 @@ export default function Header() {
           <div className="flex items-center gap-3">
             {/* Cart Icon */}
             <Link href="/panier">
-              <Button variant="ghost" size="icon" className="relative text-white/80 hover:text-[#d4a843]">
+              <Button variant="ghost" size="icon" className="relative">
                 <ShoppingCart className="h-5 w-5" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-[#d4a843] text-[#0a0a0a] text-xs flex items-center justify-center font-bold">
+                  <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-breslev-gold text-breslev-blue text-xs flex items-center justify-center font-bold">
                     {cartCount > 99 ? "99+" : cartCount}
                   </span>
                 )}
@@ -100,7 +100,7 @@ export default function Header() {
             {/* User Menu */}
             {isAuthenticated ? (
               <Link href="/espace-membre">
-                <Button variant="ghost" size="icon" className="text-white/80 hover:text-[#d4a843]">
+                <Button variant="ghost" size="icon">
                   <User className="h-5 w-5" />
                 </Button>
               </Link>
@@ -120,7 +120,7 @@ export default function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-white/80"
+              className="md:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? (
@@ -134,7 +134,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-white/10">
+          <div className="md:hidden py-4 border-t border-border">
             <nav className="flex flex-col gap-3">
               {navLinks.map(link => (
                 <Link key={link.href} href={link.href}>
@@ -142,8 +142,8 @@ export default function Header() {
                     onClick={() => setMobileMenuOpen(false)}
                     className={`block px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                       isActive(link.href)
-                        ? "bg-white/5 text-[#d4a843]"
-                        : "text-white/80 hover:bg-white/5"
+                        ? "bg-breslev-cream text-breslev-gold"
+                        : "text-foreground hover:bg-breslev-cream"
                     }`}
                   >
                     {link.label}

@@ -32,11 +32,13 @@ export default function Produit() {
   const [quantity, setQuantity] = useState(1);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
 
+  // Récupérer le livre
   const { data: book, isLoading } = trpc.books.getBySlug.useQuery(
     { slug: slug || "" },
     { enabled: !!slug }
   );
 
+  // Mutations
   const addToFavoritesMutation = trpc.favorites.add.useMutation({
     onSuccess: () => {
       toast.success("Ajouté aux favoris !");
@@ -75,13 +77,13 @@ export default function Produit() {
         <Header />
         <main className="flex-1 container py-12">
           <div className="animate-pulse">
-            <div className="h-8 bg-white/5 rounded w-1/4 mb-8" />
+            <div className="h-8 bg-breslev-cream rounded w-1/4 mb-8" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div className="aspect-[3/4] bg-white/5 rounded-lg" />
+              <div className="aspect-[3/4] bg-breslev-cream rounded-lg" />
               <div className="space-y-4">
-                <div className="h-12 bg-white/5 rounded" />
-                <div className="h-6 bg-white/5 rounded w-3/4" />
-                <div className="h-32 bg-white/5 rounded" />
+                <div className="h-12 bg-breslev-cream rounded" />
+                <div className="h-6 bg-breslev-cream rounded w-3/4" />
+                <div className="h-32 bg-breslev-cream rounded" />
               </div>
             </div>
           </div>
@@ -112,19 +114,19 @@ export default function Produit() {
   const priceInShekels = currentPrice ? (currentPrice / 100).toFixed(2) : "0.00";
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-breslev-cream/20">
       <Header />
 
       <main className="flex-1">
         {/* Breadcrumb */}
-        <div className="border-b border-white/5">
+        <div className="bg-white border-b border-breslev-cream">
           <div className="container py-4">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Link href="/" className="hover:text-[#d4a843] transition-colors">
+              <Link href="/" className="hover:text-breslev-blue transition-colors">
                 Accueil
               </Link>
               <span>/</span>
-              <Link href="/boutique" className="hover:text-[#d4a843] transition-colors">
+              <Link href="/boutique" className="hover:text-breslev-blue transition-colors">
                 Boutique
               </Link>
               <span>/</span>
@@ -133,11 +135,12 @@ export default function Produit() {
           </div>
         </div>
 
+        {/* Contenu principal */}
         <div className="container py-12">
           <Button
             variant="ghost"
             asChild
-            className="mb-6 -ml-4 hover:bg-white/5"
+            className="mb-6 -ml-4 hover:bg-breslev-cream/50"
           >
             <Link href="/boutique">
               <ArrowLeft className="h-4 w-4 mr-2" />
@@ -148,7 +151,7 @@ export default function Produit() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
             {/* Image du livre */}
             <div className="space-y-4">
-              <div className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-breslev-lg bg-card p-8 border border-white/10">
+              <div className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-breslev bg-white p-8">
                 {book.coverImageUrl ? (
                   <img
                     src={book.coverImageUrl}
@@ -156,12 +159,12 @@ export default function Produit() {
                     className="w-full h-full object-contain"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-white/5">
-                    <Book className="h-24 w-24 text-white/20" />
+                  <div className="w-full h-full flex items-center justify-center bg-breslev-cream">
+                    <Book className="h-24 w-24 text-breslev-blue/30" />
                   </div>
                 )}
                 {book.featured && (
-                  <Badge className="absolute top-4 left-4 bg-[#d4a843] text-[#0a0a0a]">
+                  <Badge className="absolute top-4 left-4 bg-breslev-gold text-white">
                     Phare
                   </Badge>
                 )}
@@ -171,11 +174,11 @@ export default function Produit() {
             {/* Informations du livre */}
             <div className="space-y-6">
               <div>
-                <h1 className="font-serif text-4xl font-bold text-foreground mb-2">
+                <h1 className="font-serif text-4xl font-bold text-breslev-blue mb-2">
                   {book.titleFr}
                 </h1>
                 {book.titleHe && (
-                  <p className="text-2xl text-white/60 font-hebrew mb-4">
+                  <p className="text-2xl text-breslev-blue/70 font-hebrew mb-4">
                     {book.titleHe}
                   </p>
                 )}
@@ -193,23 +196,24 @@ export default function Produit() {
                 </div>
               </div>
 
+              {/* Description courte */}
               <p className="text-lg leading-relaxed">{book.descriptionFr}</p>
 
               {/* Sélection du format */}
-              <Card className="p-6 bg-white/5 border border-white/10">
+              <Card className="p-6 bg-breslev-cream/30">
                 <h3 className="font-semibold mb-4">Choisissez votre format</h3>
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <button
                     onClick={() => setSelectedFormat("physical")}
                     className={`p-4 rounded-lg border-2 transition-all ${
                       selectedFormat === "physical"
-                        ? "border-[#d4a843] bg-[#d4a843]/10"
-                        : "border-white/10 hover:border-[#d4a843]/50"
+                        ? "border-breslev-blue bg-breslev-blue/5"
+                        : "border-border hover:border-breslev-blue/50"
                     }`}
                   >
-                    <Package className="h-6 w-6 mx-auto mb-2 text-[#d4a843]" />
+                    <Package className="h-6 w-6 mx-auto mb-2 text-breslev-blue" />
                     <div className="font-medium">Livre Physique</div>
-                    <div className="text-2xl font-bold text-[#d4a843] mt-2">
+                    <div className="text-2xl font-bold text-breslev-gold mt-2">
                       {book.pricePhysical ? `${(book.pricePhysical / 100).toFixed(2)}₪` : "N/A"}
                     </div>
                   </button>
@@ -219,19 +223,20 @@ export default function Produit() {
                       onClick={() => setSelectedFormat("digital")}
                       className={`p-4 rounded-lg border-2 transition-all ${
                         selectedFormat === "digital"
-                          ? "border-[#d4a843] bg-[#d4a843]/10"
-                          : "border-white/10 hover:border-[#d4a843]/50"
+                          ? "border-breslev-blue bg-breslev-blue/5"
+                          : "border-border hover:border-breslev-blue/50"
                       }`}
                     >
-                      <Download className="h-6 w-6 mx-auto mb-2 text-[#d4a843]" />
+                      <Download className="h-6 w-6 mx-auto mb-2 text-breslev-blue" />
                       <div className="font-medium">Version Digitale</div>
-                      <div className="text-2xl font-bold text-[#d4a843] mt-2">
+                      <div className="text-2xl font-bold text-breslev-gold mt-2">
                         {book.priceDigital ? `${(book.priceDigital / 100).toFixed(2)}₪` : "N/A"}
                       </div>
                     </button>
                   )}
                 </div>
 
+                {/* Quantité */}
                 {selectedFormat === "physical" && (
                   <div className="mb-6">
                     <label className="block text-sm font-medium mb-2">Quantité</label>
@@ -255,22 +260,24 @@ export default function Produit() {
                   </div>
                 )}
 
-                <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg mb-4">
+                {/* Prix total */}
+                <div className="flex items-center justify-between p-4 bg-white rounded-lg mb-4">
                   <span className="text-lg font-medium">Prix total</span>
-                  <span className="text-3xl font-bold text-[#d4a843]">
+                  <span className="text-3xl font-bold text-breslev-gold">
                     {(parseFloat(priceInShekels) * quantity).toFixed(2)}₪
                   </span>
                 </div>
 
+                {/* Boutons d'action */}
                 <div className="flex gap-3">
                   <Button
                     onClick={handleAddToCart}
                     size="lg"
                     className="flex-1"
-                    disabled={isAddingToCart || book.inStock === false || (!book.pdfUrl && !book.pricePhysical)}
+                    disabled={isAddingToCart}
                   >
                     <ShoppingCart className="h-5 w-5 mr-2" />
-                    {book.inStock === false ? "Indisponible" : "Ajouter au panier"}
+                    Ajouter au panier
                   </Button>
                   <Button
                     onClick={handleAddToFavorites}
@@ -283,13 +290,14 @@ export default function Produit() {
                 </div>
               </Card>
 
+              {/* Badges informatifs */}
               <div className="flex flex-wrap gap-2">
                 <Badge variant="outline" className="gap-1">
                   <Globe className="h-3 w-3" />
                   {book.language === "fr" ? "Français" : book.language === "he" ? "Hébreu" : "Anglais"}
                 </Badge>
                 {book.includedInSubscription && (
-                  <Badge variant="outline" className="gap-1 bg-[#d4a843]/10 text-[#d4a843] border-[#d4a843]">
+                  <Badge variant="outline" className="gap-1 bg-breslev-gold/10 text-breslev-gold border-breslev-gold">
                     <Star className="h-3 w-3" />
                     Inclus dans l'abonnement
                   </Badge>
@@ -308,10 +316,10 @@ export default function Produit() {
 
             <TabsContent value="description" className="mt-8">
               <Card className="p-8">
-                <h2 className="text-2xl font-bold mb-4 text-foreground">
+                <h2 className="text-2xl font-bold mb-4 text-breslev-blue">
                   À propos de ce livre
                 </h2>
-                <div className="prose prose-lg max-w-none prose-invert">
+                <div className="prose prose-lg max-w-none">
                   <p className="leading-relaxed whitespace-pre-line">
                     {book.descriptionFr}
                   </p>
@@ -321,7 +329,7 @@ export default function Produit() {
 
             <TabsContent value="details" className="mt-8">
               <Card className="p-8">
-                <h2 className="text-2xl font-bold mb-6 text-foreground">
+                <h2 className="text-2xl font-bold mb-6 text-breslev-blue">
                   Détails du produit
                 </h2>
                 <dl className="grid grid-cols-1 md:grid-cols-2 gap-4">

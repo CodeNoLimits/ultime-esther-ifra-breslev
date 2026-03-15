@@ -46,58 +46,94 @@
   --color-breslev-gold: var(--breslev-gold);
   --color-breslev-cream: var(--breslev-cream);
   --color-breslev-gray: var(--breslev-gray);
-  --color-breslev-copper: var(--breslev-copper);
 }
 
 :root {
-  /* ================================================
-     VERSION CLAUDE CODE — Dark Premium Design System
-     Inspired by Tikoun Aolam's unified dark aesthetic
-     ================================================ */
-
-  /* Breslev Colors: Deep Dark + Luxury Gold */
-  --breslev-blue: oklch(0.08 0.01 264);       /* Near-black #0a0a0a */
-  --breslev-gold: oklch(0.72 0.14 80);        /* #d4a843 — Warm Luxury gold (UNCHANGED) */
-  --breslev-cream: oklch(0.15 0.01 264);      /* Dark surface for muted areas */
-  --breslev-gray: oklch(0.15 0.005 264);      /* Dark gray for borders */
-  --breslev-copper: oklch(0.58 0.12 55);      /* #b87333 — Copper accent */
+  /* Breslev Colors: Premium Deep Blue + Luxury Gold */
+  --breslev-blue: oklch(0.25 0.05 264); /* Deep elegant spiritual blue */
+  --breslev-gold: oklch(
+    0.72 0.14 80
+  ); /* #d4a843 - Warm Luxury gold (AG-4 Fix) */
+  --breslev-cream: oklch(0.99 0.01 85); /* #FAFAF9 - Luxury Light Stone */
+  --breslev-gray: oklch(0.94 0.005 264); /* Soft gray */
 
   --primary: var(--breslev-gold);
-  --primary-foreground: oklch(0.08 0.01 264);
-  --secondary: oklch(0.15 0.005 264);
-  --secondary-foreground: oklch(0.98 0 0);
+  --primary-foreground: var(--breslev-blue);
+  --secondary: var(--breslev-blue);
+  --secondary-foreground: oklch(1 0 0);
   --accent: var(--breslev-gold);
-  --accent-foreground: oklch(0.08 0.01 264);
+  --accent-foreground: var(--breslev-blue);
 
-  --radius: 0.5rem;
-  --background: oklch(0.07 0.005 264);         /* #0a0a0a — Deep dark */
-  --foreground: oklch(0.98 0 0);               /* #fafaf9 — Off-white */
-  --card: oklch(0.11 0.005 264);               /* #171717 — Dark card */
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.11 0.005 264);
-  --popover-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.15 0.005 264);
-  --muted-foreground: oklch(0.65 0.01 264);
+  --radius: 0.5rem; /* 8px - border radius doux et spirituel */
+  --background: oklch(1 0 0); /* Blanc pur */
+  --foreground: oklch(0.25 0.01 264); /* Texte sombre */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.25 0.01 264);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.25 0.01 264);
+  --muted: var(--breslev-cream);
+  --muted-foreground: oklch(0.5 0.01 264);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
+  --border: var(--breslev-gray);
+  --input: var(--breslev-gray);
   --ring: var(--breslev-gold);
-
-  --sidebar: oklch(0.11 0.005 264);
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.15 0.005 264);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.25 0.01 264);
+  --sidebar-accent: var(--breslev-cream);
+  --sidebar-accent-foreground: var(--breslev-blue);
+  --sidebar-border: var(--breslev-gray);
   --sidebar-ring: var(--breslev-gold);
-  --sidebar-primary: var(--breslev-gold);
-  --sidebar-primary-foreground: oklch(0.08 0.01 264);
-
-  --chart-1: var(--breslev-gold);
-  --chart-2: var(--breslev-copper);
+  --sidebar-primary: var(--breslev-blue);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --chart-1: var(--breslev-blue);
+  --chart-2: var(--breslev-gold);
   --chart-3: oklch(0.45 0.12 264);
   --chart-4: oklch(0.65 0.12 85);
   --chart-5: oklch(0.55 0.12 264);
+
+  /* Mobile warm palette variables */
+  --breslev-warm-bg: oklch(0.97 0.015 85);       /* #F5F0E8 — creme chaud */
+  --breslev-warm-surface: oklch(0.95 0.02 75);    /* #EDE4D3 — surface doree douce */
+  --breslev-warm-hero: oklch(0.30 0.06 264);      /* Bleu nuit attenue — moins noir */
+  --breslev-warm-section: oklch(0.22 0.04 264);   /* Section piliers moins sombre */
+  --breslev-peach: oklch(0.90 0.05 60);           /* Touche peche pour accents mobiles */
+  --breslev-soft-gold: oklch(0.80 0.10 80);       /* Or plus clair pour mobile */
+}
+
+.dark {
+  --primary: var(--color-blue-700);
+  --primary-foreground: var(--color-blue-50);
+  --sidebar-primary: var(--color-blue-500);
+  --sidebar-primary-foreground: var(--color-blue-50);
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.85 0.005 65);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.85 0.005 65);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.85 0.005 65);
+  --secondary: oklch(0.24 0.006 286.033);
+  --secondary-foreground: oklch(0.7 0.005 65);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.92 0.005 65);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.488 0.243 264.376);
+  --chart-1: var(--color-blue-300);
+  --chart-2: var(--color-blue-500);
+  --chart-3: var(--color-blue-600);
+  --chart-4: var(--color-blue-700);
+  --chart-5: var(--color-blue-800);
+  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.85 0.005 65);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.488 0.243 264.376);
 }
 
 @layer base {
@@ -121,11 +157,24 @@
 }
 
 @layer components {
+  /**
+   * Custom container utility that centers content and adds responsive padding.
+   *
+   * This overrides Tailwind's default container behavior to:
+   * - Auto-center content (mx-auto)
+   * - Add responsive horizontal padding
+   * - Set max-width for large screens
+   *
+   * Usage: <div className="container">...</div>
+   *
+   * For custom widths, use max-w-* utilities directly:
+   * <div className="max-w-6xl mx-auto px-4">...</div>
+   */
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem;
+    padding-left: 1rem; /* 16px - mobile padding */
     padding-right: 1rem;
   }
 
@@ -136,20 +185,19 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem;
+      padding-left: 1.5rem; /* 24px - tablet padding */
       padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem;
+      padding-left: 2rem; /* 32px - desktop padding */
       padding-right: 2rem;
-      max-width: 1280px;
+      max-width: 1280px; /* Standard content width */
     }
   }
 }
-
 /* Breslev Typography */
 @layer base {
   :root {
@@ -163,12 +211,18 @@
     line-height: 1.6;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-serif);
     font-weight: 700;
     line-height: 1.2;
   }
 
+  /* Classe pour texte hébreu */
   .hebrew {
     font-family: var(--font-sans);
     direction: rtl;
@@ -185,10 +239,6 @@
     color: var(--breslev-gold);
   }
 
-  .text-breslev-copper {
-    color: var(--breslev-copper);
-  }
-
   .bg-breslev-blue {
     background-color: var(--breslev-blue);
   }
@@ -201,24 +251,20 @@
     background-color: var(--breslev-cream);
   }
 
-  .bg-breslev-copper {
-    background-color: var(--breslev-copper);
-  }
-
   .border-breslev-gold {
     border-color: var(--breslev-gold);
   }
 
   .shadow-breslev {
     box-shadow:
-      0 4px 6px -1px rgba(0, 0, 0, 0.3),
-      0 2px 4px -1px rgba(0, 0, 0, 0.2);
+      0 4px 6px -1px rgba(30, 58, 138, 0.1),
+      0 2px 4px -1px rgba(30, 58, 138, 0.06);
   }
 
   .shadow-breslev-lg {
     box-shadow:
-      0 10px 15px -3px rgba(0, 0, 0, 0.4),
-      0 4px 6px -2px rgba(0, 0, 0, 0.2);
+      0 10px 15px -3px rgba(30, 58, 138, 0.1),
+      0 4px 6px -2px rgba(30, 58, 138, 0.05);
   }
 
   .shadow-breslev-gold {
@@ -232,68 +278,34 @@
   }
 }
 
-/* ==========================================
-   MOBILE COLOR REFINEMENTS (Point 12)
-   Ensure gold/white/dark palette renders
-   well on mobile screens with varying
-   brightness and color accuracy.
-   ========================================== */
-@media (max-width: 767px) {
-  :root {
-    /* Slightly brighter gold on mobile for better visibility */
-    --breslev-gold: oklch(0.75 0.14 80);
-    /* Slightly lighter muted text for mobile readability */
-    --muted-foreground: oklch(0.70 0.01 264);
-  }
-
-  /* Improve touch target sizes on mobile */
-  .glass-card-v2 {
-    @apply rounded-xl;
-  }
-
-  /* Ensure sufficient contrast for secondary text */
-  .text-white\/60 {
-    color: rgba(255, 255, 255, 0.70);
-  }
-
-  .text-white\/50 {
-    color: rgba(255, 255, 255, 0.65);
-  }
-
-  /* Boost border visibility on small screens */
-  .border-white\/10 {
-    border-color: rgba(255, 255, 255, 0.15);
-  }
-}
-
-/*
+/* 
   =========================================
-  VERSION CLAUDE CODE — Dark Premium
+  THEME V2: GAN EDEN PREMIUM (Phase 3)
+  Design System by AntiGravity
   =========================================
 */
 
 @layer components {
   /* --- Advanced Glassmorphism --- */
   .glass-panel-v2 {
-    @apply bg-[#0a0a0a]/40 backdrop-blur-xl border border-[#d4a843]/20 shadow-2xl;
+    @apply bg-breslev-blue/40 backdrop-blur-xl border border-breslev-gold/20 shadow-2xl;
   }
 
   .glass-card-v2 {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-lg transition-all duration-500 hover:bg-white/10 hover:border-[#d4a843]/40 hover:-translate-y-2;
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-lg transition-all duration-500 hover:bg-white/10 hover:border-breslev-gold/40 hover:-translate-y-2;
   }
 
   .glass-card-light {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg rounded-2xl transition-all duration-300;
+    @apply bg-white/70 backdrop-blur-xl border border-white/50 shadow-[0_8px_32px_0_rgba(30,58,138,0.08)] rounded-2xl transition-all duration-300;
   }
 
   /* --- Premium Hero Area --- */
   .hero-v2-bg {
-    @apply relative overflow-hidden;
-    background-color: oklch(0.07 0.005 264);
+    @apply relative overflow-hidden bg-breslev-blue;
     background-image:
       radial-gradient(
         circle at 50% 0%,
-        rgba(212, 168, 67, 0.12) 0%,
+        rgba(212, 168, 67, 0.15) 0%,
         transparent 50%
       ),
       url("/assets/patterns/breslev-pattern.svg");
@@ -302,7 +314,7 @@
   }
 
   .hero-v2-overlay {
-    @apply absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/60 via-[#0a0a0a]/40 to-[#0a0a0a] pointer-events-none;
+    @apply absolute inset-0 bg-gradient-to-b from-[#1a2332]/60 via-[#1a2332]/80 to-[#1a2332] pointer-events-none;
   }
 
   /* --- Text Effects --- */
@@ -310,19 +322,21 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-[#e6c875] via-[#d4a843] to-[#c4922b];
   }
 
-  .text-gradient-gold-copper {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#d4a843] to-[#b87333];
-  }
-
   .text-glow-gold {
     text-shadow: 0 0 20px rgba(212, 168, 67, 0.4);
   }
 
-  /* --- Animations --- */
+  /* --- Animations & Micro-Interactions --- */
   @keyframes float-book {
-    0% { transform: translateY(0px) rotateX(5deg) rotateY(-5deg); }
-    50% { transform: translateY(-15px) rotateX(8deg) rotateY(-8deg); }
-    100% { transform: translateY(0px) rotateX(5deg) rotateY(-5deg); }
+    0% {
+      transform: translateY(0px) rotateX(5deg) rotateY(-5deg);
+    }
+    50% {
+      transform: translateY(-15px) rotateX(8deg) rotateY(-8deg);
+    }
+    100% {
+      transform: translateY(0px) rotateX(5deg) rotateY(-5deg);
+    }
   }
 
   .animate-float-3d {
@@ -332,43 +346,33 @@
   }
 
   @keyframes pulse-ring {
-    0% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.05); opacity: 0.2; }
-    100% { transform: scale(1); opacity: 0.5; }
+    0% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.2;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
   }
 
   .animate-pulse-ring::before {
     content: "";
-    @apply absolute inset-0 rounded-full border border-[#d4a843]/50 z-[-1];
+    @apply absolute inset-0 rounded-full border border-breslev-gold/50 z-[-1];
     animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  @keyframes halo-pulse {
-    0%, 100% { opacity: 0.2; transform: translate(-50%, -50%) scale(0.9); }
-    50% { opacity: 0.4; transform: translate(-50%, -50%) scale(1.1); }
-  }
-
-  .animate-halo-pulse {
-    animation: halo-pulse 4s ease-in-out infinite;
-  }
-
-  @keyframes slow-zoom {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-  }
-
-  .animate-slow-zoom {
-    animation: slow-zoom 40s linear infinite;
-    will-change: transform;
   }
 
   /* --- Premium Badges & Buttons --- */
   .badge-bestseller-v2 {
-    @apply absolute -top-3 -right-3 bg-gradient-to-br from-[#d4a843] to-[#9c7827] text-[#0a0a0a] text-xs font-bold px-3 py-1.5 rounded-full shadow-lg border border-white/20 transform rotate-12 z-10;
+    @apply absolute -top-3 -right-3 bg-gradient-to-br from-[#d4a843] to-[#9c7827] text-[#1a2332] text-xs font-bold px-3 py-1.5 rounded-full shadow-lg border border-white/20 transform rotate-12 z-10;
   }
 
   .btn-premium-cta {
-    @apply relative overflow-hidden bg-gradient-to-r from-[#d4a843] to-[#b58c30] text-[#0a0a0a] font-semibold py-3 px-8 rounded-full shadow-[0_0_20px_rgba(212,168,67,0.3)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(212,168,67,0.5)] hover:scale-105;
+    @apply relative overflow-hidden bg-gradient-to-r from-[#d4a843] to-[#b58c30] text-[#1a2332] font-semibold py-3 px-8 rounded-full shadow-[0_0_20px_rgba(212,168,67,0.3)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(212,168,67,0.5)] hover:scale-105;
   }
 
   .btn-premium-cta::after {
@@ -378,5 +382,64 @@
 
   .btn-premium-cta:hover::after {
     left: 200%;
+  }
+}
+
+/* ===== MOBILE WARM OVERRIDE (max-width: 767px) ===== */
+/* Esther feedback: "couleurs moins foncees et plus gaies sur portable" */
+/* Desktop stays UNTOUCHED — all overrides scoped to mobile only */
+@media (max-width: 767px) {
+  :root {
+    --background: oklch(0.98 0.01 85);              /* Fond general plus chaud */
+    --breslev-cream: oklch(0.97 0.015 85);          /* Creme plus prononce */
+    --card: oklch(1 0.005 80);                       /* Cards legere teinte chaude */
+    --muted: oklch(0.95 0.015 80);                   /* Muted plus chaud */
+    --muted-foreground: oklch(0.45 0.02 264);        /* Texte secondaire plus doux */
+  }
+
+  /* Hero mobile: degrade vers un bleu plus doux au lieu du noir pur */
+  .hero-v2-bg {
+    background-image:
+      radial-gradient(
+        circle at 50% 30%,
+        rgba(212, 168, 67, 0.25) 0%,
+        transparent 60%
+      ),
+      linear-gradient(180deg, oklch(0.28 0.05 264) 0%, oklch(0.20 0.04 264) 100%);
+    background-size: cover;
+  }
+
+  .hero-v2-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(26, 35, 50, 0.40) 0%,
+      rgba(26, 35, 50, 0.60) 50%,
+      rgba(26, 35, 50, 0.85) 100%
+    );
+  }
+
+  /* Section Piliers: fond plus clair sur mobile */
+  section[class*="bg-[#0b111a]"] {
+    background-color: oklch(0.20 0.04 264) !important;
+  }
+
+  /* Glass cards plus lumineuses sur mobile */
+  .glass-card-v2 {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(212, 168, 67, 0.25);
+  }
+
+  /* Abonnement section plus chaude */
+  .bg-gradient-to-br.from-breslev-gold\/10 {
+    background: linear-gradient(135deg,
+      oklch(0.95 0.03 80) 0%,
+      oklch(0.97 0.015 85) 100%
+    );
+  }
+
+  /* Plans cards mobile — fond chaud */
+  .bg-card {
+    background: oklch(1 0.005 80);
+    border: 1px solid oklch(0.90 0.02 80);
   }
 }

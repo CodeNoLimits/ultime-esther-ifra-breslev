@@ -28,7 +28,6 @@ export default function BookCard({
   const hasPhysical = !!book.pricePhysical && book.pricePhysical > 0;
   const hasDigital =
     !!book.pdfUrl && !!book.priceDigital && book.priceDigital > 0;
-  const isUnavailable = book.inStock === false || (!book.pdfUrl && !hasPhysical);
 
   return (
     <motion.div
@@ -75,12 +74,7 @@ export default function BookCard({
           </div>
 
           {/* Badges */}
-          {isUnavailable && (
-            <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded z-20">
-              Indisponible
-            </div>
-          )}
-          {!!book.featured && !isUnavailable && (
+          {!!book.featured && (
             <div className="badge-bestseller-v2">Meilleure Vente</div>
           )}
           {book.type === "brochure" && (
@@ -145,7 +139,7 @@ export default function BookCard({
           {hasPhysical && (
             <Badge
               variant="outline"
-              className="text-xs border-white/30 text-white/80"
+              className="text-xs border-breslev-blue text-breslev-blue"
             >
               Physique
             </Badge>
