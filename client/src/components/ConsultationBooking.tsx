@@ -31,7 +31,7 @@ const CONSULTATION_TYPES = [
 
 export default function ConsultationBooking() {
   return (
-    <section className="py-24 border-b border-white/5 relative overflow-hidden">
+    <section className="py-24 bg-[#0b111a] relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-[#d4a843]/5 rounded-full blur-[130px] pointer-events-none translate-y-1/2 -translate-x-1/3" />
 
