@@ -282,14 +282,14 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Featured Books Section */}
-        <section className="py-16 bg-breslev-cream">
+        {/* Featured Books Section — Rectangle Central Bleu Marine */}
+        <section className="py-16 bg-[#2C3E50]">
           <div className="container">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-breslev-blue">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                 Livres Phares
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg text-white/70 max-w-2xl mx-auto">
                 Découvrez notre sélection de livres essentiels pour débuter ou
                 approfondir votre étude des enseignements de Rabbi Nachman.
               </p>
@@ -299,7 +299,7 @@ export default function Home() {
             <FeaturedBooks />
 
             <div className="text-center mt-12">
-              <Button asChild size="lg" variant="outline">
+              <Button asChild size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10">
                 <Link href="/boutique">Voir tous les livres</Link>
               </Button>
             </div>
