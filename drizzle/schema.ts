@@ -294,3 +294,40 @@ export const reviews = sqliteTable("reviews", {
     .$defaultFn(() => new Date())
     .notNull(),
 });
+
+/**
+ * Audio Lessons (Cours Audio Quotidien)
+ */
+export const audioLessons = sqliteTable("audio_lessons", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  titleFr: text("titleFr").notNull(),
+  titleHe: text("titleHe"),
+  descriptionFr: text("descriptionFr"),
+
+  // Rubrique: LM = Likoutey Moharane, HK = Halakha/Cacheroute, MI = Midot, VB = Vie Breslever
+  rubrique: text("rubrique", {
+    enum: ["LM", "HK", "MI", "VB"]
+  }).notNull(),
+
+  audioUrl: text("audioUrl").notNull(),         // URL S3 ou CDN
+  duration: integer("duration"),                 // en secondes
+  thumbnailUrl: text("thumbnailUrl"),
+
+  // Scheduling
+  publishDate: integer("publishDate", { mode: "timestamp" }),  // date de publication
+  dayOfYear: integer("dayOfYear"),               // 1-366 pour rotation quotidienne
+
+  active: integer("active", { mode: "boolean" }).default(true),
+  featured: integer("featured", { mode: "boolean" }).default(false),
+
+  createdAt: integer("createdAt", { mode: "timestamp" })
+    .$defaultFn(() => new Date())
+    .notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp" })
+    .$defaultFn(() => new Date())
+    .$onUpdateFn(() => new Date())
+    .notNull(),
+});
+
+export type AudioLesson = typeof audioLessons.$inferSelect;
+export type InsertAudioLesson = typeof audioLessons.$inferInsert;

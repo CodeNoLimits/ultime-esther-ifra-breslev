@@ -20,12 +20,14 @@ import Panier from "./pages/Panier";
 import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite";
 import Produit from "./pages/Produit";
 import TestPDFPage from "./pages/TestPDFPage";
+import CoursAudio from "./pages/CoursAudio";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path="/boutique" component={Boutique} />
+      <Route path="/cours-audio" component={CoursAudio} />
       <Route path="/livre/:slug" component={Produit} />
       <Route path={"/abonnement"} component={Abonnement} />
       <Route path={"/a-propos"} component={APropos} />

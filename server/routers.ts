@@ -166,6 +166,25 @@ export const appRouter = router({
       return await db.clearCart(ctx.user.id);
     }),
   }),
+
+  audioLessons: router({
+    // Cours du jour (basé sur le jour de l'année)
+    getToday: publicProcedure.query(async () => {
+      return await db.getTodayLesson();
+    }),
+
+    // Tous les cours par rubrique
+    getByRubrique: publicProcedure
+      .input(z.object({ rubrique: z.enum(["LM", "HK", "MI", "VB"]).optional() }))
+      .query(async ({ input }) => {
+        return await db.getAudioLessons(input.rubrique);
+      }),
+
+    // Cours recent (3 derniers)
+    getRecent: publicProcedure.query(async () => {
+      return await db.getRecentLessons(3);
+    }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

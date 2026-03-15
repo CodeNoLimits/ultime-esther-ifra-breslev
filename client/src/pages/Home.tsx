@@ -59,7 +59,7 @@ export default function Home() {
 
       <main className="flex-1">
         {/* V2 GAN EDEN HERO SECTION */}
-        <section className="hero-v2-bg min-h-[90vh] flex items-center justify-center">
+        <section className="hero-v2-bg min-h-[70vh] md:min-h-[90vh] flex items-center justify-center">
           <div className="hero-v2-overlay"></div>
 
           <div className="container relative py-20 md:py-32 z-10">
@@ -84,7 +84,7 @@ export default function Home() {
                   </span>
                 </h1>
 
-                <p className="text-xl md:text-2xl mb-10 text-white/80 leading-relaxed font-cormorant border-l-2 border-breslev-gold/50 pl-6">
+                <p className="text-lg md:text-2xl mb-8 md:mb-10 text-white/90 md:text-white/80 leading-relaxed font-cormorant border-l-2 border-breslev-gold/50 pl-4 md:pl-6">
                   Traductions authentiques des enseignements de Rabbi Nachman de
                   Breslev pour éclairer votre chemin spirituel au quotidien.
                 </p>
@@ -307,7 +307,7 @@ export default function Home() {
         </section>
 
         {/* Mission Section */}
-        <section className="py-16 bg-background">
+        <section className="py-12 md:py-16 bg-background">
           <div className="container">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               {/* Image / Original Photo */}

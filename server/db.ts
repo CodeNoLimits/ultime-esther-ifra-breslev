@@ -12,6 +12,7 @@ import {
   readingProgress,
   subscriptionPlans,
   users,
+  audioLessons,
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
@@ -353,4 +354,47 @@ export async function removeFromCart(userId: number, cartItemId: number) {
 export async function clearCart(userId: number) {
   await db.delete(cartItems).where(eq(cartItems.userId, userId));
   return true;
+}
+
+export async function getTodayLesson() {
+  const dayOfYear = Math.floor(
+    (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000
+  );
+  const lessons = await db
+    .select()
+    .from(audioLessons)
+    .where(and(eq(audioLessons.active, true)))
+    .orderBy(audioLessons.dayOfYear)
+    .all();
+
+  if (lessons.length === 0) return null;
+  // Rotation cyclique basee sur le jour de l'annee
+  return lessons[dayOfYear % lessons.length];
+}
+
+export async function getAudioLessons(rubrique?: string) {
+  if (rubrique) {
+    return await db
+      .select()
+      .from(audioLessons)
+      .where(and(eq(audioLessons.active, true), eq(audioLessons.rubrique, rubrique)))
+      .orderBy(desc(audioLessons.publishDate))
+      .all();
+  }
+  return await db
+    .select()
+    .from(audioLessons)
+    .where(eq(audioLessons.active, true))
+    .orderBy(desc(audioLessons.publishDate))
+    .all();
+}
+
+export async function getRecentLessons(limit: number) {
+  return await db
+    .select()
+    .from(audioLessons)
+    .where(eq(audioLessons.active, true))
+    .orderBy(desc(audioLessons.publishDate))
+    .limit(limit)
+    .all();
 }
