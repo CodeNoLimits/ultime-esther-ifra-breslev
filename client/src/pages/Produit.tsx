@@ -177,6 +177,11 @@ export default function Produit() {
                 <h1 className="font-serif text-4xl font-bold text-breslev-blue mb-2">
                   {book.titleFr}
                 </h1>
+                {!book.inStock && (
+                  <Badge variant="destructive" className="mt-2 mb-2">
+                    Indisponible pour le moment
+                  </Badge>
+                )}
                 {book.titleHe && (
                   <p className="text-2xl text-breslev-blue/70 font-hebrew mb-4">
                     {book.titleHe}
@@ -274,10 +279,11 @@ export default function Produit() {
                     onClick={handleAddToCart}
                     size="lg"
                     className="flex-1"
-                    disabled={isAddingToCart}
+                    disabled={isAddingToCart || !book.inStock}
                   >
-                    <ShoppingCart className="h-5 w-5 mr-2" />
-                    Ajouter au panier
+                    {!book.inStock ? "Indisponible" : (
+                      <><ShoppingCart className="h-5 w-5 mr-2" />Ajouter au panier</>
+                    )}
                   </Button>
                   <Button
                     onClick={handleAddToFavorites}

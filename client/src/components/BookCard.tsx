@@ -73,6 +73,15 @@ export default function BookCard({
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
           </div>
 
+          {/* Unavailable overlay */}
+          {!book.inStock && (
+            <div className="absolute inset-0 bg-black/40 z-10 flex items-center justify-center">
+              <span className="bg-red-600 text-white text-sm font-bold px-4 py-2 rounded-lg shadow-lg">
+                Indisponible
+              </span>
+            </div>
+          )}
+
           {/* Badges */}
           {!!book.featured && (
             <div className="badge-bestseller-v2">Meilleure Vente</div>
@@ -177,10 +186,13 @@ export default function BookCard({
           <Link href={`/livre/${book.slug}`}>
             <Button
               size="sm"
-              variant="default"
-              className="gap-2 bg-breslev-blue hover:bg-breslev-gold hover:text-breslev-blue text-white transition-all duration-300 shadow-md hover:shadow-breslev-gold hover:scale-105"
+              variant={book.inStock ? "default" : "outline"}
+              className={book.inStock
+                ? "gap-2 bg-breslev-blue hover:bg-breslev-gold hover:text-breslev-blue text-white transition-all duration-300 shadow-md hover:shadow-breslev-gold hover:scale-105"
+                : "gap-2 text-muted-foreground"
+              }
             >
-              Decouvrir
+              {book.inStock ? "Decouvrir" : "Voir"}
             </Button>
           </Link>
         </div>
