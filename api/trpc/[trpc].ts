@@ -83,6 +83,22 @@ async function ensureTables() {
       lastReadAt TEXT DEFAULT CURRENT_TIMESTAMP,
       UNIQUE(userId, bookId)
     );
+    CREATE TABLE IF NOT EXISTS audio_lessons (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      titleFr TEXT NOT NULL,
+      titleHe TEXT,
+      descriptionFr TEXT,
+      rubrique TEXT NOT NULL,
+      audioUrl TEXT NOT NULL,
+      duration INTEGER,
+      thumbnailUrl TEXT,
+      publishDate INTEGER,
+      dayOfYear INTEGER,
+      active INTEGER DEFAULT 1,
+      featured INTEGER DEFAULT 0,
+      createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
+      updatedAt INTEGER NOT NULL DEFAULT (unixepoch())
+    );
   `);
   _migrated = true;
 }
@@ -357,6 +373,47 @@ const queries: Record<
       });
     }
     return { success: true };
+  },
+
+  // ── Audio Lessons ──
+  "audioLessons.getToday": async () => {
+    await ensureTables();
+    const db = getClient();
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = now.getTime() - start.getTime();
+    const dayOfYear = Math.floor(diff / 86400000);
+
+    const r = await db.execute(
+      "SELECT * FROM audio_lessons WHERE active = 1 ORDER BY dayOfYear ASC"
+    );
+    if (r.rows.length === 0) return null;
+    return r.rows[dayOfYear % r.rows.length];
+  },
+
+  "audioLessons.getByRubrique": async (input) => {
+    await ensureTables();
+    const db = getClient();
+    if (input?.rubrique) {
+      const r = await db.execute({
+        sql: "SELECT * FROM audio_lessons WHERE active = 1 AND rubrique = ? ORDER BY id ASC",
+        args: [input.rubrique],
+      });
+      return r.rows;
+    }
+    const r = await db.execute(
+      "SELECT * FROM audio_lessons WHERE active = 1 ORDER BY id ASC"
+    );
+    return r.rows;
+  },
+
+  "audioLessons.getRecent": async () => {
+    await ensureTables();
+    const db = getClient();
+    const r = await db.execute(
+      "SELECT * FROM audio_lessons WHERE active = 1 ORDER BY id DESC LIMIT 3"
+    );
+    return r.rows;
   },
 };
 
