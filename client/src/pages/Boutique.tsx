@@ -262,7 +262,7 @@ export default function Boutique() {
         <div className="container py-8">
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3 text-breslev-blue">
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-3 text-breslev-blue tracking-tight">
               Boutique
             </h1>
             <p className="text-muted-foreground text-lg">
