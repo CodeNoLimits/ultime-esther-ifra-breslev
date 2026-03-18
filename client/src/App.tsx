@@ -21,6 +21,7 @@ import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite";
 import Produit from "./pages/Produit";
 import TestPDFPage from "./pages/TestPDFPage";
 import CoursAudio from "./pages/CoursAudio";
+import Etudes from "./pages/Etudes";
 
 function Router() {
   return (
@@ -28,6 +29,7 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path="/boutique" component={Boutique} />
       <Route path="/cours-audio" component={CoursAudio} />
+      <Route path="/etudes" component={Etudes} />
       <Route path="/livre/:slug" component={Produit} />
       <Route path={"/abonnement"} component={Abonnement} />
       <Route path={"/a-propos"} component={APropos} />

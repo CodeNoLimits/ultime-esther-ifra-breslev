@@ -27,6 +27,7 @@ export default function Header() {
     { href: "/", label: "Accueil" },
     { href: "/boutique", label: "Boutique" },
     { href: "/cours-audio", label: "Cours Audio" },
+    { href: "/etudes", label: "Études" },
     { href: "/abonnement", label: "Abonnement" },
     { href: "/a-propos", label: "À Propos" },
   ];
