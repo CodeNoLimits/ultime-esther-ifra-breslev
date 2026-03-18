@@ -6,7 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "", {
   apiVersion: "2026-01-28.clover" as any,
 });
 
-const SITE_URL = process.env.VITE_APP_URL || "https://breslev-books-preview.vercel.app";
+const SITE_URL = process.env.SITE_URL || process.env.VITE_APP_URL || "https://esther-code-live.vercel.app";
 
 export function registerPaymentRoutes(app: Express) {
   // POST /api/checkout — Create Stripe Checkout Session
@@ -49,7 +49,7 @@ export function registerPaymentRoutes(app: Express) {
           price_data: {
             currency: "ils",
             product_data: {
-              name: `${book.title}${item.type === "digital" ? " (Numérique)" : " (Broché)"}`,
+              name: `${book.titleFr || book.titleEn}${item.type === "digital" ? " (Numérique)" : " (Broché)"}`,
               description: book.author ?? undefined,
             },
             unit_amount: price, // already in agorot (cents)
@@ -75,7 +75,7 @@ export function registerPaymentRoutes(app: Express) {
       };
 
       if (shippingAddress) {
-        sessionParams.shipping_address_collection = { allowed_countries: ["IL", "FR"] };
+        sessionParams.shipping_address_collection = { allowed_countries: ["IL", "FR", "CA", "BE", "CH"] };
       }
 
       const session = await stripe.checkout.sessions.create(sessionParams);

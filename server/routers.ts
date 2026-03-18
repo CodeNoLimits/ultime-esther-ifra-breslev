@@ -184,6 +184,22 @@ export const appRouter = router({
     getRecent: publicProcedure.query(async () => {
       return await db.getRecentLessons(3);
     }),
+
+    // Sauvegarder progression (position en secondes)
+    saveProgress: protectedProcedure
+      .input(z.object({
+        lessonId: z.number(),
+        positionSec: z.number().min(0),
+        completed: z.boolean().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return await db.saveAudioProgress(ctx.user.id, input.lessonId, input.positionSec, input.completed ?? false);
+      }),
+
+    // Récupérer progression de l'utilisateur
+    getProgress: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getAudioProgress(ctx.user.id);
+    }),
   }),
 });
 

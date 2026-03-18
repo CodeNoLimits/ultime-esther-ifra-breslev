@@ -1,10 +1,11 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { trpc } from "@/lib/trpc";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Play, Pause, Headphones, Calendar } from "lucide-react";
+import { Play, Pause, Headphones, Calendar, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 const RUBRIQUES = [
   { id: "ALL", label: "Tous les cours" },
@@ -15,16 +16,26 @@ const RUBRIQUES = [
 ];
 
 export default function CoursAudio() {
+  const { isAuthenticated } = useAuth();
   const [selectedTab, setSelectedTab] = useState("ALL");
   const [playingId, setPlayingId] = useState<number | null>(null);
   const [progress, setProgress] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const saveProgressMutation = trpc.audioLessons.saveProgress.useMutation();
+  const { data: userProgress } = trpc.audioLessons.getProgress.useQuery(undefined, {
+    enabled: isAuthenticated,
+  });
 
   const { data: lessons, isLoading } = trpc.audioLessons.getByRubrique.useQuery({
     rubrique: selectedTab !== "ALL" ? (selectedTab as any) : undefined,
   });
 
   const playingLesson = lessons?.find((l) => l.id === playingId);
+
+  // Returns true if lesson was completed by this user
+  const isCompleted = useCallback((lessonId: number) => {
+    return userProgress?.some(p => p.lessonId === lessonId && p.completed) ?? false;
+  }, [userProgress]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -36,19 +47,45 @@ export default function CoursAudio() {
       }
     };
 
-    const handleEnded = () => setPlayingId(null);
+    const handleEnded = () => {
+      if (playingId && isAuthenticated) {
+        saveProgressMutation.mutate({ lessonId: playingId, positionSec: 0, completed: true });
+      }
+      setPlayingId(null);
+    };
+
+    // Save position every 15 seconds while playing
+    const saveInterval = setInterval(() => {
+      if (audio && !audio.paused && playingId && isAuthenticated && audio.currentTime > 5) {
+        const completed = audio.duration > 0 && (audio.currentTime / audio.duration) > 0.9;
+        saveProgressMutation.mutate({
+          lessonId: playingId,
+          positionSec: Math.floor(audio.currentTime),
+          completed,
+        });
+      }
+    }, 15000);
 
     audio.addEventListener("timeupdate", updateProgress);
     audio.addEventListener("ended", handleEnded);
     return () => {
       audio.removeEventListener("timeupdate", updateProgress);
       audio.removeEventListener("ended", handleEnded);
+      clearInterval(saveInterval);
     };
-  }, [playingLesson]);
+  }, [playingLesson, playingId, isAuthenticated]);
 
   const togglePlay = (lessonId: number, url: string) => {
     if (playingId === lessonId) {
       if (audioRef.current) {
+        // Save position on pause
+        if (isAuthenticated) {
+          saveProgressMutation.mutate({
+            lessonId,
+            positionSec: Math.floor(audioRef.current.currentTime),
+            completed: false,
+          });
+        }
         audioRef.current.pause();
         setPlayingId(null);
       }
@@ -130,6 +167,9 @@ export default function CoursAudio() {
                     <span className="text-xs font-bold px-2 py-1 bg-breslev-gold/10 text-breslev-gold rounded uppercase">
                       {RUBRIQUES.find(r => r.id === lesson.rubrique)?.label || lesson.rubrique}
                     </span>
+                    {isCompleted(lesson.id) && (
+                      <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" aria-label="Cours écouté" />
+                    )}
                     <span className="flex items-center text-xs text-muted-foreground">
                       <Calendar className="w-3 h-3 mr-1" />
                       {new Date(lesson.publishDate || "").toLocaleDateString("fr-FR")}

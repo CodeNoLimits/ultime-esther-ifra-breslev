@@ -1,4 +1,4 @@
-import { integer, primaryKey, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, primaryKey, real, sqliteTable, text, unique } from "drizzle-orm/sqlite-core";
 
 /**
  * Core user table backing auth flow.
@@ -331,3 +331,27 @@ export const audioLessons = sqliteTable("audio_lessons", {
 
 export type AudioLesson = typeof audioLessons.$inferSelect;
 export type InsertAudioLesson = typeof audioLessons.$inferInsert;
+
+/**
+ * Audio Lesson Progress — tracks per-user listening position
+ */
+export const audioProgress = sqliteTable(
+  "audio_progress",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    userId: integer("userId")
+      .references(() => users.id)
+      .notNull(),
+    lessonId: integer("lessonId")
+      .references(() => audioLessons.id)
+      .notNull(),
+    positionSec: integer("positionSec").default(0).notNull(),
+    completed: integer("completed", { mode: "boolean" }).default(false),
+    lastListenedAt: integer("lastListenedAt", { mode: "timestamp" })
+      .$defaultFn(() => new Date())
+      .notNull(),
+  },
+  (t) => ({ uniq: unique().on(t.userId, t.lessonId) })
+);
+
+export type AudioProgress = typeof audioProgress.$inferSelect;

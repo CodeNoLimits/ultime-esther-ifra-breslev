@@ -13,6 +13,7 @@ import {
   subscriptionPlans,
   users,
   audioLessons,
+  audioProgress,
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
@@ -377,7 +378,7 @@ export async function getAudioLessons(rubrique?: string) {
     return await db
       .select()
       .from(audioLessons)
-      .where(and(eq(audioLessons.active, true), eq(audioLessons.rubrique, rubrique)))
+      .where(and(eq(audioLessons.active, true), eq(audioLessons.rubrique, rubrique as "LM" | "HK" | "MI" | "VB")))
       .orderBy(desc(audioLessons.publishDate))
       .all();
   }
@@ -396,5 +397,25 @@ export async function getRecentLessons(limit: number) {
     .where(eq(audioLessons.active, true))
     .orderBy(desc(audioLessons.publishDate))
     .limit(limit)
+    .all();
+}
+
+export async function saveAudioProgress(userId: number, lessonId: number, positionSec: number, completed: boolean) {
+  const now = new Date();
+  return await db
+    .insert(audioProgress)
+    .values({ userId, lessonId, positionSec, completed, lastListenedAt: now })
+    .onConflictDoUpdate({
+      target: [audioProgress.userId, audioProgress.lessonId],
+      set: { positionSec, completed, lastListenedAt: now },
+    })
+    .run();
+}
+
+export async function getAudioProgress(userId: number) {
+  return await db
+    .select()
+    .from(audioProgress)
+    .where(eq(audioProgress.userId, userId))
     .all();
 }
