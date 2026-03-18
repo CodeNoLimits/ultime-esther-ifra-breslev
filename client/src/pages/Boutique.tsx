@@ -270,9 +270,10 @@ export default function Boutique() {
         <div className="container py-8">
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-3 text-breslev-blue tracking-tight">
-              Boutique
+            <h1 className="text-4xl md:text-5xl font-black mb-2 text-breslev-blue tracking-tight font-cinzel">
+              Notre Bibliothèque
             </h1>
+            <div className="h-1 w-20 bg-breslev-gold rounded-full mb-4" />
             <p className="text-muted-foreground text-lg">
               Découvrez notre collection complète de livres et brochures sur les
               enseignements de Rabbi Nachman
