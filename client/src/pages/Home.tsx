@@ -9,6 +9,8 @@ import { motion } from "framer-motion";
 import { Facebook, Headphones, Instagram, Quote, Star, Youtube } from "lucide-react";
 import { Link } from "wouter";
 import { Helmet } from "react-helmet-async";
+import TrustBar from "@/components/TrustBar";
+import ConsultationBooking from "@/components/ConsultationBooking";
 
 function FeaturedBooks() {
   const { data: books, isLoading } = trpc.books.getFeatured.useQuery();
@@ -225,6 +227,8 @@ export default function Home() {
           </div>
         </section>
 
+        <TrustBar />
+
         {/* AUDIO LIBRARY — 4 Categories matching reference */}
         <section className="py-16 bg-breslev-cream">
           <div className="container">
@@ -356,6 +360,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <ConsultationBooking />
 
         {/* SUBSCRIPTION CTA */}
         <section className="py-16 bg-white">
