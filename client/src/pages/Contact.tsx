@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
@@ -37,13 +38,27 @@ export default function Contact() {
     },
   });
 
-  function onSubmit(data: ContactFormValues) {
-    console.log(data);
-    // TODO: Connect to backend API
-    alert(
-      "Message envoyé avec succès ! Nous vous répondrons dans les plus brefs délais."
-    );
-    form.reset();
+  const [isSending, setIsSending] = useState(false);
+
+  async function onSubmit(data: ContactFormValues) {
+    setIsSending(true);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({})) as { error?: string };
+        throw new Error(err.error || "Erreur lors de l'envoi");
+      }
+      form.reset();
+      alert("Message envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.");
+    } catch (error: any) {
+      alert(`Erreur : ${error.message || "Veuillez réessayer"}`);
+    } finally {
+      setIsSending(false);
+    }
   }
 
   return (
@@ -206,10 +221,11 @@ export default function Contact() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-[#d4a843] hover:bg-[#c49a3c] text-white font-bold tracking-wide transition-all"
+                    disabled={isSending}
+                    className="w-full bg-[#d4a843] hover:bg-[#c49a3c] text-white font-bold tracking-wide transition-all disabled:opacity-70"
                   >
                     <Send className="w-4 h-4 mr-2" />
-                    Envoyer le message
+                    {isSending ? "Envoi en cours..." : "Envoyer le message"}
                   </Button>
                 </form>
               </Form>
