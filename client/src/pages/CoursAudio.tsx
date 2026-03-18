@@ -215,7 +215,7 @@ export default function CoursAudio() {
 
         {/* Sticky Player */}
         {playingLesson && (
-          <div className="fixed bottom-0 md:bottom-2 left-0 right-0 z-50 px-0 md:px-4 pointer-events-none">
+          <div className="fixed bottom-[68px] md:bottom-2 left-0 right-0 z-40 px-0 md:px-4 pointer-events-none">
             <div className="container pointer-events-auto">
               <motion.div
                 initial={{ y: 100, opacity: 0 }}

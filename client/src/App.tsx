@@ -22,6 +22,7 @@ import Produit from "./pages/Produit";
 import TestPDFPage from "./pages/TestPDFPage";
 import CoursAudio from "./pages/CoursAudio";
 import Etudes from "./pages/Etudes";
+import BottomNav from "./components/BottomNav";
 
 function Router() {
   return (
@@ -60,6 +61,7 @@ function App() {
           <TooltipProvider>
             <Toaster />
             <Router />
+            <BottomNav />
           </TooltipProvider>
         </CartProvider>
       </ThemeProvider>
