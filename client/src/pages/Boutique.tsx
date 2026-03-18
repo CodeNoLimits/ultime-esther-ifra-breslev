@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Helmet } from "react-helmet-async";
 import {
   Select,
   SelectContent,
@@ -256,6 +257,13 @@ export default function Boutique() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Boutique — Livres Breslev | breslev.fr</title>
+        <meta name="description" content="Tous les livres de Rabbi Nachman de Breslev disponibles en français : Azamra, Likoutey Moharane, Sipourey Maasiot. Éditions physiques et numériques. Livraison internationale." />
+        <meta property="og:title" content="Boutique Livres Breslev — Esther Ifrah" />
+        <meta property="og:description" content="Azamra, Likoutey Moharane, Sipourey Maasiot et plus. Livres de Rabbi Nachman en français." />
+        <meta property="og:url" content="https://breslev.fr/boutique" />
+      </Helmet>
       <Header />
 
       <main className="flex-1 bg-background">

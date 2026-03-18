@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -63,6 +64,12 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f8f6f3]">
+      <Helmet>
+        <title>Contact — Esther Ifrah | breslev.fr</title>
+        <meta name="description" content="Contactez Esther Ifrah pour toute question sur nos livres Breslev, vos commandes ou un conseil spirituel. WhatsApp, email ou formulaire de contact." />
+        <meta property="og:title" content="Contactez Esther Ifrah — breslev.fr" />
+        <meta property="og:url" content="https://breslev.fr/contact" />
+      </Helmet>
       <Header />
 
       <main className="flex-grow pt-32 pb-16">

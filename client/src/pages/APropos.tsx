@@ -5,15 +5,23 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Book, Heart, Sparkles, Users } from "lucide-react";
 import { Link } from "wouter";
+import { Helmet } from "react-helmet-async";
 
 export default function APropos() {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>À propos — Esther Ifrah & Rav Avraham Ifrah | breslev.fr</title>
+        <meta name="description" content="Découvrez Esther Ifrah et le Rav Avraham Ifrah, masoretis Breslev depuis 50 ans à Jérusalem. Fondateurs des Éditions Mayanot Hatsadik, dédiées aux enseignements de Rabbi Nachman." />
+        <meta property="og:title" content="À propos — Esther & Rav Avraham Ifrah | breslev.fr" />
+        <meta property="og:description" content="50 ans de tradition Breslev à Jérusalem. Auteur et éditeur des livres de Rabbi Nachman en français." />
+        <meta property="og:url" content="https://breslev.fr/a-propos" />
+      </Helmet>
       <Header />
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#0A1128] via-breslev-blue to-black text-white py-20 md:py-32">
+        <section className="hero-v2-bg relative overflow-hidden py-20 md:py-32">
           {/* Subtle Decorative Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-breslev-gold/10 blur-[120px] rounded-full pointer-events-none" />
 
@@ -27,12 +35,12 @@ export default function APropos() {
               <Heart className="h-4 w-4 mr-2" />
               Notre Mission
             </Badge>
-            <h1 className="text-5xl md:text-7xl font-serif font-bold mb-8 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-breslev-cream to-breslev-gold">
+            <h1 className="text-5xl md:text-7xl font-serif font-bold mb-8 leading-tight text-breslev-blue">
               Transmettre la sagesse
               <br />
               de Rabbi Nachman
             </h1>
-            <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto font-light leading-relaxed">
+            <p className="text-xl md:text-2xl text-breslev-blue/70 max-w-3xl mx-auto font-light leading-relaxed">
               Depuis plus de 50 ans, je me consacre à rendre accessibles les
               enseignements de Breslev aux lecteurs francophones.
             </p>

@@ -8,6 +8,7 @@ import { trpc } from "@/lib/trpc";
 import { motion } from "framer-motion";
 import { Facebook, Headphones, Instagram, Quote, Star, Youtube } from "lucide-react";
 import { Link } from "wouter";
+import { Helmet } from "react-helmet-async";
 
 function FeaturedBooks() {
   const { data: books, isLoading } = trpc.books.getFeatured.useQuery();
@@ -75,17 +76,39 @@ const TESTIMONIALS = [
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-breslev-cream">
+      <Helmet>
+        <title>Esther Ifrah — Livres de Rabbi Nachman de Breslev | breslev.fr</title>
+        <meta name="description" content="Découvrez la boutique Breslev d'Esther Ifrah : livres, cours audio et enseignements authentiques de Rabbi Nachman de Breslev. Livraison France, Belgique, Canada, Israël." />
+        <meta property="og:title" content="Esther Ifrah — Livres de Rabbi Nachman de Breslev" />
+        <meta property="og:description" content="Boutique en ligne de livres Breslev, cours audio et enseignements de Rabbi Nachman. Azamra, Likoutey Moharane, Sipourey Maasiot." />
+        <meta property="og:url" content="https://breslev.fr/" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
       <Header />
 
       <main className="flex-1">
-        {/* HERO — Centered, clean, matching reference */}
-        <section className="py-20 md:py-28 bg-breslev-cream">
-          <div className="container">
+        {/* HERO — Video background matching reference (breslev-esther-ifrah) */}
+        <section className="relative min-h-[70vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden">
+          {/* Video Background */}
+          <video
+            className="absolute inset-0 w-full h-full object-cover z-0"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/images/breslev_profile.png"
+          >
+            <source src="/videos/hero-bg.mp4" type="video/mp4" />
+          </video>
+          {/* Overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A]/55 via-[#1E3A8A]/40 to-[#0F172A]/75 z-[1]" />
+
+          <div className="container relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-center max-w-3xl mx-auto"
+              className="text-center max-w-3xl mx-auto bg-white/95 backdrop-blur-[10px] rounded-2xl border-2 border-breslev-gold p-10 md:p-14 shadow-2xl"
             >
               <h1 className="text-4xl md:text-6xl font-serif font-bold text-breslev-blue mb-6 leading-tight">
                 Breslev Esther Ifrah
@@ -159,11 +182,54 @@ export default function Home() {
           </div>
         </section>
 
+        {/* VIDÉOS D'ESTHER IFRAH */}
+        <section className="py-16 bg-breslev-blue">
+          <div className="container">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-3">
+                Vidéos d'Esther Ifrah
+              </h2>
+              <p className="text-white/70 text-lg max-w-2xl mx-auto">
+                Regardez et écoutez les enseignements de Rabbi Nachman en vidéo
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { src: "/videos/esther_01_presentation.mp4", title: "Présentation", subtitle: "Qui est Esther Ifrah ?" },
+                { src: "/videos/esther_02_likoutei.mp4", title: "Likoutei Moharan", subtitle: "Thora Alef — Introduction" },
+                { src: "/videos/esther_03_clip.mp4", title: "Enseignement du jour", subtitle: "La musique et la Torah" },
+              ].map((vid, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15 }}
+                  className="rounded-xl overflow-hidden border border-breslev-gold/30 bg-black/30 shadow-lg"
+                >
+                  <video
+                    className="w-full aspect-video object-cover"
+                    controls
+                    playsInline
+                    preload="metadata"
+                  >
+                    <source src={vid.src} type="video/mp4" />
+                  </video>
+                  <div className="p-4">
+                    <h3 className="font-bold text-white text-base">{vid.title}</h3>
+                    <p className="text-white/60 text-sm mt-1">{vid.subtitle}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* AUDIO LIBRARY — 4 Categories matching reference */}
         <section className="py-16 bg-breslev-cream">
           <div className="container">
             <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-breslev-blue mb-3">
+              <h2 className="text-3xl md:text-4xl font-serif font-extrabold text-breslev-blue mb-3 tracking-tight uppercase">
                 Bibliothèque Audio
               </h2>
               <p className="text-muted-foreground text-lg">
@@ -248,6 +314,45 @@ export default function Home() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* VOYAGES — Section Prochains Voyages */}
+        <section className="py-16 bg-white">
+          <div className="container">
+            <div className="text-center mb-10">
+              <span className="inline-block text-xs font-bold tracking-[0.2em] uppercase text-breslev-gold bg-breslev-gold/10 px-4 py-1.5 rounded-full mb-4">
+                Nouveauté
+              </span>
+              <h2 className="text-3xl md:text-4xl font-serif font-extrabold text-breslev-blue mb-3 tracking-tight">
+                Voyages & Retraites Breslev
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Rejoignez Esther Ifrah pour des voyages spirituels sur les chemins de Rabbi Nachman
+              </p>
+            </div>
+            <div className="max-w-2xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="relative rounded-2xl overflow-hidden border-2 border-breslev-gold/30 bg-gradient-to-br from-breslev-blue to-[#1a2d4a] p-8 text-center shadow-xl"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-breslev-gold/5 to-transparent pointer-events-none" />
+                <div className="text-5xl mb-4">✈️</div>
+                <h3 className="text-2xl font-bold text-white mb-3 font-cinzel">Prochain Voyage — Bientôt</h3>
+                <p className="text-white/70 font-cormorant text-lg mb-6 leading-relaxed">
+                  Esther Ifrah prépare un prochain voyage spirituel.<br />
+                  Inscrivez-vous pour être parmi les premiers informés.
+                </p>
+                <a
+                  href="mailto:contact@breslev.fr?subject=Voyage%20Breslev%20-%20Je%20suis%20intéressé(e)"
+                  className="inline-flex items-center gap-2 bg-breslev-gold hover:bg-breslev-gold/90 text-breslev-blue font-bold px-8 py-3 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg"
+                >
+                  Être informé(e) en premier
+                </a>
+              </motion.div>
             </div>
           </div>
         </section>

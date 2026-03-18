@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Helmet } from "react-helmet-async";
 import { trpc } from "@/lib/trpc";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
@@ -105,6 +106,13 @@ export default function CoursAudio() {
 
   return (
     <div className="min-h-screen flex flex-col bg-breslev-cream">
+      <Helmet>
+        <title>Cours Audio — Enseignements d'Esther Ifrah | breslev.fr</title>
+        <meta name="description" content="Écoutez les cours audio d'Esther Ifrah : Likoutey Moharane, Halakha & Cacheroute, Midot, La vie d'un Breslever. 40+ enseignements authentiques de Rabbi Nachman." />
+        <meta property="og:title" content="Cours Audio Breslev — Esther Ifrah" />
+        <meta property="og:description" content="40+ cours audio gratuits sur les enseignements de Rabbi Nachman : Likoutey Moharane, Midot, Halakha et plus." />
+        <meta property="og:url" content="https://breslev.fr/cours-audio" />
+      </Helmet>
       <Header />
       
       <main className="flex-1 pb-24">
